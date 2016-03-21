@@ -97,6 +97,12 @@
 			<version>1.4.187</version>
 			<!-- <scope>test</scope> -->
 		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4-1200-jdbc41</version>
+		</dependency>
+
 		<!-- Java Server Faces -->
 		<dependency>
 			<groupId>com.sun.faces</groupId>
