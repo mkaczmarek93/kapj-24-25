@@ -6,3 +6,4 @@
 .project
 .springBeans
 /.idea/
+*.iml
