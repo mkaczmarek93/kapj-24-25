@@ -1,0 +1,23 @@
+
+
+.ui-widget, 
+.ui-cell-editor,
+.ui-widget-input,
+.ui-widget input, 
+.ui-widget select, 
+.ui-widget textarea, 
+.ui-widget button,
+.ui-state-active ,
+.ui-widget-content,
+.ui-state-default,
+.ui-datatable-content,
+.ui-outputLabel,
+.ui-widget .ui-widget {
+
+    font-size: 9pt!important;
+}
+
+
+
+
+
