@@ -1,5 +1,6 @@
 package pl.zt.mk.language;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import javax.faces.context.FacesContext;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope(value = "session")
-public class LanguageBean {
+public class LanguageBean  implements Serializable{
 
 	private Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
 
