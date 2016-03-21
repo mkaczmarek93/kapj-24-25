@@ -11,9 +11,13 @@
  		</h:head>
 	
 	<h:body>
-	Hello World !@
-	
-	<p:clock></p:clock>
 
+<h:form>
+	<p:outputLabel value="#{i18n['hello']}" />
+	
+	<p:commandButton actionListener="#{languageBean.setLanguage('pl')}" value="PL" update="@all"/> 
+	<p:commandButton actionListener="#{languageBean.setLanguage('en')}" value="EN" update="@all"/>
+	
+</h:form>
 	</h:body>
 </html>

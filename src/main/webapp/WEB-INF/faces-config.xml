@@ -19,4 +19,14 @@
 			<source-class>javax.faces.component.UIViewRoot</source-class>
 		</system-event-listener>
 	</application>
+	
+	<application>
+     	   <locale-config>
+     	        <default-locale>pl</default-locale>
+     	   </locale-config>
+	   <resource-bundle>
+		<base-name>messages</base-name>
+		<var>i18n</var>
+	   </resource-bundle>
+     </application>
 </faces-config>
