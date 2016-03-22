@@ -29,11 +29,11 @@ public class UserServiceImpl implements UserService,UserDetailsService {
     @Override
     public Long addUser(String name, String email) {
         String salt = BCrypt.gensalt();
-        String password = RandomStringUtils.randomAlphanumeric(10);
+        String password = RandomStringUtils.randomAlphanumeric(10).toLowerCase();
         String hashpw = BCrypt.hashpw(password,salt);
         UserDetail saved =  userRepository.save(new UserDetail(name,email, hashpw));
-        log.info(password);
-        return 5L;
+        log.info(email+":"+password);
+        return saved.getId();
     }
 
     @Override
