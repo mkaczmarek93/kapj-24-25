@@ -4,3 +4,9 @@ jdk:
 script:
   - mvn clean
   - mvn spring-boot:run
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database ham_db;' -U postgres
+addons:
+  postgresql: "9.4"
