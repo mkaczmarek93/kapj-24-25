@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
@@ -14,7 +15,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private final static String ADMIN = "ADMIN";
+    private final static String USER = "USER";
 
+    @Autowired
+    UserDetailsService userDetailService;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -22,21 +27,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/javax.faces.resources/**").permitAll()
-                .antMatchers("/index.xhtml").hasRole("USER")
+                .antMatchers("/views/admin/**").hasRole(ADMIN)
+                .antMatchers("/vies/user/**").hasAnyRole(USER, ADMIN)
                 .and()
                 .formLogin()
-                .loginPage("/login.xhtml").loginProcessingUrl("/login").defaultSuccessUrl("/index.xhtml").and().exceptionHandling().accessDeniedPage("/403-error.xhtml")
-                .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .invalidateHttpSession(true)
-                .logoutSuccessUrl(
-                        "/login.xhtml");
+                .loginPage("/views/login.xhtml")
+                .defaultSuccessUrl("/index.xhtml")
+                .permitAll()
+                .and().logout(). logoutRequestMatcher(new AntPathRequestMatcher("/views/logout.xhtml")).logoutSuccessUrl("/views/login.xhtml?logged_out").invalidateHttpSession(true).permitAll();
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("user").password("pass").roles("USER");
-    }
+   protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
+       auth.userDetailsService(userDetailService);
+   }
 }

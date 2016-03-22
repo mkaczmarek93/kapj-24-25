@@ -1,39 +1,33 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
-xmlns:h="http://java.sun.com/jsf/html" 
-xmlns:p="http://primefaces.org/ui" 
-xmlns:ui="http://java.sun.com/jsf/facelets">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+>
 
-	<body>
-	
-		<div align="center" style="vertical-align: middle;">
-			<h:form >
+<h:body>
 
-				<p:panelGrid columns="2" >
-					<p:panelGrid columns="3">
-					</p:panelGrid>
-					<p:panelGrid style="font-size:0.82em;">
-						<p:row>
-							<p:column style="font-weight: bold; color: cornflowerblue;">HAM</p:column>
-							<p:column>wersja PROJECT_VERSION</p:column>
-						</p:row>
-						<p:row>
-							<p:column>
-								<h:outputText value="Zalogowany:  Jan Kowalski" />
-							</p:column>
-							<p:column>
-								<p:commandLink id="wyloguj"  immediate="true" ajax="false" action="/logout" value="Logout" ></p:commandLink>
+<div align="center" style="vertical-align: middle;">
 
+    <h:form style="float:right" >
+        <p:outputLabel value="#{i18n['hello']}"/>
 
-							</p:column>
-						</p:row>
-					</p:panelGrid>
-				</p:panelGrid>
-			
-			</h:form>
-		</div>
-			
-	</body>
+        <p:commandButton actionListener="#{languageBean.setLanguage('pl')}" value="PL" update="@all"/>
+        <p:commandButton actionListener="#{languageBean.setLanguage('en')}" value="EN" update="@all"/>
+        #{languageBean.language}
+    </h:form>
+
+    <form action="#{request.contextPath}/views/logout.xhtml?logged_out=true" method="GET">
+
+        <span> Zalogowany:  #{authenticationBean.auth} </span>
+        <button type="submit"
+                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+            <span class="ui-button-text">#{i18n['logout']}</span>
+        </button>
+    </form>
+</div>
+
+</h:body>
 </html>
 

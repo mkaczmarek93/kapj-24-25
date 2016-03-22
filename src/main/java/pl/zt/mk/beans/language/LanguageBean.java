@@ -1,12 +1,11 @@
-package pl.zt.mk.language;
-
-import java.io.Serializable;
-import java.util.Locale;
-
-import javax.faces.context.FacesContext;
+package pl.zt.mk.beans.language;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import javax.faces.context.FacesContext;
+import java.io.Serializable;
+import java.util.Locale;
 
 @Component
 @Scope(value = "session")

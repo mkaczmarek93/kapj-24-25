@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+>
+
+
+
+
+
+        ${param['logged_out']!=null ? i18n['logout_message']:""}
+
+    <form id="login_form" action="#{request.contextPath}/views/login.xhtml" method="post" style="align-content: center">
+        <p>
+            <label for="username" class="login-form-tag">#{i18n['user']}]</label>
+            <input type="text" id="username" name="username" class="ui-corner-all" required="required"/>
+        </p>
+        <p>
+            <label for="password" class="login-form-tag">#{i18n['password']}</label>
+            <input type="password" id="password" name="password"  class="ui-corner-all" required="required"/>
+        </p>
+        <p>
+            <button type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                <span class="ui-button-text">#{i18n['login']}</span>
+            </button>
+        </p>
+    </form>
+
+
+</html>

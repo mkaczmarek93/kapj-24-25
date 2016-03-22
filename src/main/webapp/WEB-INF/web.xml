@@ -28,7 +28,7 @@
         <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>/index.xhtml</welcome-file>
+        <welcome-file>views/index.xhtml</welcome-file>
     </welcome-file-list>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
@@ -48,11 +48,30 @@
     </servlet-mapping>
     <error-page>
         <error-code>403</error-code>
-        <location>/403-error.xhtml</location>
+        <location>/views/403-error.xhtml</location>
     </error-page>
-
+    <mime-mapping>
+        <extension>eot</extension>
+        <mime-type>application/vnd.ms-fontobject</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>otf</extension>
+        <mime-type>font/opentype</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>ttf</extension>
+        <mime-type>application/x-font-ttf</mime-type>
+    </mime-mapping>
     <mime-mapping>
         <extension>woff</extension>
-        <mime-type>application/font-woff</mime-type>
+        <mime-type>application/x-font-woff</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>svg</extension>
+        <mime-type>image/svg+xml</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>woff2</extension>
+        <mime-type>application/x-font-woff2</mime-type>
     </mime-mapping>
 </web-app>
