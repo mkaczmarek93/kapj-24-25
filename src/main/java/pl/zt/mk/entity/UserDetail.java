@@ -5,9 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Collection;
 
 /**
@@ -20,11 +18,14 @@ public class UserDetail implements org.springframework.security.core.userdetails
 
     @Id
     @Getter @Setter
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Getter @Setter
+    @Column(unique = true)
     private String name;
     @Getter @Setter
+    @Column(unique = true)
     private String email;
     @Getter @Setter
     private String password;

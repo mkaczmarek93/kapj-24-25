@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://java.sun.com/jsf/html"
+>
+
+<h:head>
+    <title>HAM</title>
+</h:head>
+
+<h:body>
+
+    <ui:composition template="../../szablony/ekranSzablonHoryzontalny.xhtml" >
+
+        <ui:define name="content">
+
+            <h:form>
+
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="#{i18n['user-name']}"/>
+                    <p:inputText value="#{addingUserBean.name}" />
+
+                    <p:outputLabel value="#{i18n['email']}"/>
+                    <p:inputText value="#{addingUserBean.email}" />
+
+                   <p:outputLabel />
+                    <p:commandButton actionListener="#{addingUserBean.addUser}" value="#{i18n['add-user']}" update="@form"/>
+                </p:panelGrid>
+
+            </h:form>
+        </ui:define>
+
+    </ui:composition>
+</h:body>
+</html>

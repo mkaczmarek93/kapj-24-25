@@ -10,5 +10,6 @@ import pl.zt.mk.entity.UserDetail;
 public interface UserService {
 
         UserDetail findByEmail(String email);
+        Long addUser(String name,String email);
 
 }
