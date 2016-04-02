@@ -4,10 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 import pl.zt.mk.entity.meta.Authorities;
 import pl.zt.mk.services.UserService;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import java.io.Serializable;
 import java.util.Arrays;
@@ -31,7 +34,19 @@ public class AddingUserBean implements Serializable {
 
     public void addUser(){
         if (Objects.nonNull(name) && Objects.nonNull(email) && Objects.nonNull(authorities)) {
-            userService.addUser(name, email, authorities);
+            String message = "";
+            FacesMessage.Severity severity;
+            try {
+                userService.addUser(name, email, authorities);
+                message = "good";
+                severity = FacesMessage.SEVERITY_INFO;
+            } catch (DataAccessException e) {
+                message = "bad";
+                severity = FacesMessage.SEVERITY_FATAL;
+            }
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, message, message));
+
         }
     }
 

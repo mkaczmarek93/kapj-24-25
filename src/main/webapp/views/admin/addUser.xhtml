@@ -13,26 +13,35 @@
 
 <h:body>
 
-    <ui:composition template="../../szablony/ekranSzablonHoryzontalny.xhtml" >
+    <ui:composition template="../../szablony/ekranSzablonHoryzontalny.xhtml">
 
         <ui:define name="content">
 
             <h:form>
 
-                <p:panelGrid columns="2">
+                <p:panelGrid columns="3">
                     <p:outputLabel value="#{i18n['user-name']}"/>
-                    <p:inputText value="#{addingUserBean.name}" />
+                    <p:inputText value="#{addingUserBean.name}" id="name" required="true"
+                                 requiredMessage="#{i18n['required-name']}">
+                    </p:inputText>
+                    <p:message for="name"/>
 
                     <p:outputLabel value="#{i18n['email']}"/>
-                    <p:inputText value="#{addingUserBean.email}" />
+                    <p:inputText value="#{addingUserBean.email}" id="email" required="true"
+                                 requiredMessage="#{i18n['required-email']}">
+                        <f:validator binding="#{userEmailValidator}"/>
+                    </p:inputText>
+                    <p:message for="email"/>
 
                     <p:outputLabel value="#{i18n['role']}"/>
                     <p:selectOneMenu value="#{addingUserBean.authorities}">
                         <f:selectItems value="#{addingUserBean.roles}"/>
                     </p:selectOneMenu>
 
-                   <p:outputLabel />
-                    <p:commandButton actionListener="#{addingUserBean.addUser}" value="#{i18n['add-user']}" update="@form"/>
+                    <p:outputLabel/>
+                    <p:commandButton actionListener="#{addingUserBean.addUser}" value="#{i18n['add-user']}"
+                                     update="@form"/>
+                    <p:messages globalOnly="true"/>
                 </p:panelGrid>
 
             </h:form>

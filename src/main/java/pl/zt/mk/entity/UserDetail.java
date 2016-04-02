@@ -23,8 +23,8 @@ public class UserDetail implements org.springframework.security.core.userdetails
     private Long id;
 
     @Getter @Setter
-    @Column(unique = true)
-    private String name;
+	@Column()
+	private String name;
     @Getter @Setter
     @Column(unique = true)
     private String email;

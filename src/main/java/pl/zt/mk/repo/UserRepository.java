@@ -10,4 +10,6 @@ import pl.zt.mk.entity.UserDetail;
 public interface UserRepository extends CrudRepository<UserDetail,Long> {
 
     UserDetail findByEmail(String email);
+
+    UserDetail findByName(String name);
 }

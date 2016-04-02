@@ -3,6 +3,7 @@ package pl.zt.mk.services;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,12 +33,19 @@ public class UserServiceImpl implements UserService,UserDetailsService {
     }
 
     @Override
-	public Long addUser(String name, String email, Authorities role) {
+	public Long addUser(String name, String email, Authorities role) throws DataAccessException {
 		String password = RandomStringUtils.randomAlphanumeric(10).toLowerCase();
 		String hashpw = encoder.encode(password);
-		UserDetail saved = userRepository.save(new UserDetail(name, email, hashpw, new UserRole(role)));
-		log.info(email+":"+password);
-        return saved.getId();
+		try {
+			UserDetail saved = userRepository.save(new UserDetail(name, email, hashpw, new UserRole(role)));
+			log.info(email + ":" + password);
+			return saved.getId();
+		} catch (DataAccessException e) {
+			log.debug("user not saved");
+			throw e;
+		}
+
+
     }
 
     @Override
