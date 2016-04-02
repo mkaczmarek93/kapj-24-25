@@ -39,7 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/views/login.xhtml")
                 .defaultSuccessUrl("/index.xhtml")
                 .permitAll()
-                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/views/logout.xhtml")).logoutSuccessUrl("/views/login.xhtml?logged_out").invalidateHttpSession(true).permitAll();
+				.and().exceptionHandling().accessDeniedPage("/views/403-error.xhtml")
+				.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/views/logout.xhtml")).logoutSuccessUrl("/views/login.xhtml?logged_out").invalidateHttpSession(true).permitAll();
     }
 
     @Bean

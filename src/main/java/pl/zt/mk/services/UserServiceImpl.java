@@ -51,11 +51,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	@Override
 	public void changePassword(String mail, String oldPassword, String newPassword) {
 
-
-		UserDetail user = userRepository.findByEmailAndPassword(mail, encoder.encode(oldPassword));
+		UserDetail user = userRepository.findByEmail(mail);
 		if (user != null) {
-			user.setPassword(encoder.encode(newPassword));
-			userRepository.save(user);
+			if (encoder.matches(oldPassword, user.getPassword())) {
+				user.setPassword(encoder.encode(newPassword));
+				userRepository.save(user);
+			}
 		}
 
 	}

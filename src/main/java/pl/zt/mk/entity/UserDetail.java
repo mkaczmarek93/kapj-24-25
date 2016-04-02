@@ -19,8 +19,8 @@ public class UserDetail implements org.springframework.security.core.userdetails
 
     @Id
     @Getter @Setter
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
     @Getter @Setter
 	@Column()

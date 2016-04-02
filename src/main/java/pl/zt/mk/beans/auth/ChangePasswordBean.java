@@ -25,7 +25,7 @@ public class ChangePasswordBean {
 
 	public void change() {
 		String name = SecurityContextHolder.getContext().getAuthentication().getName();
-
+		userService.changePassword(name, oldPassword, newPassword);
 
 	}
 }
