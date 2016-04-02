@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import pl.zt.mk.repo.UserRepository;
+import pl.zt.mk.services.InternationalizationService;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -20,6 +21,8 @@ import java.util.Objects;
 public class UserEmailValidator implements Validator {
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	InternationalizationService i18n;
 
 	@Override
 	public void validate(FacesContext facesContext, UIComponent uiComponent, Object o) throws ValidatorException {
@@ -28,10 +31,10 @@ public class UserEmailValidator implements Validator {
 
 		if (org.apache.commons.lang3.StringUtils.isNoneBlank(mail)) {
 			if (!org.apache.commons.validator.routines.EmailValidator.getInstance().isValid(mail))
-				throw new ValidatorException(new FacesMessage("invalid-mail"));
+				throw new ValidatorException(new FacesMessage(i18n.getMessage("invalid-mail")));
 
 			if (Objects.nonNull(userRepository.findByEmail(mail)))
-				throw new ValidatorException(new FacesMessage("mail-exists"));
+				throw new ValidatorException(new FacesMessage(i18n.getMessage("mail-exists")));
 		}
 
 	}

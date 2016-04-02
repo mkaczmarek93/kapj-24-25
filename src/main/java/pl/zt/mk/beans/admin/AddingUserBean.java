@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 import pl.zt.mk.entity.meta.Authorities;
+import pl.zt.mk.services.InternationalizationService;
 import pl.zt.mk.services.UserService;
 
 import javax.faces.application.FacesMessage;
@@ -25,6 +26,9 @@ import java.util.Objects;
 public class AddingUserBean implements Serializable {
     @Autowired
     UserService userService;
+
+	@Autowired
+	InternationalizationService i18n;
 
     @Getter @Setter
     private String name,email;
@@ -45,7 +49,7 @@ public class AddingUserBean implements Serializable {
                 severity = FacesMessage.SEVERITY_FATAL;
             }
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, message, message));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, i18n.getMessage(message), i18n.getMessage(message)));
 
         }
     }
