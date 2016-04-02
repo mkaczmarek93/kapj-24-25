@@ -1,32 +1,59 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
 >
 
+<h:head>
 
+    <f:facet name="first">
+        <meta http-equiv="X-UA-Compatible" content="IE=8"/>
 
+    </f:facet>
+    <f:facet name="last">
+        <title>HAM</title>
+        <h:outputStylesheet library="css" name="default.css"/>
+        <h:outputStylesheet library="primefaces" name="fa/font-awesome.css"/>
 
+        <h:outputStylesheet>
+            html, body {
+                height: 100%;
+            }
+        </h:outputStylesheet>
 
-        ${param['logged_out']!=null ? i18n['logout_message']:""}
-        ${param['error']!=null ? i18n['login_error']:""}
+    </f:facet>
+</h:head>
 
-        <form id="login_form" action="#{request.contextPath}/views/login.xhtml" method="post"
-              style="align-content: center; width:100%;">
+<h:body>
+
+    <div style="width:250px; text-align: center;margin:auto;">
         <p>
-            <label for="username" class="login-form-tag">#{i18n['user']}]</label>
-            <input type="text" id="username" name="username" class="ui-corner-all" required="required"/>
+            ${param['logged_out']!=null ? i18n['logout_message']:""}
+            ${param['error']!=null ? i18n['login_error']:""}
         </p>
-        <p>
-            <label for="password" class="login-form-tag">#{i18n['password']}</label>
-            <input type="password" id="password" name="password"  class="ui-corner-all" required="required"/>
-        </p>
-        <p>
-            <button type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+        <form id="login_form" method="post" action="#{request.contextPath}/views/login.xhtml"
+              class="ui-grid ui-grid-responsive">
+
+            <p:outputLabel for="username" class="ui-grid-col-12">#{i18n['user']}] </p:outputLabel>
+            <p:inputText type="text" id="username" name="username" class=" ui-grid-col-12"
+                         required="true"/>
+
+            <p:outputLabel for="password" class="login-form-tag ui-grid-col-12">#{i18n['password']}</p:outputLabel>
+            <p:password id="password" name="password" class=" ui-grid-col-12"
+                        required="true"/>
+
+            <button class="ui-grid-col-12 ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
                 <span class="ui-button-text">#{i18n['login']}</span>
             </button>
-        </p>
-    </form>
+
+
+        </form>
+
+    </div>
+
+</h:body>
 
 
 </html>

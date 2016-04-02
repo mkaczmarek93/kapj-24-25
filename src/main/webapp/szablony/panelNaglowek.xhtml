@@ -11,11 +11,10 @@
 <div align="center" style="vertical-align: middle;">
 
     <h:form style="float:right" >
-        <p:outputLabel value="#{i18n['hello']}"/>
-
-        <p:commandButton actionListener="#{languageBean.setLanguage('pl')}" value="PL" update="@all"/>
-        <p:commandButton actionListener="#{languageBean.setLanguage('en')}" value="EN" update="@all"/>
-        #{languageBean.language}
+        <p:panelGrid columns="2">
+            <p:commandLink actionListener="#{languageBean.setLanguage('pl')}" value="PL" update="@all"/>
+            <p:commandLink actionListener="#{languageBean.setLanguage('en')}" value="EN" update="@all"/>
+        </p:panelGrid>
     </h:form>
 
     <form action="#{request.contextPath}/views/logout.xhtml?logged_out=true" method="GET">
