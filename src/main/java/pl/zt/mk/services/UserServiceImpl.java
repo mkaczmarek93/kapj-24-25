@@ -17,22 +17,22 @@ import pl.zt.mk.repo.UserRepository;
  * Created by zt on 2016-03-22.
  */
 @Service
-public class UserServiceImpl implements UserService,UserDetailsService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
-    private final static Logger log = Logger.getLogger(UserServiceImpl.class);
+	private final static Logger log = Logger.getLogger(UserServiceImpl.class);
 
-    @Autowired
-    UserRepository userRepository;
+	@Autowired
+	UserRepository userRepository;
 
 	@Autowired
 	PasswordEncoder encoder;
 
-    @Override
-    public UserDetail findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
+	@Override
+	public UserDetail findByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
 
-    @Override
+	@Override
 	public Long addUser(String name, String email, Authorities role) throws DataAccessException {
 		String password = RandomStringUtils.randomAlphanumeric(10).toLowerCase();
 		String hashpw = encoder.encode(password);
@@ -46,10 +46,22 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 		}
 
 
-    }
+	}
 
-    @Override
-    public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email);
-    }
+	@Override
+	public void changePassword(String mail, String oldPassword, String newPassword) {
+
+
+		UserDetail user = userRepository.findByEmailAndPassword(mail, encoder.encode(oldPassword));
+		if (user != null) {
+			user.setPassword(encoder.encode(newPassword));
+			userRepository.save(user);
+		}
+
+	}
+
+	@Override
+	public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		return userRepository.findByEmail(email);
+	}
 }

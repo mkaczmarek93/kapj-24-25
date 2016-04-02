@@ -5,5 +5,5 @@ package pl.zt.mk.entity.meta;
  */
 public enum Authorities {
 
-	USER, ADMIN
+	ROLE_USER, ROLE_ADMIN
 }

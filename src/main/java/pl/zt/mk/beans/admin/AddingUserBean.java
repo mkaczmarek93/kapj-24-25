@@ -58,7 +58,7 @@ public class AddingUserBean implements Serializable {
     public List<SelectItem> getRoles() {
 
 
-        return Arrays.asList(new SelectItem(Authorities.ADMIN), new SelectItem(Authorities.USER));
-    }
+		return Arrays.asList(new SelectItem(Authorities.ROLE_ADMIN), new SelectItem(Authorities.ROLE_USER));
+	}
 
 }
