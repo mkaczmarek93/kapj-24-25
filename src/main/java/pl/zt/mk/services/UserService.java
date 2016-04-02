@@ -15,6 +15,6 @@ public interface UserService {
 
         Long addUser(String name, String email, Authorities role) throws DataAccessException;
 
-        void changePassword(String user, String oldPassword, String newPassword);
+        boolean changePassword(String user, String oldPassword, String newPassword);
 
 }

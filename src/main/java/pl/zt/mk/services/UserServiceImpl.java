@@ -13,6 +13,8 @@ import pl.zt.mk.entity.UserRole;
 import pl.zt.mk.entity.meta.Authorities;
 import pl.zt.mk.repo.UserRepository;
 
+import java.util.Objects;
+
 /**
  * Created by zt on 2016-03-22.
  */
@@ -49,16 +51,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public void changePassword(String mail, String oldPassword, String newPassword) {
+	public boolean changePassword(String mail, String oldPassword, String newPassword) {
 
 		UserDetail user = userRepository.findByEmail(mail);
-		if (user != null) {
-			if (encoder.matches(oldPassword, user.getPassword())) {
-				user.setPassword(encoder.encode(newPassword));
-				userRepository.save(user);
-			}
-		}
+		if (encoder.matches(oldPassword, user.getPassword())) {
+			user.setPassword(encoder.encode(newPassword));
+			user = userRepository.save(user);
 
+			return Objects.nonNull(user);
+		}
+		return false;
 	}
 
 	@Override
