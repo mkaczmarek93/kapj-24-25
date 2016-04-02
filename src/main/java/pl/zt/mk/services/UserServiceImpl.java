@@ -5,9 +5,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.zt.mk.entity.UserDetail;
+import pl.zt.mk.entity.UserRole;
+import pl.zt.mk.entity.meta.Authorities;
 import pl.zt.mk.repo.UserRepository;
 
 /**
@@ -21,18 +23,20 @@ public class UserServiceImpl implements UserService,UserDetailsService {
     @Autowired
     UserRepository userRepository;
 
+	@Autowired
+	PasswordEncoder encoder;
+
     @Override
     public UserDetail findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
-    public Long addUser(String name, String email) {
-        String salt = BCrypt.gensalt();
-        String password = RandomStringUtils.randomAlphanumeric(10).toLowerCase();
-        String hashpw = BCrypt.hashpw(password,salt);
-        UserDetail saved =  userRepository.save(new UserDetail(name,email, hashpw));
-        log.info(email+":"+password);
+	public Long addUser(String name, String email, Authorities role) {
+		String password = RandomStringUtils.randomAlphanumeric(10).toLowerCase();
+		String hashpw = encoder.encode(password);
+		UserDetail saved = userRepository.save(new UserDetail(name, email, hashpw, new UserRole(role)));
+		log.info(email+":"+password);
         return saved.getId();
     }
 

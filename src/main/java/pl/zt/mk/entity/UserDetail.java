@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -30,17 +31,23 @@ public class UserDetail implements org.springframework.security.core.userdetails
     @Getter @Setter
     private String password;
 
+	@OneToOne(cascade = CascadeType.PERSIST)
+	@Getter
+	@Setter
+	private UserRole role;
 
-    public UserDetail(String name, String email, String password) {
-        this.name = name;
+
+	public UserDetail(String name, String email, String password, UserRole role) {
+		this.name = name;
         this.email = email;
         this.password = password;
-    }
+		this.role = role;
+	}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
+		return Arrays.asList(role);
+	}
 
     @Override
     public String getPassword() {

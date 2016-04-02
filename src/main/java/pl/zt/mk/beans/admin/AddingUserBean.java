@@ -5,9 +5,13 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import pl.zt.mk.entity.meta.Authorities;
 import pl.zt.mk.services.UserService;
 
+import javax.faces.model.SelectItem;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -21,11 +25,21 @@ public class AddingUserBean implements Serializable {
 
     @Getter @Setter
     private String name,email;
+    @Getter
+    @Setter
+    private Authorities authorities;
 
     public void addUser(){
-        if (Objects.nonNull(name) && Objects.nonNull(email)){
-            userService.addUser(name,email);
+        if (Objects.nonNull(name) && Objects.nonNull(email) && Objects.nonNull(authorities)) {
+            userService.addUser(name, email, authorities);
         }
+    }
+
+
+    public List<SelectItem> getRoles() {
+
+
+        return Arrays.asList(new SelectItem(Authorities.ADMIN), new SelectItem(Authorities.USER));
     }
 
 }

@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
 >
 
 <h:head>
@@ -24,6 +25,11 @@
 
                     <p:outputLabel value="#{i18n['email']}"/>
                     <p:inputText value="#{addingUserBean.email}" />
+
+                    <p:outputLabel value="#{i18n['role']}"/>
+                    <p:selectOneMenu value="#{addingUserBean.authorities}">
+                        <f:selectItems value="#{addingUserBean.roles}"/>
+                    </p:selectOneMenu>
 
                    <p:outputLabel />
                     <p:commandButton actionListener="#{addingUserBean.addUser}" value="#{i18n['add-user']}" update="@form"/>
