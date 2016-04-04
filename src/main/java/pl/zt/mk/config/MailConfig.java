@@ -43,12 +43,20 @@ public class MailConfig {
 	@Value("${mail.password}")
 	private String password;
 
+	@Value("${mail.smtp.ssl.trust}")
+	private String trustSsl;
+
+	@Value("${mail.smtp.socketFactory.class}")
+	private String socketFactory;
+
 	@Bean
 	public JavaMailSender mailSender() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 		Properties mailProperties = new Properties();
 		mailProperties.put("mail.smtp.auth", auth);
 		mailProperties.put("mail.smtp.starttls.enable", starttls);
+		mailProperties.put("mail.smtp.ssl.trust", trustSsl);
+		mailProperties.put("mail.smtp.socketFactory.class", socketFactory);
 		mailSender.setJavaMailProperties(mailProperties);
 		mailSender.setHost(host);
 		mailSender.setPort(port);
