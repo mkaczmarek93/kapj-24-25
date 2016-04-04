@@ -24,38 +24,39 @@ import java.util.Objects;
 @Component
 @Scope(value = "view")
 public class AddingUserBean implements Serializable {
-    @Autowired
-    UserService userService;
+	@Autowired
+	UserService userService;
 
 	@Autowired
 	InternationalizationService i18n;
 
-    @Getter @Setter
-    private String name,email;
-    @Getter
-    @Setter
-    private Authorities authorities;
+	@Getter
+	@Setter
+	private String name, email;
+	@Getter
+	@Setter
+	private Authorities authorities;
 
-    public void addUser(){
-        if (Objects.nonNull(name) && Objects.nonNull(email) && Objects.nonNull(authorities)) {
-            String message = "";
-            FacesMessage.Severity severity;
-            try {
-                userService.addUser(name, email, authorities);
-                message = "good";
-                severity = FacesMessage.SEVERITY_INFO;
-            } catch (DataAccessException e) {
-                message = "bad";
-                severity = FacesMessage.SEVERITY_FATAL;
-            }
+	public void addUser() {
+		if (Objects.nonNull(name) && Objects.nonNull(email) && Objects.nonNull(authorities)) {
+			String message = "";
+			FacesMessage.Severity severity;
+			try {
+				userService.addUser(name, email, authorities);
+				message = "good";
+				severity = FacesMessage.SEVERITY_INFO;
+			} catch (DataAccessException e) {
+				message = "bad";
+				severity = FacesMessage.SEVERITY_FATAL;
+			}
 
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, i18n.getMessage(message), i18n.getMessage(message)));
 
-        }
-    }
+		}
+	}
 
 
-    public List<SelectItem> getRoles() {
+	public List<SelectItem> getRoles() {
 
 
 		return Arrays.asList(new SelectItem(Authorities.ROLE_ADMIN), new SelectItem(Authorities.ROLE_USER));

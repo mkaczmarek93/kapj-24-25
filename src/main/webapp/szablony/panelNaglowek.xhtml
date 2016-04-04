@@ -8,25 +8,25 @@
 
 <h:body>
 
-<div align="center" style="vertical-align: middle;">
+    <div align="center" style="vertical-align: middle;">
 
-    <h:form style="float:right" >
-        <p:panelGrid columns="2">
-            <p:commandLink actionListener="#{languageBean.setLanguage('pl')}" value="PL" update="@all"/>
-            <p:commandLink actionListener="#{languageBean.setLanguage('en')}" value="EN" update="@all"/>
-        </p:panelGrid>
-    </h:form>
+        <h:form style="float:right">
+            <p:panelGrid columns="2">
+                <p:commandLink actionListener="#{languageBean.setLanguage('pl')}" value="PL" update="@all"/>
+                <p:commandLink actionListener="#{languageBean.setLanguage('en')}" value="EN" update="@all"/>
+            </p:panelGrid>
+        </h:form>
 
-    <form action="#{request.contextPath}/views/logout.xhtml?logged_out=true" method="GET">
+        <form action="#{request.contextPath}/views/logout.xhtml?logged_out=true" method="GET">
 
-        <span> Zalogowany:  #{authenticationBean.auth} </span>
-        <button type="submit"
-                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-            <span class="ui-button-text">#{i18n['logout']}</span>
-        </button>
-    </form>
+            <span> Zalogowany:  #{authenticationBean.auth} </span>
+            <button type="submit"
+                    class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                <span class="ui-button-text">#{i18n['logout']}</span>
+            </button>
+        </form>
 
-</div>
+    </div>
 
 </h:body>
 </html>

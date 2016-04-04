@@ -28,7 +28,7 @@ public class JsfConfig implements ServletContextAware {
     public void setServletContext(ServletContext servletContext) {
     	servletContext.setInitParameter("com.sun.faces.forceLoadConfiguration", Boolean.TRUE.toString());
         servletContext.setInitParameter("javax.faces.PROJECT_STAGE", "Development");
-        servletContext.setInitParameter("primefaces.FONT_AWESOME", Boolean.TRUE.toString());
+		servletContext.setInitParameter("primefaces.FONT_AWESOME", Boolean.TRUE.toString());
 		servletContext.setInitParameter("javax.faces.FACELETS_LIBRARIES", "/WEB-INF/springsecurity.taglib.xml");
 	}
 

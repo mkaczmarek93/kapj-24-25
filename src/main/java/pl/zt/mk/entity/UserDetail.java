@@ -17,19 +17,23 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class UserDetail implements org.springframework.security.core.userdetails.UserDetails {
 
-    @Id
-    @Getter @Setter
+	@Id
+	@Getter
+	@Setter
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-    @Getter @Setter
+	@Getter
+	@Setter
 	@Column()
 	private String name;
-    @Getter @Setter
-    @Column(unique = true)
-    private String email;
-    @Getter @Setter
-    private String password;
+	@Getter
+	@Setter
+	@Column(unique = true)
+	private String email;
+	@Getter
+	@Setter
+	private String password;
 
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@Getter
@@ -39,43 +43,43 @@ public class UserDetail implements org.springframework.security.core.userdetails
 
 	public UserDetail(String name, String email, String password, UserRole role) {
 		this.name = name;
-        this.email = email;
-        this.password = password;
+		this.email = email;
+		this.password = password;
 		this.role = role;
 	}
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return Arrays.asList(role);
 	}
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
+	@Override
+	public String getPassword() {
+		return password;
+	}
 
-    @Override
-    public String getUsername() {
-        return email;
-    }
+	@Override
+	public String getUsername() {
+		return email;
+	}
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
 
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 }

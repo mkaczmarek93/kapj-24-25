@@ -6,17 +6,17 @@
     <h:body>
 
 		<h:form id="formMenu" rendered="#{securityBean.authenticated}">
-		<p:menu widgetVar="wmenuGlowne" style="width:95%!important;">
-			<p:submenu label="Menu" expanded="true">
-				<p:menuitem value="#{i18n['change-password']}"
-							action="/views/user/changePassword.xhtml?faces-redirect=true"/>
-				<p:menuitem value="#{i18n['add-user']}"
-							action="/views/admin/addUser.xhtml?faces-redirect=true"
-							rendered="#{securityBean.hasRole('ADMIN')}"/>
-				<p:menuitem value="#{i18n['logout']}" action="/views/logout.xhtml?faces-redirect=true"/>
+			<p:menu widgetVar="wmenuGlowne" style="width:95%!important;">
+				<p:submenu label="Menu" expanded="true">
+					<p:menuitem value="#{i18n['change-password']}"
+								action="/views/user/changePassword.xhtml?faces-redirect=true"/>
+					<p:menuitem value="#{i18n['add-user']}"
+								action="/views/admin/addUser.xhtml?faces-redirect=true"
+								rendered="#{securityBean.hasRole('ADMIN')}"/>
+					<p:menuitem value="#{i18n['logout']}" action="/views/logout.xhtml?faces-redirect=true"/>
 		    </p:submenu>
 
-		</p:menu>
+			</p:menu>
 	</h:form>
 		
 

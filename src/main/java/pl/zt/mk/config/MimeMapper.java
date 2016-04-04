@@ -10,15 +10,15 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class MimeMapper implements EmbeddedServletContainerCustomizer {
-    @Override
-    public void customize(ConfigurableEmbeddedServletContainer container) {
-        MimeMappings mappings = new MimeMappings(MimeMappings.DEFAULT);
-        mappings.add("eot", "application/vnd.ms-fontobject");
-        mappings.add("otf", "font/opentype");
-        mappings.add("ttf", "application/x-font-ttf");
-        mappings.add("woff", "application/x-font-woff");
-        mappings.add("svg", "image/svg+xml");
-        mappings.add("woff2", "application/x-font-woff2");
-        container.setMimeMappings(mappings);
-    }
+	@Override
+	public void customize(ConfigurableEmbeddedServletContainer container) {
+		MimeMappings mappings = new MimeMappings(MimeMappings.DEFAULT);
+		mappings.add("eot", "application/vnd.ms-fontobject");
+		mappings.add("otf", "font/opentype");
+		mappings.add("ttf", "application/x-font-ttf");
+		mappings.add("woff", "application/x-font-woff");
+		mappings.add("svg", "image/svg+xml");
+		mappings.add("woff2", "application/x-font-woff2");
+		container.setMimeMappings(mappings);
+	}
 }

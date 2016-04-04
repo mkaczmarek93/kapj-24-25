@@ -13,9 +13,9 @@ import java.io.Serializable;
 @Scope(value = "session")
 public class AuthenticationBean implements Serializable {
 
-    private String auth;
+	private String auth;
 
-    public String getAuth(){
-     return    SecurityContextHolder.getContext().getAuthentication().getName();
-    }
+	public String getAuth() {
+		return SecurityContextHolder.getContext().getAuthentication().getName();
+	}
 }

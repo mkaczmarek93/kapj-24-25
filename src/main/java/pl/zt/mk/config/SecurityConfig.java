@@ -19,48 +19,48 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final static String ADMIN = "ADMIN";
-    private final static String USER = "USER";
+	private final static String ADMIN = "ADMIN";
+	private final static String USER = "USER";
 
-    @Autowired
-    UserDetailsService userDetailService;
+	@Autowired
+	UserDetailsService userDetailService;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable();
+		http.csrf().disable();
 
-        http
-                .authorizeRequests()
-                .antMatchers("/views/admin/**").hasRole(ADMIN)
-                .antMatchers("/views/user/**").hasAnyRole(USER, ADMIN)
-                .and()
-                .formLogin()
-                .loginPage("/views/login.xhtml")
-                .defaultSuccessUrl("/index.xhtml")
-                .permitAll()
+		http
+				.authorizeRequests()
+				.antMatchers("/views/admin/**").hasRole(ADMIN)
+				.antMatchers("/views/user/**").hasAnyRole(USER, ADMIN)
+				.and()
+				.formLogin()
+				.loginPage("/views/login.xhtml")
+				.defaultSuccessUrl("/index.xhtml")
+				.permitAll()
 				.and().exceptionHandling().accessDeniedPage("/views/403-error.xhtml")
 				.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/views/logout.xhtml")).logoutSuccessUrl("/views/login.xhtml?logged_out").invalidateHttpSession(true).permitAll();
-    }
+	}
 
-    @Bean
-    public DaoAuthenticationProvider authProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailService);
-        authProvider.setPasswordEncoder(encoder());
-        return authProvider;
-    }
+	@Bean
+	public DaoAuthenticationProvider authProvider() {
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		authProvider.setUserDetailsService(userDetailService);
+		authProvider.setPasswordEncoder(encoder());
+		return authProvider;
+	}
 
-    @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder encoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 
-    @Autowired
-    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+	@Autowired
+	protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ROLE_ADMIN");
-        auth.authenticationProvider(authProvider());
+		auth.authenticationProvider(authProvider());
 
-    }
+	}
 }

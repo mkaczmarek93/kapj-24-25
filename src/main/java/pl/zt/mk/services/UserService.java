@@ -11,10 +11,10 @@ import pl.zt.mk.entity.meta.Authorities;
 @Service
 public interface UserService {
 
-        UserDetail findByEmail(String email);
+	UserDetail findByEmail(String email);
 
-        Long addUser(String name, String email, Authorities role) throws DataAccessException;
+	Long addUser(String name, String email, Authorities role) throws DataAccessException;
 
-        boolean changePassword(String user, String oldPassword, String newPassword);
+	boolean changePassword(String user, String oldPassword, String newPassword);
 
 }
