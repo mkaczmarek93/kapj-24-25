@@ -1,0 +1,11 @@
+language: java
+jdk:
+  - oraclejdk8
+script:
+  - mvn clean install
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database ham_db;' -U postgres
+addons:
+  postgresql: "9.4"
