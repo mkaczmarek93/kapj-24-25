@@ -1,5 +1,8 @@
 package pl.zt.mk.config;
 
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,13 +16,13 @@ import java.util.Properties;
  * Created by Michal on 02.04.2016.
  */
 @Configuration
-@PropertySource("file:mail.properties")
+@PropertySource("classpath:mail.properties")
 public class MailConfig {
 
 	@Value("${mail.protocol}")
 	private String protocol;
 
-	@Value("${mail.port}")
+	@Value("${mail.host}")
 	private String host;
 
 	@Value("${mail.port}")
@@ -53,6 +56,15 @@ public class MailConfig {
 		mailSender.setUsername(username);
 		mailSender.setPassword(password);
 		return mailSender;
+	}
+
+	@Bean
+	public VelocityEngine velocityEngine() {
+		VelocityEngine velocityEngine = new VelocityEngine();
+		velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "class");
+		velocityEngine.setProperty("class.resource.loader.class", ClasspathResourceLoader.class.getName());
+		velocityEngine.init();
+		return velocityEngine;
 	}
 
 }
