@@ -6,7 +6,10 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.zt.mk.ProjectStarter;
+<<<<<<< HEAD
 import pl.zt.mk.entity.UserDetail;
+=======
+>>>>>>> mail_notification
 import pl.zt.mk.services.RegistrationMailSender;
 
 /**
@@ -22,8 +25,7 @@ public class MailingTest extends TestCase {
 
 	@Test
 	public void test() {
-		UserDetail userDetail = new UserDetail("name", "180192@edu.p.lodz.pl", "password", null);
-		sender.sendRegistrationEmail(userDetail);
+		sender.sendRegistrationEmail("name", "180192@edu.p.lodz.pl", "password");
 		assertTrue(true);
 
 	}
