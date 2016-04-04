@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		try {
 			UserDetail saved = userRepository.save(new UserDetail(name, email, hashpw, new UserRole(role)));
 			log.info(email + ":" + password);
-			registrationMailSender.sendRegistrationEmail(saved);
+			registrationMailSender.sendRegistrationEmail(name, email, password);
 			return saved.getId();
 		} catch (DataAccessException e) {
 			log.debug("user not saved");

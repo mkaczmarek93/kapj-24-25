@@ -7,7 +7,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
-import pl.zt.mk.entity.UserDetail;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,13 +24,15 @@ public class RegistrationMailSenderImpl implements RegistrationMailSender {
 	private VelocityEngine velocityEngine;
 
 	@Override
-	public void sendRegistrationEmail(final UserDetail user) {
+	public void sendRegistrationEmail(final String name, final String email, final String password) {
 		MimeMessagePreparator preparator = mimeMessage -> {
 			MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-			message.setTo(user.getEmail());
+			message.setTo(email);
 			message.setSubject("Registration in Housing Association Management");
 			Map model = new HashMap<>();
-			model.put("user", user);
+			model.put("name", name);
+			model.put("login", email);
+			model.put("password", password);
 			String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/registrationMail.vm", "UTF-8", model);
 			message.setText(text, true);
 		};
