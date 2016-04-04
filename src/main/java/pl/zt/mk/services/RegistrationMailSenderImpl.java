@@ -29,10 +29,11 @@ public class RegistrationMailSenderImpl implements RegistrationMailSender {
 		MimeMessagePreparator preparator = mimeMessage -> {
 			MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
 			message.setTo(user.getEmail());
+			message.setSubject("Registration in Housing Association Management");
 			Map model = new HashMap<>();
 			model.put("user", user);
 			String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/registrationMail.vm", "UTF-8", model);
-			message.setText(text);
+			message.setText(text, true);
 		};
 		this.mailSender.send(preparator);
 	}
