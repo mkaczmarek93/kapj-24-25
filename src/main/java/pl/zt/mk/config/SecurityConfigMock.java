@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
@@ -16,16 +15,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
  */
 @Configuration
 @EnableWebSecurity
-@Profile("!dev")
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@Profile("dev")
+public class SecurityConfigMock extends WebSecurityConfigurerAdapter {
 	private final static String ADMIN = "ADMIN";
 	private final static String USER = "USER";
 
 	@Autowired
 	DaoAuthenticationProvider authProvider;
 
-	@Autowired
-	PasswordEncoder encoder;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -34,8 +31,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http
 				.authorizeRequests()
-				.antMatchers("/views/admin/**").hasRole(ADMIN)
-				.antMatchers("/views/user/**").hasAnyRole(USER, ADMIN)
 				.and()
 				.formLogin()
 				.loginPage("/views/login.xhtml")
