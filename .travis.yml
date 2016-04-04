@@ -3,6 +3,7 @@ jdk:
   - oraclejdk8
 script:
   - mvn clean install
+  - mvn test
 services:
   - postgresql
 before_script:
