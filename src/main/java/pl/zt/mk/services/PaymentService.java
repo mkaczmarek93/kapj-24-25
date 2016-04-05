@@ -1,5 +1,6 @@
 package pl.zt.mk.services;
 
+import org.springframework.dao.DataAccessException;
 import pl.zt.mk.entity.Payment;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public interface PaymentService {
 
 	List<Payment> findAll();
 
-	void addPayment(Payment payment);
+	Long addPayment(Payment payment) throws DataAccessException;
 }

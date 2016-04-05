@@ -1,6 +1,7 @@
 package pl.zt.mk.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import pl.zt.mk.entity.Payment;
 import pl.zt.mk.repo.PaymentRepository;
@@ -23,7 +24,12 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public void addPayment(Payment payment) {
-		this.paymentRepository.save(payment);
+	public Long addPayment(Payment payment) throws DataAccessException {
+		try {
+			return this.paymentRepository.save(payment).getId();
+
+		} catch (DataAccessException e) {
+			throw e;
+		}
 	}
 }

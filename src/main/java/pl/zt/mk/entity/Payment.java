@@ -6,10 +6,8 @@ import lombok.Setter;
 import org.joda.time.LocalDate;
 import pl.zt.mk.entity.meta.PaymentType;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by zt on 2016-04-05.
@@ -36,11 +34,17 @@ public class Payment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
+	@NotNull
 	private String name;
 	private String description;
+	@Enumerated
+	@NotNull
 	private PaymentType type;
 	private String unit;
+	@NotNull
 	private Double price;
+	@NotNull
 	private LocalDate startDate;
 	private LocalDate endDate;
 }
