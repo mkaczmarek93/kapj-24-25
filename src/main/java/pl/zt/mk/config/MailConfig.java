@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
 
 import java.util.Properties;
 
@@ -71,8 +72,15 @@ public class MailConfig {
 		VelocityEngine velocityEngine = new VelocityEngine();
 		velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "class");
 		velocityEngine.setProperty("class.resource.loader.class", ClasspathResourceLoader.class.getName());
+		velocityEngine.setProperty("velocimacro.library", "velocity/macro.vm");
 		velocityEngine.init();
 		return velocityEngine;
 	}
 
+	@Bean
+	public VelocityViewResolver viewResolver() {
+		VelocityViewResolver resolver = new VelocityViewResolver();
+		resolver.setExposeSpringMacroHelpers(true);
+		return resolver;
+	}
 }

@@ -25,6 +25,4 @@ public class MailingTest extends TestCase {
 		assertTrue(true);
 
 	}
-
-
 }

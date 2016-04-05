@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-<body>
-<h3>Hi ${name}, welcome to the Housing Association Management!</h3>
-
+<body xmlns="http://www.w3.org/1999/html">
+<h3>#msg("mail.hi") ${name}, #msg("mail.registration.welcome")</h3>
 <div>
-	Your login is <b>${email}</b></br>
-	and your password is <b>${password}</b>
+	#msg("mail.registration.login") <b>${email}</b></br>
+	#msg("mail.registration.password") <b>${password}</b>
 </div>
 </body>
 </html>
