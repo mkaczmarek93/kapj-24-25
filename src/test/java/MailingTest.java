@@ -21,7 +21,7 @@ public class MailingTest extends TestCase {
 
 	@Test
 	public void test() {
-		sender.sendRegistrationEmail("name", "180192@edu.p.lodz.pl", "password");
+		sender.sendRegistrationEmail("name", "180300@edu.p.lodz.pl", "password");
 		assertTrue(true);
 
 	}

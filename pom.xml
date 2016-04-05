@@ -119,7 +119,7 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>1.4.187</version>
-			<!-- <scope>test</scope> -->
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -173,6 +173,20 @@
 			<artifactId>antlr</artifactId>
 			<version>2.7.7</version>
 		</dependency>
+
+		<!--date/time utils-->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.9.3</version>
+		</dependency>
+		<!--Classes utilising Joda Time, Joda Money, Libphonenum and JDK Types that add Hibernate support-->
+		<dependency>
+			<groupId>org.jadira.usertype</groupId>
+			<artifactId>usertype.core</artifactId>
+			<version>4.0.0.GA</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>commons-validator</groupId>

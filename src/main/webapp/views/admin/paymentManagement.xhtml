@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+>
+
+<h:head>
+    <title>HAM</title>
+</h:head>
+
+<h:body>
+
+    <ui:composition template="../../szablony/ekranSzablonHoryzontalny.xhtml">
+
+        <ui:define name="content">
+
+            <h:form id="list">
+                <p:remoteCommand autoRun="true" actionListener="#{paymentBean.init()}"
+                                 update="@(.addPayment) @(.payment)"/>
+
+                <p:dataTable value="#{paymentBean.paymentList}" var="payment" styleClass="payment">
+                    <p:column headerText="#{i18n['fee-name']}">#{payment.id}</p:column>
+                    <p:column headerText="#{i18n['fee-name']}">#{payment.name}</p:column>
+                    <p:column headerText="#{i18n['fee-desc']}">#{payment.description}</p:column>
+                    <p:column headerText="#{i18n['fee-type']}">#{payment.type}</p:column>
+                    <p:column headerText="#{i18n['fee-unit']}">#{payment.unit}</p:column>
+                    <p:column headerText="#{i18n['fee-price']}">#{payment.price}</p:column>
+                    <p:column headerText="#{i18n['fee-start-date']}">#{payment.startDate}</p:column>
+                    <p:column headerText="#{i18n['fee-start-date']}">#{payment.endDate}</p:column>
+
+
+                </p:dataTable>
+
+            </h:form>
+
+            <h:form id="management">
+
+                <p:panelGrid columns="2" styleClass="addPayment">
+                    <p:outputLabel value="#{i18n['fee-name']}"/>
+                    <p:inputText value="#{paymentBean.payment.name}" required="true"
+                                 requiredMessage="#{i18n['required']}"/>
+
+                    <p:outputLabel value="#{i18n['fee-desc']}" required="true" requiredMessage="#{i18n['required']}"/>
+                    <p:inputText value="#{paymentBean.payment.description}"/>
+
+                    <p:outputLabel value="#{i18n['fee-type']}"/>
+                    <p:selectOneMenu value="#{paymentBean.payment.name}" required="true"
+                                     requiredMessage="#{i18n['required']}">
+                        <f:selectItems value="#{paymentBean.paymentTypes}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="#{i18n['fee-unit']}"/>
+                    <p:inputText value="#{paymentBean.payment.unit}"/>
+
+                    <p:outputLabel value="#{i18n['fee-price']}" required="true" requiredMessage="#{i18n['required']}"/>
+                    <p:inputText value="#{paymentBean.payment.price}"/>
+
+                    <p:outputLabel value="#{i18n['fee-start-date']}" required="true"
+                                   requiredMessage="#{i18n['required']}"/>
+                    <p:calendar value="#{paymentBean.payment.startDate}">
+                        <f:converter binding="#{jodaTimeConverter}"/>
+                    </p:calendar>
+
+                    <p:outputLabel value="#{i18n['fee-end-date']}"/>
+                    <p:calendar value="#{paymentBean.payment.endDate}">
+                        <f:converter binding="#{jodaTimeConverter}"/>
+                    </p:calendar>
+
+
+                    <p:commandButton value="#{i18n['add-payment']}" actionListener="#{paymentBean.addPayment}"
+                                     update="@form"/>
+                    <p:messages/>
+                </p:panelGrid>
+
+            </h:form>
+        </ui:define>
+
+    </ui:composition>
+</h:body>
+</html>
