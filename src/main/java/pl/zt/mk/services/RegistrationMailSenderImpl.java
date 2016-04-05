@@ -31,7 +31,7 @@ public class RegistrationMailSenderImpl implements RegistrationMailSender {
 			message.setSubject("Registration in Housing Association Management");
 			Map model = new HashMap<>();
 			model.put("name", name);
-			model.put("login", email);
+			model.put("email", email);
 			model.put("password", password);
 			String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/registrationMail.vm", "UTF-8", model);
 			message.setText(text, true);
