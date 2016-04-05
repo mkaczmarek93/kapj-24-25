@@ -7,12 +7,13 @@ import pl.zt.mk.annotations.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import java.io.Serializable;
 
 /**
  * Created by zt on 2016-04-05.
  */
 @RequestScoped
-public class JodaTimeConverter implements Converter {
+public class JodaTimeConverter implements Converter, Serializable {
 
 
 	@Override

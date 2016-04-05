@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -15,7 +16,7 @@ import java.util.Objects;
  */
 @Component
 @Scope(value = "session")
-public class SecurityBean {
+public class SecurityBean implements Serializable {
 
 	private final static String ROLE = "ROLE_";
 	private final static String ANONYMOUS = "ROLE_ANONYMOUS";
