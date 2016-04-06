@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import pl.zt.mk.annotations.ViewScoped;
 import pl.zt.mk.entity.Payment;
 import pl.zt.mk.entity.meta.PaymentType;
@@ -69,11 +68,10 @@ public class PaymentBean implements Serializable {
 	public void savePayment(Payment payment) {
 		String message;
 		FacesMessage.Severity severity;
-		try {
-			paymentService.addPayment(payment);
+		if (paymentService.savePayment(payment)) {
 			message = "good";
 			severity = FacesMessage.SEVERITY_INFO;
-		} catch (DataAccessException e) {
+		} else {
 			message = "bad";
 			severity = FacesMessage.SEVERITY_FATAL;
 		}

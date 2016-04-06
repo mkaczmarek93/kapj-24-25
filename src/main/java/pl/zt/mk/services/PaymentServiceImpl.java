@@ -23,12 +23,21 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public Long addPayment(Payment payment) throws DataAccessException {
+	public Boolean savePayment(Payment payment) {
 		try {
-			return this.paymentRepository.save(payment).getId();
-
+			this.paymentRepository.save(payment);
+			return true;
 		} catch (DataAccessException e) {
-			throw e;
+			return false;
 		}
+	}
+
+	@Override
+	public Boolean deactivePayment(Payment payment) {
+		if (payment.isActive()) {
+			payment.setActive(false);
+			return this.savePayment(payment);
+		}
+		return false;
 	}
 }
