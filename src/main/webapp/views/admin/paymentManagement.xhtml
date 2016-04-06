@@ -38,8 +38,8 @@
                 <p:dataTable value="#{paymentBean.paymentLazyModel}" var="payment" styleClass="payment"
                              selection="#{paymentBean.selectedPayment}" selectionMode="single" rowIndexVar="paySel"
                              rowKey="#{payment.id}" lazy="true" paginator="true" rows="10"
-                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                             rowsPerPageTemplate="5,10,15">
+                             paginatorTemplate="#{i18n['paginatorTemplate']}"
+                             rowsPerPageTemplate="#{i18n['rowsPerPageTemplate']}">
 
                     <p:ajax event="rowSelect" update=" @(.toolbar)"/>
                     <p:ajax event="rowUnselect" update=" @(.toolbar)"/>

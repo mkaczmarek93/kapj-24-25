@@ -13,6 +13,9 @@
 					<p:menuitem value="#{i18n['add-user']}"
 								action="/views/admin/addUser.xhtml?faces-redirect=true"
 								rendered="#{securityBean.hasRole('ADMIN')}"/>
+					<p:menuitem value="#{i18n['payment-management']}"
+								action="/views/admin/paymentManagement.xhtml?faces-redirect=true"
+								rendered="#{securityBean.hasRole('ADMIN')}"/>
 					<p:menuitem value="#{i18n['logout']}" action="/views/logout.xhtml?faces-redirect=true"/>
 		    </p:submenu>
 
