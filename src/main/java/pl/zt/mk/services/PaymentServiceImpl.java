@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import pl.zt.mk.entity.Payment;
+import pl.zt.mk.lazy.LazyModel;
 import pl.zt.mk.repo.PaymentRepository;
-
-import java.util.List;
 
 /**
  * Created by zt on 2016-04-05.
@@ -19,8 +18,8 @@ public class PaymentServiceImpl implements PaymentService {
 
 
 	@Override
-	public List<Payment> findAll() {
-		return paymentRepository.findAll();
+	public LazyModel<Payment> findAll() {
+		return new LazyModel<>(paymentRepository);
 	}
 
 	@Override

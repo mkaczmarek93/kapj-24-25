@@ -8,6 +8,7 @@ import org.springframework.dao.DataAccessException;
 import pl.zt.mk.annotations.ViewScoped;
 import pl.zt.mk.entity.Payment;
 import pl.zt.mk.entity.meta.PaymentType;
+import pl.zt.mk.lazy.LazyModel;
 import pl.zt.mk.services.InternationalizationService;
 import pl.zt.mk.services.PaymentService;
 
@@ -36,7 +37,7 @@ public class PaymentBean implements Serializable {
 	@Setter(AccessLevel.NONE)
 	private PaymentService paymentService;
 	private Payment payment = new Payment();
-	private List<Payment> paymentList = null;
+	private LazyModel<Payment> paymentLazyModel;
 	private Payment selectedPayment = null;
 	private List<SelectItem> paymentTypes = null;
 
@@ -45,7 +46,7 @@ public class PaymentBean implements Serializable {
 	}
 
 	public void init() {
-		paymentList = paymentService.findAll();
+		paymentLazyModel = paymentService.findAll();
 	}
 
 	public void initTypes() {
@@ -56,13 +57,20 @@ public class PaymentBean implements Serializable {
 		}
 	}
 
+	public void deactive() {
+		this.selectedPayment.setActive(false);
+		this.savePayment(this.selectedPayment);
+	}
 
 	public void addPayment() {
+		savePayment(this.payment);
+	}
 
+	public void savePayment(Payment payment) {
 		String message;
 		FacesMessage.Severity severity;
 		try {
-			paymentService.addPayment(this.payment);
+			paymentService.addPayment(payment);
 			message = "good";
 			severity = FacesMessage.SEVERITY_INFO;
 		} catch (DataAccessException e) {
@@ -74,6 +82,9 @@ public class PaymentBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, message, message));
 	}
 
+	public void preEdit() {
+		this.payment = this.selectedPayment;
+	}
 
 	public boolean isUnitRequired() {
 		return Objects.nonNull(this.payment) && Objects.nonNull(this.payment.getType()) && PaymentType.PER_UNIT.equals(this.payment.getType());

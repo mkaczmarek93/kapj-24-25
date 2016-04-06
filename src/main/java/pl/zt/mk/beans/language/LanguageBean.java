@@ -9,9 +9,13 @@ import java.util.Locale;
 
 @Component
 @Scope(value = "session")
-public class LanguageBean  implements Serializable{
+public class LanguageBean implements Serializable {
 
-	private Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+	private Locale locale;
+
+	public LanguageBean() {
+		this.locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+	}
 
 	public Locale getLocale() {
 		return locale;
@@ -20,10 +24,11 @@ public class LanguageBean  implements Serializable{
 	public String getLanguage() {
 		return locale.getLanguage();
 	}
-	
-	public void setLanguage(String language){
+
+	public void setLanguage(String language) {
 		locale = new Locale(language);
 		FacesContext.getCurrentInstance().getViewRoot().setLocale(new Locale(language));
+
 	}
 
 }

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.joda.time.LocalDate;
 import pl.zt.mk.entity.meta.PaymentType;
+import pl.zt.mk.lazy.IDProvider;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -29,7 +30,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class Payment {
+public class Payment implements IDProvider {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,4 +48,6 @@ public class Payment {
 	@NotNull
 	private LocalDate startDate;
 	private LocalDate endDate;
+
+	private boolean active;
 }
