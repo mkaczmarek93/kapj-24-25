@@ -156,6 +156,12 @@
 			<artifactId>glass-x</artifactId>
 			<version>1.0.10</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<version>1.2</version>
+		</dependency>
+
 		<!--utilities-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>

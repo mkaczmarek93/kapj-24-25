@@ -39,7 +39,6 @@ public class RegistrationMailSenderImpl implements RegistrationMailSender {
 			model.put("name", name);
 			model.put("email", email);
 			model.put("password", password);
-
 			model.put("resources", messageSource);
 			model.put("locale", new Locale("pl"));
 
