@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 import pl.zt.mk.entity.meta.Authorities;
 import pl.zt.mk.services.InternationalizationService;
@@ -41,11 +40,10 @@ public class AddingUserBean implements Serializable {
 		if (Objects.nonNull(name) && Objects.nonNull(email) && Objects.nonNull(authorities)) {
 			String message = "";
 			FacesMessage.Severity severity;
-			try {
-				userService.addUser(name, email, authorities);
+			if (userService.addUser(name, email, authorities)) {
 				message = "good";
 				severity = FacesMessage.SEVERITY_INFO;
-			} catch (DataAccessException e) {
+			} else {
 				message = "bad";
 				severity = FacesMessage.SEVERITY_FATAL;
 			}
@@ -53,6 +51,7 @@ public class AddingUserBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, i18n.getMessage(message), i18n.getMessage(message)));
 
 		}
+
 	}
 
 

@@ -37,17 +37,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Long addUser(String name, String email, Authorities role) throws DataAccessException {
+	public boolean addUser(String name, String email, Authorities role) {
 		String password = RandomStringUtils.randomAlphanumeric(10).toLowerCase();
 		String hashpw = encoder.encode(password);
 		try {
 			UserDetail saved = userRepository.save(new UserDetail(name, email, hashpw, new UserRole(role)));
 			log.info(email + ":" + password);
 			registrationMailSender.sendRegistrationEmail(name, email, password);
-			return saved.getId();
+			return true;
 		} catch (DataAccessException e) {
 			log.debug("user not saved");
-			throw e;
+			return false;
 		}
 
 
