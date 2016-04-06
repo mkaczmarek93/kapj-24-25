@@ -21,30 +21,47 @@
 
             <h:form id="list" styleClass="list">
                 <p:remoteCommand autoRun="true" actionListener="#{paymentBean.init()}"
-                                 update="@(.payment)"/>
+                                 update="@(.payment)" id="remote"/>
                 <p:toolbar styleClass="toolbar">
                     <f:facet name="left">
                         <p:commandButton value="#{i18n['edit']}" icon="fa fa-pencil"
-                                         disabled="#{paymentBean.selectedPayment eq null}"/>
-                        <p:commandButton value="#{i18n['remove']}" icon="fa fa-trash"
-                                         disabled="#{paymentBean.selectedPayment eq null}"/>
+                                         disabled="#{paymentBean.selectedPayment eq null}"
+                                         actionListener="#{paymentBean.preEdit}" update="@(.addPayment)"
+                                         oncomplete="PF('paymentForm').show()"/>
+                        <p:commandButton value="#{i18n['deactive']}" icon="fa fa-trash"
+                                         disabled="#{paymentBean.selectedPayment eq null}"
+                                         actionListener="#{paymentBean.deactive}" update="@(.payment)"/>
                         <p:commandButton value="#{i18n['add']}" icon="fa fa-plus" onclick="PF('paymentForm').show()"/>
                     </f:facet>
                 </p:toolbar>
 
-                <p:dataTable value="#{paymentBean.paymentList}" var="payment" styleClass="payment"
+                <p:dataTable value="#{paymentBean.paymentLazyModel}" var="payment" styleClass="payment"
                              selection="#{paymentBean.selectedPayment}" selectionMode="single" rowIndexVar="paySel"
-                             rowKey="#{payment.id}">
-                    <p:ajax event="rowSelect" update="@(.addPayment) @(.toolbar)"/>
-                    <p:ajax event="rowUnselect" update="@(.addPayment) @(.toolbar)"/>
-                    <p:column headerText="#{i18n['fee-name']}">#{payment.id}</p:column>
-                    <p:column headerText="#{i18n['fee-name']}">#{payment.name}</p:column>
-                    <p:column headerText="#{i18n['fee-desc']}">#{payment.description}</p:column>
-                    <p:column headerText="#{i18n['fee-type']}">#{payment.type}</p:column>
-                    <p:column headerText="#{i18n['fee-unit']}">#{payment.unit}</p:column>
-                    <p:column headerText="#{i18n['fee-price']}">#{payment.price}</p:column>
-                    <p:column headerText="#{i18n['fee-start-date']}">#{payment.startDate}</p:column>
-                    <p:column headerText="#{i18n['fee-start-date']}">#{payment.endDate}</p:column>
+                             rowKey="#{payment.id}" lazy="true" paginator="true" rows="10"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                             rowsPerPageTemplate="5,10,15">
+
+                    <p:ajax event="rowSelect" update=" @(.toolbar)"/>
+                    <p:ajax event="rowUnselect" update=" @(.toolbar)"/>
+                    <p:column headerText="#{i18n['fee-name']}" sortable="true"
+                              sortBy="#{payment.id}">#{payment.id}</p:column>
+                    <p:column headerText="#{i18n['fee-name']}" sortable="true"
+                              sortBy="#{payment.name}">#{payment.name}</p:column>
+                    <p:column headerText="#{i18n['fee-desc']}" sortable="true"
+                              sortBy="#{payment.description}">#{payment.description}</p:column>
+                    <p:column headerText="#{i18n['fee-type']}" sortable="true"
+                              sortBy="#{payment.type}">#{payment.type}</p:column>
+                    <p:column headerText="#{i18n['fee-unit']}" sortable="true"
+                              sortBy="#{payment.unit}">#{payment.unit}</p:column>
+                    <p:column headerText="#{i18n['fee-price']}" sortable="true"
+                              sortBy="#{payment.price}">#{payment.price}</p:column>
+                    <p:column headerText="#{i18n['fee-start-date']}" sortable="true"
+                              sortBy="#{payment.startDate}">#{payment.startDate}</p:column>
+                    <p:column headerText="#{i18n['fee-start-date']}" sortable="true"
+                              sortBy="#{payment.endDate}">#{payment.endDate}</p:column>
+                    <p:column headerText="#{i18n['fee-active']}" sortable="true"
+                              sortBy="#{payment.active}"><p:selectBooleanCheckbox value="#{payment.active}"
+                                                                                  disabled="true"/></p:column>
                     <p:column>
 
                     </p:column>
@@ -101,7 +118,12 @@
                         <p:calendar value="#{paymentBean.payment.endDate}" pattern="dd-MM-yyyy">
                             <f:converter binding="#{jodaTimeConverter}"/>
                         </p:calendar>
+                        <p:outputLabel/>
 
+
+                        <p:outputLabel value="#{i18n['fee-active']}"/>
+                        <p:selectBooleanCheckbox value="#{paymentBean.payment.active}"/>
+                        <p:outputLabel/>
 
                         <p:commandButton value="#{i18n['add-payment']}" actionListener="#{paymentBean.addPayment}"
                                          update="@(.addPayment) @(.list)"/>
