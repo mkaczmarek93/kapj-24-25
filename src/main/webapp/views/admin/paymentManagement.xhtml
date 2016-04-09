@@ -32,6 +32,8 @@
                                          disabled="#{paymentBean.selectedPayment eq null}"
                                          actionListener="#{paymentBean.deactive}" update="@(.payment)"/>
                         <p:commandButton value="#{i18n['add']}" icon="fa fa-plus" onclick="PF('paymentForm').show()"/>
+
+                        <p:commandButton ajax="false" value="test_report" actionListener="#{paymentBean.export}"/>
                     </f:facet>
                 </p:toolbar>
 

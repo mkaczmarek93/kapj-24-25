@@ -1,15 +1,14 @@
 package pl.zt.mk.beans.language;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import pl.zt.mk.annotations.SessionScoped;
 
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.Locale;
 
-@Component
-@Scope(value = "session")
+@SessionScoped
 public class LanguageBean implements Serializable {
+
 
 	private Locale locale;
 
