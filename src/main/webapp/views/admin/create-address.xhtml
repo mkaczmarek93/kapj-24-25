@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:pe="http://primefaces.org/ui/extensions">
+<f:view>
+	<ui:composition template="../../szablony/ekranSzablonHoryzontalny.xhtml">
+		<ui:define name="content">
+			<h:form>
+
+				<p:panelGrid columns="3">
+					<p:outputLabel value="#{i18n['city']}"/>
+					<p:inputText value="#{addingAddressBean.city}" id="city" required="true"
+								 requiredMessage="#{i18n['required-city']}">
+					</p:inputText>
+					<p:message for="city"/>
+
+					<p:outputLabel value="#{i18n['street']}"/>
+					<p:inputText value="#{addingAddressBean.street}" id="street" required="true"
+								 requiredMessage="#{i18n['required-street']}">
+					</p:inputText>
+					<p:message for="street"/>
+
+					<p:outputLabel value="#{i18n['flat-number']}"/>
+					<p:inputText value="#{addingAddressBean.flatNumber}" id="flat" required="true" maxlength="4"
+								 requiredMessage="#{i18n['required-flat-number']}">
+						<pe:keyFilter mask="int"/>
+					</p:inputText>
+					<p:message for="flat"/>
+
+					<p:outputLabel value="#{i18n['apartment-number']}"/>
+					<p:inputText value="#{addingAddressBean.apartmentNumber}" id="apartment" maxlength="4">
+						<pe:keyFilter mask="int"/>
+					</p:inputText>
+					<p:outputLabel/>
+
+					<p:outputLabel value="#{i18n['collaborators']}"/>
+					<p:inputText value="#{addingAddressBean.collaborators}" id="collaborators" required="true"
+								 maxlength="4" requiredMessage="#{i18n['required-collaborators']}">
+						<pe:keyFilter mask="int"/>
+					</p:inputText>
+					<p:message for="collaborators"/>
+
+					<p:commandButton actionListener="#{addingAddressBean.addAddress}" value="#{i18n['add-address']}"
+									 update="@form"/>
+					<p:messages globalOnly="true"/>
+				</p:panelGrid>
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>
