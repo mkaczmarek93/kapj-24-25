@@ -8,9 +8,9 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
+import pl.zt.mk.config.LocaleConfig;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -28,19 +28,25 @@ public class RegistrationMailSenderImpl implements RegistrationMailSender {
 	@Autowired
 	private ResourceBundleMessageSource messageSource;
 
+	@Autowired
+	private LocaleConfig locale;
+
+	@Autowired
+	private InternationalizationService i18n;
+
 	@Override
 	public void sendRegistrationEmail(final String name, final String email, final String password) {
 		MimeMessagePreparator preparator = mimeMessage -> {
 			MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
 			message.setTo(email);
-			message.setSubject("Registration in Housing Association Management");
+			message.setSubject(i18n.getMessage("mail.registration.title"));
 
 			Map model = new HashMap<>();
 			model.put("name", name);
 			model.put("email", email);
 			model.put("password", password);
 			model.put("resources", messageSource);
-			model.put("locale", new Locale("pl"));
+			model.put("locale", locale.localeProvider().getLocale());
 
 			String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/registrationMail.vm", "UTF-8", model);
 			message.setText(text, true);
