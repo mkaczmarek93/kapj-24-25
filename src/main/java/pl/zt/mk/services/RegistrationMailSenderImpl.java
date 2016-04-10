@@ -39,7 +39,8 @@ public class RegistrationMailSenderImpl implements RegistrationMailSender {
 		MimeMessagePreparator preparator = mimeMessage -> {
 			MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
 			message.setTo(email);
-			message.setSubject(i18n.getMessage("mail.registration.title"));
+			String subject = i18n.getMessage("mail-registration-title");
+			message.setSubject(subject);
 
 			Map model = new HashMap<>();
 			model.put("name", name);
