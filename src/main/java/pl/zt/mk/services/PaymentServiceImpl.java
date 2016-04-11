@@ -5,6 +5,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import pl.zt.mk.entity.Payment;
 import pl.zt.mk.lazy.LazyModel;
+import pl.zt.mk.lazy.impl.PaymentPageResolver;
 import pl.zt.mk.repo.PaymentRepository;
 
 /**
@@ -19,7 +20,7 @@ public class PaymentServiceImpl implements PaymentService {
 
 	@Override
 	public LazyModel<Payment> findAll() {
-		return new LazyModel<>(paymentRepository);
+		return new LazyModel<>(new PaymentPageResolver(paymentRepository));
 	}
 
 	@Override

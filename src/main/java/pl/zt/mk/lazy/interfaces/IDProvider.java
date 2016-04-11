@@ -1,4 +1,4 @@
-package pl.zt.mk.lazy;
+package pl.zt.mk.lazy.interfaces;
 
 /**
  * Created by zt on 2016-04-06.
