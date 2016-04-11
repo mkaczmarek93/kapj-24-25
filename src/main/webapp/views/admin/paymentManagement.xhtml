@@ -53,13 +53,15 @@
                               sortBy="#{payment.description}">#{payment.description}</p:column>
                     <p:column headerText="#{i18n['fee-type']}" sortable="true"
                               sortBy="#{payment.type}">#{payment.type}</p:column>
+                    <p:column headerText="#{i18n['fee-counter-type']}" sortable="true"
+                              sortBy="#{payment.type}">#{payment.counterType}</p:column>
                     <p:column headerText="#{i18n['fee-unit']}" sortable="true"
                               sortBy="#{payment.unit}">#{payment.unit}</p:column>
                     <p:column headerText="#{i18n['fee-price']}" sortable="true"
                               sortBy="#{payment.price}">#{payment.price}</p:column>
                     <p:column headerText="#{i18n['fee-start-date']}" sortable="true"
                               sortBy="#{payment.startDate}">#{payment.startDate}</p:column>
-                    <p:column headerText="#{i18n['fee-start-date']}" sortable="true"
+                    <p:column headerText="#{i18n['fee-end-date']}" sortable="true"
                               sortBy="#{payment.endDate}">#{payment.endDate}</p:column>
                     <p:column headerText="#{i18n['fee-active']}" sortable="true"
                               sortBy="#{payment.active}"><p:selectBooleanCheckbox value="#{payment.active}"
@@ -91,9 +93,18 @@
                         <p:selectOneMenu value="#{paymentBean.payment.type}" required="true"
                                          requiredMessage="#{i18n['required']}" id="type" styleClass="payment-type">
                             <f:selectItems value="#{paymentBean.paymentTypes}"/>
-                            <p:ajax event="change" update="unit"/>
+                            <p:ajax event="change" update="unit,counterType"/>
                         </p:selectOneMenu>
                         <p:message for="type"/>
+
+                        <p:outputLabel value="#{i18n['fee-counter-type']}"/>
+                        <p:selectOneMenu value="#{paymentBean.payment.counterType}"
+                                         required="${paymentBean.unitRequired}"
+                                         requiredMessage="#{i18n['required']}" id="counterType"
+                                         styleClass="counter-type">
+                            <f:selectItems value="#{paymentBean.counterTypes}"/>
+                        </p:selectOneMenu>
+                        <p:message for="counterType"/>
 
 
                         <p:outputLabel value="#{i18n['fee-unit']}"/>
