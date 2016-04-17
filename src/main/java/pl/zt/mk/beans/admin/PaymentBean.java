@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.zt.mk.annotations.ViewScoped;
 import pl.zt.mk.entity.Payment;
+import pl.zt.mk.entity.meta.CounterType;
 import pl.zt.mk.entity.meta.PaymentType;
 import pl.zt.mk.lazy.LazyModel;
 import pl.zt.mk.services.InternationalizationService;
@@ -39,6 +40,7 @@ public class PaymentBean implements Serializable {
 	private LazyModel<Payment> paymentLazyModel;
 	private Payment selectedPayment = null;
 	private List<SelectItem> paymentTypes = null;
+	private List<SelectItem> counterTypes;
 
 	public PaymentBean() {
 		initTypes();
@@ -49,10 +51,20 @@ public class PaymentBean implements Serializable {
 	}
 
 	public void initTypes() {
+		SelectItem empty = new SelectItem();
 		paymentTypes = new ArrayList<>();
+		counterTypes = new ArrayList<>();
+
+		paymentTypes.add(empty);
+		counterTypes.add(empty);
+
 
 		for (PaymentType paymentType : PaymentType.values()) {
 			paymentTypes.add(new SelectItem(paymentType));
+		}
+
+		for (CounterType counterType : CounterType.values()) {
+			counterTypes.add(new SelectItem(counterType));
 		}
 	}
 

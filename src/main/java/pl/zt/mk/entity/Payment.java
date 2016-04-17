@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.joda.time.LocalDate;
+import pl.zt.mk.entity.meta.CounterType;
 import pl.zt.mk.entity.meta.PaymentType;
 import pl.zt.mk.lazy.IDProvider;
 
@@ -42,6 +43,8 @@ public class Payment implements IDProvider {
 	@Enumerated
 	@NotNull
 	private PaymentType type;
+	@Enumerated
+	private CounterType counterType;
 	private String unit;
 	@NotNull
 	private Double price;
