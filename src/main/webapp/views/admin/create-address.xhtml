@@ -18,21 +18,21 @@
 			<h:form id="address">
 				<p:panelGrid columns="3">
 					<p:outputLabel value="#{i18n['city']}"/>
-					<p:inputText value="#{addingAddressBean.city}" id="city" required="true"
-								 requiredMessage="#{i18n['required-city']}">
-					</p:inputText>
+					<p:outputLabel value="#{addingAddressBean.city}" id="city" required="true"
+								   requiredMessage="#{i18n['required-city']}">
+					</p:outputLabel>
 					<p:message for="city"/>
 
 					<p:outputLabel value="#{i18n['post-code']}"/>
-					<p:inputText value="#{addingAddressBean.postCode}" id="postCode" required="true"
-								 requiredMessage="#{i18n['required-post-code']}">
-					</p:inputText>
+					<p:outputLabel value="#{addingAddressBean.postCode}" id="postCode" required="true"
+								   requiredMessage="#{i18n['required-post-code']}">
+					</p:outputLabel>
 					<p:message for="postCode"/>
 
 					<p:outputLabel value="#{i18n['street']}"/>
-					<p:inputText value="#{addingAddressBean.street}" id="street" required="true"
-								 requiredMessage="#{i18n['required-street']}">
-					</p:inputText>
+					<p:outputLabel value="#{addingAddressBean.street}" id="street" required="true"
+								   requiredMessage="#{i18n['required-street']}">
+					</p:outputLabel>
 					<p:message for="street"/>
 
 					<p:outputLabel value="#{i18n['flat-number']}"/>
@@ -54,7 +54,7 @@
 					</p:inputText>
 					<p:message for="collaborators"/>
 					<p:commandButton actionListener="#{addingAddressBean.addAddress}" value="#{i18n['add-address']}"
-									 update="@form :messages"/>
+									 update=":messages"/>
 				</p:panelGrid>
 			</h:form>
 

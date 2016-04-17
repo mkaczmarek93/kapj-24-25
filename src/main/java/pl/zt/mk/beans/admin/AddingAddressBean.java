@@ -21,6 +21,7 @@ import pl.zt.mk.services.InternationalizationService;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.Objects;
@@ -36,7 +37,9 @@ import java.util.Objects;
 public class AddingAddressBean implements Serializable {
 
 	@Getter(AccessLevel.NONE)
-	private static final String GEOCODING_URL = "https://maps.googleapis.com/maps/api/geocode/json?language=pl&result_type=street_address|postal_code";
+	private static final String GEOCODING_URL = "https://maps.googleapis.com/maps/api/geocode/json?language=pl";
+	@Getter(AccessLevel.NONE)
+	private static final String GEOCODING_RESULT_TYPE = "&result_type=street_address|postal_code";
 	@Getter(AccessLevel.NONE)
 	private static final String GOOGLE_API_KEY = "&key=AIzaSyBdC2NNDL1PYq1O131l7KDRylzYa5dx1D4";
 
@@ -85,12 +88,10 @@ public class AddingAddressBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Znaleziono adres.", read.getFormattedAddress()));
 	}
 
-	public void addAddress() {
+	public void addAddress() throws IOException {
 		if (Objects.nonNull(city)
 				&& Objects.nonNull(postCode)
-				&& Objects.nonNull(street)
-				&& Objects.nonNull(flatNumber)
-				&& Objects.nonNull(collaborators)) {
+				&& Objects.nonNull(street)) {
 			String msg;
 			FacesMessage.Severity severity;
 			if (addressService.addAddress(new Address(city, postCode, street, flatNumber, apartmentNumber, collaborators))) {
@@ -101,11 +102,14 @@ public class AddingAddressBean implements Serializable {
 				severity = FacesMessage.SEVERITY_FATAL;
 			}
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, i18n.getMessage(msg), i18n.getMessage(msg)));
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, i18n.getMessage("bad"), i18n.getMessage("check-on-map")));
+			log.info("Address not added");
 		}
 	}
 
 	private String readUrl() throws Exception {
-		URL url = new URL(GEOCODING_URL + "&latlng=" + lat + "," + lng + GOOGLE_API_KEY);
+		URL url = new URL(GEOCODING_URL + GEOCODING_RESULT_TYPE + "&latlng=" + lat + "," + lng + GOOGLE_API_KEY);
 		log.info("Get address from: " + url.toString());
 		JSONObject jo = (JSONObject) new JSONTokener(IOUtils.toString(url)).nextValue();
 		return jo.toString();
