@@ -9,6 +9,7 @@ import pl.zt.mk.converters.dto.ReadAddress;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Michal on 14.04.2016.
@@ -22,12 +23,11 @@ public class JsonConverter {
 		List<Results> results = gson.fromJson(json, Results.Container.class).results;
 		if (results.isEmpty())
 			return new ReadAddress();
-		List<AddressComponent> components = results.get(0).addressComponents;
 		ReadAddress address = new ReadAddress();
 		results.stream().filter(res -> res.types.contains("street_address")).forEach(res -> {
 			address.setFormattedAddress(res.formattedAddress);
 			boolean isPremise = false;
-			for (AddressComponent com : components) {
+			for (AddressComponent com : res.addressComponents) {
 				if (com.types.contains("route")) {
 					address.setStreet(com.longName);
 				} else if (com.types.contains("locality")) {
@@ -37,12 +37,21 @@ public class JsonConverter {
 				} else if (com.types.contains("premise")) {
 					address.setFlatNumber(com.longName);
 					isPremise = true;
+				} else if (com.types.contains("postal_code")) {
+					address.setPostCode(com.longName);
 				}
 			}
 			if (isPremise) {
 				address.setStreet(address.getCity());
 			}
 		});
+		if (Objects.isNull(address.getPostCode())) {
+			results.stream().filter(res -> res.types.contains("postal_code")).forEach(res -> {
+				if (!res.types.contains("postal_code_prefix")) {
+					res.addressComponents.stream().filter(com -> com.types.contains("postal_code") && !com.types.contains("postal_code_prefix")).forEach(com -> address.setPostCode(com.longName));
+				}
+			});
+		}
 		return address;
 	}
 

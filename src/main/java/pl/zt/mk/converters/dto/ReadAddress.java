@@ -18,6 +18,8 @@ public class ReadAddress {
 
 	private String city;
 
+	private String postCode;
+
 	private String street;
 
 	private String flatNumber;
@@ -26,6 +28,7 @@ public class ReadAddress {
 
 	public boolean isEmpty() {
 		return Objects.isNull(city)
+				&& Objects.isNull(postCode)
 				&& Objects.isNull(street)
 				&& Objects.isNull(flatNumber)
 				&& Objects.isNull(formattedAddress);

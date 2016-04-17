@@ -25,38 +25,14 @@ public class AddressTest extends TestCase {
 		Address saved = null;
 		try {
 			String city = "Lodz";
+			String postCode = "90-700";
 			String street = "Piotrkowska";
 			String flatNumber = "13";
 			Integer apartmentNumber = 43;
 			Integer collaborators = 3;
-			Address address = new Address(city, street, flatNumber, apartmentNumber, collaborators);
+			Address address = new Address(city, postCode, street, flatNumber, apartmentNumber, collaborators);
 			saved = addressRepository.save(address);
-			assertEquals(saved.getCity(), city);
-			assertEquals(saved.getStreet(), street);
-			assertEquals(saved.getFlatNumber(), flatNumber);
-			assertEquals(saved.getApartmentNumber(), apartmentNumber);
-			assertEquals(saved.getCollaborators(), collaborators);
-		} finally {
-			if (null != saved)
-				addressRepository.delete(saved);
-		}
-	}
-
-	@Test
-	public void addingAddressWithoutApartmentTest() {
-		Address saved = null;
-		try {
-			String city = "Lodz";
-			String street = "Piotrkowska";
-			String flatNumber = "13";
-			Integer collaborators = 3;
-			Address address = new Address(city, street, flatNumber, null, collaborators);
-			saved = addressRepository.save(address);
-			assertEquals(saved.getCity(), city);
-			assertEquals(saved.getStreet(), street);
-			assertEquals(saved.getFlatNumber(), flatNumber);
-			assertNull(saved.getApartmentNumber());
-			assertEquals(saved.getCollaborators(), collaborators);
+			assertEquals(address, saved);
 		} finally {
 			if (null != saved)
 				addressRepository.delete(saved);
