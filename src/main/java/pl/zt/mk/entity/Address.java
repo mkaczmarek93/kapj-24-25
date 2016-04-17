@@ -29,7 +29,7 @@ public class Address {
 	private String street;
 
 	@Column
-	private Integer flatNumber;
+	private String flatNumber;
 
 	@Column
 	private Integer apartmentNumber;
@@ -37,7 +37,7 @@ public class Address {
 	@Column
 	private Integer collaborators;
 
-	public Address(String city, String street, Integer flatNumber, Integer apartmentNumber, Integer collaborators) {
+	public Address(String city, String street, String flatNumber, Integer apartmentNumber, Integer collaborators) {
 		this.city = city;
 		this.street = street;
 		this.flatNumber = flatNumber;

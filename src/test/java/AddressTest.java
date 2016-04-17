@@ -26,7 +26,7 @@ public class AddressTest extends TestCase {
 		try {
 			String city = "Lodz";
 			String street = "Piotrkowska";
-			Integer flatNumber = 13;
+			String flatNumber = "13";
 			Integer apartmentNumber = 43;
 			Integer collaborators = 3;
 			Address address = new Address(city, street, flatNumber, apartmentNumber, collaborators);
@@ -48,7 +48,7 @@ public class AddressTest extends TestCase {
 		try {
 			String city = "Lodz";
 			String street = "Piotrkowska";
-			Integer flatNumber = 13;
+			String flatNumber = "13";
 			Integer collaborators = 3;
 			Address address = new Address(city, street, flatNumber, null, collaborators);
 			saved = addressRepository.save(address);
