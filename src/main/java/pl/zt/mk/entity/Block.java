@@ -3,6 +3,7 @@ package pl.zt.mk.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Michal on 10.04.2016.
@@ -31,6 +32,9 @@ public class Block {
 
 	@Column
 	private String postCode;
+
+	@OneToMany(mappedBy = "block")
+	private List<Apartment> apartments;
 
 	public Block(String city, String postCode, String street, String flatNumber) {
 		this.city = city;
