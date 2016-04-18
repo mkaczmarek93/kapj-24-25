@@ -5,10 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.primefaces.event.map.PointSelectEvent;
 import org.primefaces.json.JSONObject;
 import org.primefaces.json.JSONTokener;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -53,8 +55,8 @@ public class AddingAddressBean implements Serializable {
 	private Double lat;
 	private Double lng;
 	private MapModel emptyModel;
-	private List<Apartment> apartments;
 	private List<Block> blocks;
+	private List<Apartment> apartments;
 
 	@Autowired
 	@Setter(AccessLevel.NONE)
@@ -94,10 +96,6 @@ public class AddingAddressBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Znaleziono adres.", read.getFormattedAddress()));
 	}
 
-	public void addNewApartment() {
-		apartments.add(new Apartment());
-	}
-
 	public void addAddress() throws IOException {
 		if (Objects.nonNull(city)
 				&& Objects.nonNull(postCode)
@@ -116,6 +114,11 @@ public class AddingAddressBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, i18n.getMessage("bad"), i18n.getMessage("check-on-map")));
 			log.info("Block not added");
 		}
+	}
+
+
+	public void addNewApartment() {
+		apartments.add(new Apartment());
 	}
 
 	private String readUrl() throws Exception {
