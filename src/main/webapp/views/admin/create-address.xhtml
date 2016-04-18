@@ -15,7 +15,7 @@
 					model="#{addingAddressBean.emptyModel}" onPointClick="handlePointClick(event);" widgetVar="map"/>
 
 
-			<h:form id="address">
+			<h:form id="block">
 				<p:panelGrid columns="2">
 					<p:outputLabel value="#{i18n['city']}"/>
 					<p:outputLabel value="#{addingAddressBean.city}" id="city" required="true"
@@ -44,7 +44,7 @@
 								 maxlength="4" requiredMessage="#{i18n['required-collaborators']}">
 						<pe:keyFilter mask="int"/>
 					</p:inputText>
-					<p:commandButton actionListener="#{addingAddressBean.addAddress}" value="#{i18n['add-address']}"
+					<p:commandButton actionListener="#{addingAddressBean.addAddress}" value="#{i18n['add-block']}"
 									 update=":messages"/>
 				</p:panelGrid>
 			</h:form>
@@ -53,7 +53,7 @@
 				<h:inputHidden id="lat" value="#{addingAddressBean.lat}"/>
 				<h:inputHidden id="lng" value="#{addingAddressBean.lng}"/>
 				<p:commandLink id="hiddenButton" actionListener="#{addingAddressBean.geolocationPosition}"
-							   style="display:none" update=":address :messages" resetValues="true"/>
+							   style="display:none" update=":block :messages" resetValues="true"/>
 			</h:form>
 
 			<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>

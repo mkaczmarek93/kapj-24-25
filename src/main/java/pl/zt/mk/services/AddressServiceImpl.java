@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-import pl.zt.mk.entity.Address;
+import pl.zt.mk.entity.Block;
 import pl.zt.mk.repo.AddressRepository;
 
 import java.util.List;
@@ -21,13 +21,13 @@ public class AddressServiceImpl implements AddressService {
 
 
 	@Override
-	public boolean addAddress(Address address) {
+	public boolean addAddress(Block block) {
 		try {
-			Address saved = addressRepository.save(address);
-			log.info("Saved address: " + saved.toString());
+			Block saved = addressRepository.save(block);
+			log.info("Saved block: " + saved.toString());
 			return true;
 		} catch (DataAccessException e) {
-			log.debug("Address not saved.");
+			log.debug("Block not saved.");
 			return false;
 		}
 	}

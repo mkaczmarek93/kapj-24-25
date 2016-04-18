@@ -14,7 +14,7 @@ import javax.persistence.*;
 @ToString
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Address {
+public class Block {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,21 +30,13 @@ public class Address {
 	private String flatNumber;
 
 	@Column
-	private Integer apartmentNumber;
-
-	@Column
-	private Integer collaborators;
-
-	@Column
 	private String postCode;
 
-	public Address(String city, String postCode, String street, String flatNumber, Integer apartmentNumber, Integer collaborators) {
+	public Block(String city, String postCode, String street, String flatNumber) {
 		this.city = city;
 		this.postCode = postCode;
 		this.street = street;
 		this.flatNumber = flatNumber;
-		this.apartmentNumber = apartmentNumber;
-		this.collaborators = collaborators;
 	}
 
 }
