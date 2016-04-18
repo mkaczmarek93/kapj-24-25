@@ -85,6 +85,10 @@ public class PaymentBean implements Serializable {
 		this.payment = this.selectedPayment;
 	}
 
+	public void preAdd() {
+		this.payment = new Payment();
+	}
+
 	public boolean isUnitRequired() {
 		return Objects.nonNull(this.payment) && Objects.nonNull(this.payment.getType()) && PaymentType.PER_UNIT.equals(this.payment.getType());
 	}

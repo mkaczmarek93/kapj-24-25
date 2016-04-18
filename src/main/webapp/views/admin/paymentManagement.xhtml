@@ -31,7 +31,8 @@
                         <p:commandButton value="#{i18n['deactive']}" icon="fa fa-trash"
                                          disabled="#{paymentBean.selectedPayment eq null}"
                                          actionListener="#{paymentBean.deactive}" update="@(.payment)"/>
-                        <p:commandButton value="#{i18n['add']}" icon="fa fa-plus" onclick="PF('paymentForm').show()"/>
+                        <p:commandButton value="#{i18n['add']}" icon="fa fa-plus" actionListener="#{paymentBean.preAdd}"
+                                         update="@(.addPayment)" onclick="PF('paymentForm').show()"/>
 
                         <p:commandButton ajax="false" value="test_report" actionListener="#{paymentBean.export}"/>
                     </f:facet>
@@ -139,7 +140,8 @@
                         <p:outputLabel/>
 
                         <p:commandButton value="#{i18n['add-payment']}" actionListener="#{paymentBean.addPayment}"
-                                         update="@(.addPayment) @(.list)"/>
+                                         update="@(.addPayment) @(.list)" oncomplete="PF('paymentForm').hide()"/>
+
 
                     </p:panelGrid>
                     <p:messages styleClass="addPayment"/>
