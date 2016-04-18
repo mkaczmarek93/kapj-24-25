@@ -1,4 +1,4 @@
-package pl.zt.mk.services;
+package pl.zt.mk.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -7,6 +7,7 @@ import pl.zt.mk.entity.Payment;
 import pl.zt.mk.lazy.LazyModel;
 import pl.zt.mk.lazy.impl.PaymentPageResolver;
 import pl.zt.mk.repo.PaymentRepository;
+import pl.zt.mk.services.PaymentService;
 
 /**
  * Created by zt on 2016-04-05.

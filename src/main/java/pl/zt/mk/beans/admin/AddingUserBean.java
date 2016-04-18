@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import pl.zt.mk.entity.meta.Authorities;
-import pl.zt.mk.services.InternationalizationService;
 import pl.zt.mk.services.UserService;
+import pl.zt.mk.services.impl.InternationalizationServiceImpl;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -27,7 +27,7 @@ public class AddingUserBean implements Serializable {
 	UserService userService;
 
 	@Autowired
-	InternationalizationService i18n;
+	InternationalizationServiceImpl i18n;
 
 	@Getter
 	@Setter

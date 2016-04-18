@@ -1,4 +1,4 @@
-package pl.zt.mk.services;
+package pl.zt.mk.services.impl;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
@@ -11,6 +11,8 @@ import pl.zt.mk.entity.UserDetail;
 import pl.zt.mk.entity.UserRole;
 import pl.zt.mk.entity.meta.Authorities;
 import pl.zt.mk.repo.UserRepository;
+import pl.zt.mk.services.RegistrationMailSender;
+import pl.zt.mk.services.UserService;
 
 import java.util.Objects;
 
@@ -60,10 +62,20 @@ public class UserServiceImpl implements UserService {
 		if (encoder.matches(oldPassword, user.getPassword())) {
 			user.setPassword(encoder.encode(newPassword));
 			user = userRepository.save(user);
-
 			return Objects.nonNull(user);
 		}
 		return false;
+	}
+
+	@Override
+	public boolean updateUser(UserDetail user) {
+		try {
+			this.userRepository.save(user);
+			return true;
+		} catch (DataAccessException e) {
+			return false;
+		}
+
 	}
 
 	@Override

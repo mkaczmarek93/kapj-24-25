@@ -19,4 +19,9 @@ public class PaymentPageResolver extends AbstractPageResolver<Payment> {
 		return repository.findAll(pageRequest);
 	}
 
+	@Override
+	public int getCount() {
+		return (int) repository.count();
+	}
+
 }

@@ -1,4 +1,4 @@
-package pl.zt.mk.services;
+package pl.zt.mk.services.impl;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,7 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import pl.zt.mk.config.LocaleConfig;
+import pl.zt.mk.services.RegistrationMailSender;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class RegistrationMailSenderImpl implements RegistrationMailSender {
 	private LocaleConfig locale;
 
 	@Autowired
-	private InternationalizationService i18n;
+	private InternationalizationServiceImpl i18n;
 
 	@Override
 	public void sendRegistrationEmail(final String name, final String email, final String password) {

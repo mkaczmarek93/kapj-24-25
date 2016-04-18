@@ -10,6 +10,8 @@
 				<p:submenu label="Menu" expanded="true">
 					<p:menuitem value="#{i18n['change-password']}"
 								action="/views/user/changePassword.xhtml?faces-redirect=true"/>
+					<p:menuitem value="#{i18n['meter-management']}"
+								action="/views/user/counters.xhtml?faces-redirect=true"/>
 					<p:menuitem value="#{i18n['add-user']}"
 								action="/views/admin/addUser.xhtml?faces-redirect=true"
 								rendered="#{securityBean.hasRole('ADMIN')}"/>

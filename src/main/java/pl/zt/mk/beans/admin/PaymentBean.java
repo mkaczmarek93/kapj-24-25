@@ -8,12 +8,11 @@ import pl.zt.mk.annotations.ViewScoped;
 import pl.zt.mk.entity.Payment;
 import pl.zt.mk.entity.meta.CounterType;
 import pl.zt.mk.entity.meta.PaymentType;
+import pl.zt.mk.jsf.JsfUtils;
 import pl.zt.mk.lazy.LazyModel;
-import pl.zt.mk.services.InternationalizationService;
 import pl.zt.mk.services.PaymentService;
+import pl.zt.mk.services.impl.InternationalizationServiceImpl;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ public class PaymentBean implements Serializable {
 	@Autowired
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
-	InternationalizationService internationalizationService;
+	InternationalizationServiceImpl internationalizationServiceImpl;
 	@Autowired
 	@Getter(AccessLevel.NONE)
 	@Setter(AccessLevel.NONE)
@@ -78,19 +77,9 @@ public class PaymentBean implements Serializable {
 	}
 
 	public void savePayment(Payment payment) {
-		String message;
-		FacesMessage.Severity severity;
-		if (paymentService.savePayment(payment)) {
-			message = "good";
-			severity = FacesMessage.SEVERITY_INFO;
-		} else {
-			message = "bad";
-			severity = FacesMessage.SEVERITY_FATAL;
-		}
-
-		message = internationalizationService.getMessage(message);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, message, message));
+		JsfUtils.createDefaultMessage(paymentService.savePayment(payment), internationalizationServiceImpl);
 	}
+
 
 	public void preEdit() {
 		this.payment = this.selectedPayment;

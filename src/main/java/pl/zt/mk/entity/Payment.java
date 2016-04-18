@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.joda.time.LocalDate;
 import pl.zt.mk.entity.meta.CounterType;
 import pl.zt.mk.entity.meta.PaymentType;
-import pl.zt.mk.lazy.IDProvider;
+import pl.zt.mk.lazy.interfaces.IDProvider;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import pl.zt.mk.repo.UserRepository;
-import pl.zt.mk.services.InternationalizationService;
+import pl.zt.mk.services.impl.InternationalizationServiceImpl;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -22,7 +22,7 @@ public class UserEmailValidator implements Validator {
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
-	InternationalizationService i18n;
+	InternationalizationServiceImpl i18n;
 
 	@Override
 	public void validate(FacesContext facesContext, UIComponent uiComponent, Object o) throws ValidatorException {

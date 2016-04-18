@@ -17,4 +17,6 @@ public interface UserService extends UserDetailsService {
 
 	boolean changePassword(String user, String oldPassword, String newPassword);
 
+	boolean updateUser(UserDetail admin);
+
 }

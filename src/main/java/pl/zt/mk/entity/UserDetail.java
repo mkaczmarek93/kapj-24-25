@@ -40,6 +40,11 @@ public class UserDetail implements org.springframework.security.core.userdetails
 	@Setter
 	private UserRole role;
 
+	@OneToOne(cascade = CascadeType.PERSIST)
+	@Getter
+	@Setter
+	private Place place;
+
 
 	public UserDetail(String name, String email, String password, UserRole role) {
 		this.name = name;

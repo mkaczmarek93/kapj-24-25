@@ -25,7 +25,5 @@ public abstract class AbstractPageResolver<T> implements LazyPageResolver<T> {
 	public abstract Page<T> getData(PageRequest pageRequest);
 
 	@Override
-	public int getCount() {
-		return (int) repository.count();
-	}
+	public abstract int getCount();
 }

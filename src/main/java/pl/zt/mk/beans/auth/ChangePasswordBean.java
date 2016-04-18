@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import pl.zt.mk.services.InternationalizationService;
 import pl.zt.mk.services.UserService;
+import pl.zt.mk.services.impl.InternationalizationServiceImpl;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -20,16 +20,13 @@ import java.io.Serializable;
 @Scope(value = "view")
 public class ChangePasswordBean implements Serializable {
 
+	@Autowired
+	InternationalizationServiceImpl i18n;
+	@Autowired
+	UserService userService;
 	@Getter
 	@Setter
 	private String oldPassword, newPassword, repeatPassword;
-
-	@Autowired
-	InternationalizationService i18n;
-
-
-	@Autowired
-	UserService userService;
 
 	public void change() {
 
