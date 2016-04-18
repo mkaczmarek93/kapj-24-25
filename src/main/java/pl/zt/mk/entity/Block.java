@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * Created by Michal on 10.04.2016.
  */
-@Table
 @Entity
 @Getter
 @Setter
@@ -33,14 +32,15 @@ public class Block {
 	@Column
 	private String postCode;
 
-	@OneToMany(mappedBy = "block")
+	@OneToMany(mappedBy = "block", cascade = CascadeType.PERSIST)
 	private List<Apartment> apartments;
 
-	public Block(String city, String postCode, String street, String flatNumber) {
+	public Block(String city, String postCode, String street, String flatNumber, List<Apartment> apartments) {
 		this.city = city;
 		this.postCode = postCode;
 		this.street = street;
 		this.flatNumber = flatNumber;
+		this.apartments = apartments;
 	}
 
 }

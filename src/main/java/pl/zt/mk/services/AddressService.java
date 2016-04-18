@@ -10,7 +10,5 @@ import java.util.List;
 public interface AddressService {
 	boolean addAddress(Block block);
 
-	List<String> getCities();
-
-	List<String> getStreets();
+	List<Block> getAll();
 }

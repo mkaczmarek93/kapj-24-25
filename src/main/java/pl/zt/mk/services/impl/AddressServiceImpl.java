@@ -34,12 +34,7 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public List<String> getCities() {
-		return null;
-	}
-
-	@Override
-	public List<String> getStreets() {
-		return null;
+	public List<Block> getAll() {
+		return (List<Block>) addressRepository.findAll();
 	}
 }

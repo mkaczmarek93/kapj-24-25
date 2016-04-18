@@ -1,6 +1,7 @@
 package pl.zt.mk.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -9,10 +10,11 @@ import javax.persistence.*;
 /**
  * Created by Michal on 18.04.2016.
  */
-@Table
+@Entity
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class Apartment {
 
 	@Id

@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import pl.zt.mk.converters.JsonConverter;
 import pl.zt.mk.converters.dto.ReadAddress;
+import pl.zt.mk.entity.Apartment;
 import pl.zt.mk.entity.Block;
 import pl.zt.mk.services.AddressService;
 import pl.zt.mk.services.InternationalizationService;
@@ -24,6 +25,8 @@ import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -50,6 +53,8 @@ public class AddingAddressBean implements Serializable {
 	private Double lat;
 	private Double lng;
 	private MapModel emptyModel;
+	private List<Apartment> apartments;
+	private List<Block> blocks;
 
 	@Autowired
 	@Setter(AccessLevel.NONE)
@@ -66,9 +71,12 @@ public class AddingAddressBean implements Serializable {
 	@Setter(AccessLevel.NONE)
 	private JsonConverter jsonConverter;
 
+
 	@PostConstruct
 	public void init() {
 		this.emptyModel = new DefaultMapModel();
+		this.apartments = new ArrayList<>();
+		this.blocks = addressService.getAll();
 	}
 
 	public void geolocationPosition() throws Exception {
@@ -86,13 +94,17 @@ public class AddingAddressBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Znaleziono adres.", read.getFormattedAddress()));
 	}
 
+	public void addNewApartment() {
+		apartments.add(new Apartment());
+	}
+
 	public void addAddress() throws IOException {
 		if (Objects.nonNull(city)
 				&& Objects.nonNull(postCode)
 				&& Objects.nonNull(street)) {
 			String msg;
 			FacesMessage.Severity severity;
-			if (addressService.addAddress(new Block(city, postCode, street, flatNumber))) {
+			if (addressService.addAddress(new Block(city, postCode, street, flatNumber, apartments))) {
 				msg = "good";
 				severity = FacesMessage.SEVERITY_INFO;
 			} else {
