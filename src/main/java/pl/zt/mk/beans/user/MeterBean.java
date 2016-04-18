@@ -58,9 +58,10 @@ public class MeterBean implements Serializable {
 		try {
 			meterService.addMeter(this.meter);
 		} catch (IllegalArgumentException e) {
-			JsfUtils.createMessage("theres no place", FacesMessage.SEVERITY_FATAL);
+
+			JsfUtils.createMessage(internationalizationService.getMessage("user-has-no-place"), FacesMessage.SEVERITY_FATAL);
 		} catch (DataAccessException e) {
-			JsfUtils.createMessage("terror", FacesMessage.SEVERITY_FATAL);
+			JsfUtils.createMessage(internationalizationService.getMessage("bad"), FacesMessage.SEVERITY_FATAL);
 
 		}
 		JsfUtils.createDefaultMessage(true, internationalizationService);
