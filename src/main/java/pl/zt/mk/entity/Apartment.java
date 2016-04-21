@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Michal on 18.04.2016.
@@ -13,23 +14,25 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
-public class Apartment {
+public class Apartment implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne()
 	private Block block;
 
-	private Integer apartmentNumber;
+	@Column
+	private String apartmentNumber;
 
+	@Column
 	private Integer roomersCount;
 
-	public Apartment(Integer apartmentNumber, Integer roomersCount) {
+	public Apartment(String apartmentNumber, Integer roomersCount, Block block) {
 		this.apartmentNumber = apartmentNumber;
 		this.roomersCount = roomersCount;
+		this.block = block;
 	}
 }

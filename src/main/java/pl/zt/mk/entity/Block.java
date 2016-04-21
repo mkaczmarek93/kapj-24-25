@@ -1,6 +1,9 @@
 package pl.zt.mk.entity;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,7 +14,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Block {
@@ -32,7 +34,7 @@ public class Block {
 	@Column
 	private String postCode;
 
-	@OneToMany(mappedBy = "block", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "block", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	private List<Apartment> apartments;
 
 	public Block(String city, String postCode, String street, String flatNumber, List<Apartment> apartments) {

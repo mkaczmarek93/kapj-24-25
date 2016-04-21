@@ -25,7 +25,7 @@ public class AddressServiceImpl implements AddressService {
 	public boolean addAddress(Block block) {
 		try {
 			Block saved = addressRepository.save(block);
-			log.info("Saved block: " + saved.toString());
+			log.info("Saved selectedBlock: " + saved.toString());
 			return true;
 		} catch (DataAccessException e) {
 			log.debug("Block not saved.");
@@ -36,5 +36,15 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	public List<Block> getAll() {
 		return (List<Block>) addressRepository.findAll();
+	}
+
+	@Override
+	public boolean removeBlock(Block block) {
+		try {
+			addressRepository.delete(block);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }

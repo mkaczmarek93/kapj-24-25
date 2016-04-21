@@ -12,6 +12,7 @@
 		<ui:define name="content">
 			<p:growl id="messages" showDetail="true"/>
 			<p:tabView dynamic="true" id="tabView">
+
 				<p:tab title="#{i18n['add-block']}">
 					<p:gmap id="gmap" center="51.76,19.46" zoom="16" type="HYBRID" style="width:80%;height:600px"
 							model="#{addingAddressBean.emptyModel}" widgetVar="map"
@@ -34,7 +35,7 @@
 										 requiredMessage="#{i18n['required-flat-number']}"/>
 
 							<p:commandButton actionListener="#{addingAddressBean.addAddress}"
-											 value="#{i18n['add-block']}" update=":messages :tabView:block"/>
+											 value="#{i18n['add-block']}" update=":messages :tabView:block @(.blocks)"/>
 						</p:panelGrid>
 					</h:form>
 					<h:form prependId="false" id="hidden">
@@ -47,10 +48,15 @@
 					<script type="text/javascript">
 						var currentMarker = null;
 						function handlePointClick(event) {
+							var ids = document.querySelectorAll('[id]');
+
+							Array.prototype.forEach.call(ids, function (el, i) {
+								// "el" is your element
+								console.log(el.id); // log the ID
+							});
 							if (null !== currentMarker) {
 								currentMarker.setMap(null);
 							}
-
 							document.getElementById('tabView:lat').value = event.latLng.lat();
 							document.getElementById('tabView:lng').value = event.latLng.lng();
 							currentMarker = new google.maps.Marker({
@@ -61,30 +67,73 @@
 						}
 					</script>
 				</p:tab>
+
 				<p:tab title="#{i18n['addres-management']}">
+					<h:form>
+						<p:dataTable id="blocks" var="block" value="#{addingApartmentsBean.blocks}"
+									 selectionMode="single" rows="20" selection="#{addingApartmentsBean.selectedBlock}"
+									 paginator="true" rowKey="#{block.id}" styleClass="blocks"
+									 widgetVar="dataTableApartments">
+							<p:ajax event="rowSelect" onsuccess="PF('apartmentsDialog').show()"
+									update="@(.apartmentsClass)"/>
+							<p:column headerText="#{i18n['city']}">
+								<h:outputText value="#{block.city}"/>
+							</p:column>
+							<p:column headerText="#{i18n['street']}">
+								<h:outputText value="#{block.street}"/>
+							</p:column>
+							<p:column headerText="#{i18n['flat-number']}">
+								<h:outputText value="#{block.flatNumber}"/>
+							</p:column>
+							<p:column style="width: 35px; text-align: center">
+								<p:commandButton icon="ui-icon-circle-close"
+												 update=":messages @(.blocks)"
+												 actionListener="#{addingApartmentsBean.removeBlock(block)}">
+									<p:confirm header="#{i18n['confirmation']}" message="#{i18n['are-you-sure']}"
+											   icon="ui-icon-alert"/>
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="#{i18n['yes']}" type="button" styleClass="ui-confirmdialog-yes"
+											 icon="ui-icon-check"/>
+							<p:commandButton value="#{i18n['no']}" type="button" styleClass="ui-confirmdialog-no"
+											 icon="ui-icon-close"/>
+						</p:confirmDialog>
+					</h:form>
 					<p:dialog id="apartmentsDialog" header="#{i18n['apartments']}" widgetVar="apartmentsDialog"
-							  showEffect="fade" hideEffect="fade" height="500px" width="400px"
-							  appendTo="@(body)">
-						<h:form id="apartments">
-							<p:dataTable var="appartment" value="#{addingAddressBean.apartments}">
+							  showEffect="fade" hideEffect="fade" height="500px" width="400px" dynamic="true">
+						<h:form id="apartments" styleClass="apartmentsClass" style="text-align:center;">
+							<p:dataTable var="apartment" value="#{addingApartmentsBean.selectedBlock.apartments}">
 								<p:column headerText="#{i18n['apartment']}">
-									<h:inputText value="#{appartment.apartmentNumber}" required="true"
+									<h:inputText value="#{apartment.apartmentNumber}" required="true"
+												 style="width: 70px"
 												 requiredMessage="#{i18n['required-appartmnet-number']}"/>
 								</p:column>
-
 								<p:column headerText="#{i18n['roomers-count']}">
-									<h:inputText value="#{appartment.roomersCount}" required="true"
-												 requiredMessage="#{i18n['required-roomers-count']}">
-										<pe:keyFilter mask="int"/>
-									</h:inputText>
+									<p:inputText value="#{apartment.roomersCount}" required="true"
+												 requiredMessage="#{i18n['required-roomers-count']}"
+												 style="width: 70px">
+										<pe:keyFilter mask="pint"/>
+									</p:inputText>
+								</p:column>
+								<p:column style="width: 35px; text-align: center">
+									<p:commandButton icon="ui-icon-circle-close"
+													 actionListener="#{addingApartmentsBean.removeApartment(apartment)}"
+													 update="@(.apartmentsClass) :messages" immediate="true"/>
 								</p:column>
 							</p:dataTable>
 							<p:commandButton value="#{i18n['add-apartment']}"
-											 actionListener="#{addingAddressBean.addNewApartment}"
-											 update=":messages"/>
+											 actionListener="#{addingApartmentsBean.addNewApartment}"
+											 update=":messages @(.apartmentsClass)"/>
+							<p:commandButton value="#{i18n['save']}"
+											 actionListener="#{addingApartmentsBean.saveApartments}"
+											 update=":messages @(.blocks) @(.apartmentsClass)">
+							</p:commandButton>
 						</h:form>
 					</p:dialog>
 				</p:tab>
+
 				<p:tab title="#{i18n['user-to-local']}">
 
 				</p:tab>

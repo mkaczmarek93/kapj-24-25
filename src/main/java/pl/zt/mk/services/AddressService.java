@@ -11,4 +11,6 @@ public interface AddressService {
 	boolean addAddress(Block block);
 
 	List<Block> getAll();
+
+	boolean removeBlock(Block block);
 }
