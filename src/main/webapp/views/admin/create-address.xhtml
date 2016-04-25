@@ -134,7 +134,34 @@
 				</p:tab>
 
 				<p:tab title="#{i18n['user-to-local']}" styleClass="ui-grid-responsive">
-					<h:form styleClass="userToLocal ui-grid ui-grid-responsive" style="height: 410px">
+					<h:form styleClass="userToLocal ui-grid ui-grid-responsive">
+						<p:dataTable id="usersWithLocal" var="user" value="#{userToLocalBean.usersWithLocal}"
+									 rows="20" paginator="true" rowKey="#{user.id}" widgetVar="dataTableUsersWithLocal">
+							<p:column headerText="#{i18n['e-mail']}">
+								<h:outputText value="#{user.email}"/>
+							</p:column>
+							<p:column headerText="#{i18n['name']}">
+								<h:outputText value="#{user.name}"/>
+							</p:column>
+							<p:column headerText="#{i18n['city']}">
+								<h:outputText value="#{user.place.block.city}"/>
+							</p:column>
+							<p:column headerText="#{i18n['street']}">
+								<h:outputText value="#{user.place.block.street}"/>
+							</p:column>
+							<p:column headerText="#{i18n['flat-number']}">
+								<h:outputText value="#{user.place.block.flatNumber}"/>
+							</p:column>
+							<p:column headerText="#{i18n['apartment-number']}">
+								<h:outputText value="#{user.place.apartmentNumber}"/>
+							</p:column>
+							<p:column headerText="#{i18n['remoce-assigned']}" style="text-align: center">
+								<p:commandButton icon="ui-icon-circle-close"
+												 actionListener="#{userToLocalBean.removeAssigned(user)}"
+												 update=":messages @(.userToLocal)" immediate="true"/>
+							</p:column>
+						</p:dataTable>
+						<p:separator/>
 						<p:dataTable id="freePlace" var="place" value="#{userToLocalBean.places}"
 									 selectionMode="single" rows="20" selection="#{userToLocalBean.selectedPlace}"
 									 paginator="true" rowKey="#{place.id}" styleClass="ui-grid-col-6"
@@ -163,11 +190,9 @@
 								<h:outputText value="#{user.name}"/>
 							</p:column>
 						</p:dataTable>
-
 						<p:commandButton value="#{i18n['assign']}"
 										 actionListener="#{userToLocalBean.assignUserToLocal}"
-										 update=":messages @(.userToLocal)"/>
-
+										 update=":messages @(.userToLocal)" styleClass="ui-grid-row"/>
 					</h:form>
 				</p:tab>
 			</p:tabView>

@@ -29,6 +29,7 @@ public class UserToLocalBean {
 
 	private List<UserDetail> users;
 	private List<Place> places;
+	private List<UserDetail> usersWithLocal;
 	private Place selectedPlace;
 	private UserDetail selectedUser;
 
@@ -49,6 +50,7 @@ public class UserToLocalBean {
 
 	@PostConstruct
 	public void init() {
+		usersWithLocal = userService.findUsersWithLocal();
 		users = userService.findUsersWithoutPlace();
 		places = placeService.findPlacesWithoutUser();
 	}
@@ -61,13 +63,36 @@ public class UserToLocalBean {
 		FacesMessage.Severity severity = null;
 		selectedUser.setPlace(selectedPlace);
 		int userIndex = users.indexOf(selectedUser);
-		if (userService.saveUser(selectedUser)) {
+		UserDetail saved = userService.saveUser(selectedUser);
+		if (null != saved) {
 			severity = FacesMessage.SEVERITY_INFO;
 			msg = "good";
 			users.remove(userIndex);
 			places.remove(selectedPlace);
+			usersWithLocal.add(saved);
 			selectedUser = null;
 			selectedUser = null;
+		} else {
+			severity = FacesMessage.SEVERITY_ERROR;
+			msg = "bad";
+		}
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, i18n.getMessage(msg), i18n.getMessage(msg)));
+	}
+
+	public void removeAssigned(UserDetail user) {
+		FacesMessage.Severity severity = null;
+		String msg = null;
+		int userIndex = usersWithLocal.indexOf(user);
+		Place place = user.getPlace();
+		user.setPlace(null);
+		place.setUserDetail(null);
+		UserDetail saved = userService.saveUser(user);
+		if (null != saved) {
+			severity = FacesMessage.SEVERITY_INFO;
+			msg = "good";
+			usersWithLocal.remove(userIndex);
+			users.add(user);
+			places.add(place);
 		} else {
 			severity = FacesMessage.SEVERITY_ERROR;
 			msg = "bad";

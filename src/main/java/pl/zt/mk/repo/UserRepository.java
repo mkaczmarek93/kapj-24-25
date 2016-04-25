@@ -18,4 +18,6 @@ public interface UserRepository extends CrudRepository<UserDetail, Long> {
 	UserDetail findByEmailAndPassword(String email, String password);
 
 	List<UserDetail> findByPlaceIsNull();
+
+	List<UserDetail> findByPlaceIsNotNull();
 }
