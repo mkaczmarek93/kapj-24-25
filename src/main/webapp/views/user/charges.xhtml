@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+
+>
+
+<h:head>
+    <title>HAM</title>
+</h:head>
+
+<h:body>
+
+    <ui:composition template="../../szablony/ekranSzablonHoryzontalny.xhtml">
+
+        <ui:define name="content">
+            <h:form>
+                <p:remoteCommand autoRun="true"
+                                 update="list" id="remote" actionListener="#{paymentHistoryBean.init}"/>
+            </h:form>
+
+            <h:form id="list" styleClass="list">
+
+                <p:growl globalOnly="true"/>
+
+                <p:panel rendered="#{paymentHistoryBean.place eq null}" styleClass="afterRemote">
+                    #{i18n['user-has-no-place']}
+                </p:panel>
+
+                <p:outputPanel rendered="#{paymentHistoryBean.place != null}" styleClass="afterRemote">
+
+
+                    <p:dataTable value="#{paymentHistoryBean.paymentsLazyModel}" var="pay" styleClass="payment"
+                                 selection="#{paymentHistoryBean.selectedRow}" selectionMode="single" rowIndexVar="count"
+                                 rowKey="#{pay.id}" lazy="true" paginator="true" rows="10"
+                                 paginatorTemplate="#{i18n['paginatorTemplate']}"
+                                 rowsPerPageTemplate="#{i18n['rowsPerPageTemplate']}">
+
+                        <p:column headerText="#{i18n['pay-hist-month']}"><p:outputLabel value="#{pay.month}"/></p:column>
+                        <p:column headerText="#{i18n['pay-hist-charge']}"><p:outputLabel value="#{pay.charge}"/></p:column>
+                        <p:column headerText="#{i18n['pay-hist-paid']}">
+                            <p:selectBooleanCheckbox value="#{pay.paid}" />
+                                </p:column>
+                        <p:column headerText="#{i18n['pay-hist-date']}"><p:outputLabel
+                                value="#{pay.paymentDate}"/></p:column>
+                    </p:dataTable>
+
+                </p:outputPanel>
+
+
+            </h:form>
+
+
+        </ui:define>
+
+    </ui:composition>
+</h:body>
+</html>
