@@ -32,7 +32,7 @@
                                          disabled="#{paymentBean.selectedPayment eq null}"
                                          actionListener="#{paymentBean.deactive}" update="@(.payment)"/>
                         <p:commandButton value="#{i18n['add']}" icon="fa fa-plus" actionListener="#{paymentBean.preAdd}"
-                                         update="@(.addPayment)" onclick="PF('paymentForm').show()"/>
+                                         update="@(.addPayment)" oncomplete="PF('paymentForm').show()"/>
 
                         <p:commandButton ajax="false" value="test_report" actionListener="#{paymentBean.export}"/>
                     </f:facet>
@@ -52,8 +52,6 @@
                               sortBy="#{payment.name}">#{payment.name}</p:column>
                     <p:column headerText="#{i18n['fee-desc']}" sortable="true"
                               sortBy="#{payment.description}">#{payment.description}</p:column>
-                    <p:column headerText="#{i18n['fee-type']}" sortable="true"
-                              sortBy="#{payment.type}">#{payment.type}</p:column>
                     <p:column headerText="#{i18n['fee-counter-type']}" sortable="true"
                               sortBy="#{payment.type}">#{payment.counterType}</p:column>
                     <p:column headerText="#{i18n['fee-unit']}" sortable="true"
@@ -89,14 +87,6 @@
                         <p:inputText value="#{paymentBean.payment.description}" id="desc"/>
                         <p:message for="desc"/>
 
-
-                        <p:outputLabel value="#{i18n['fee-type']}"/>
-                        <p:selectOneMenu value="#{paymentBean.payment.type}" required="true"
-                                         requiredMessage="#{i18n['required']}" id="type" styleClass="payment-type">
-                            <f:selectItems value="#{paymentBean.paymentTypes}"/>
-                            <p:ajax event="change" update="unit,counterType"/>
-                        </p:selectOneMenu>
-                        <p:message for="type"/>
 
                         <p:outputLabel value="#{i18n['fee-counter-type']}"/>
                         <p:selectOneMenu value="#{paymentBean.payment.counterType}"
@@ -140,7 +130,7 @@
                         <p:outputLabel/>
 
                         <p:commandButton value="#{i18n['add-payment']}" actionListener="#{paymentBean.addPayment}"
-                                         update="@(.addPayment) @(.list)" oncomplete="PF('paymentForm').hide()"/>
+                                         update="@(.addPayment) @(.list)" />
 
 
                     </p:panelGrid>

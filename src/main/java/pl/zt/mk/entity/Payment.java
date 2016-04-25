@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.joda.time.LocalDate;
 import pl.zt.mk.entity.meta.CounterType;
-import pl.zt.mk.entity.meta.PaymentType;
 import pl.zt.mk.lazy.interfaces.IDProvider;
 
 import javax.persistence.*;
@@ -25,7 +24,7 @@ import javax.validation.constraints.NotNull;
  * Opłata może posiadać cene za jednostkę, bądź stałą opłate miesięczną.
  * <p>
  * <p>
- * TODO : ustalić daty przeliczania opłat
+ *
  */
 @Entity
 @Getter
@@ -40,9 +39,6 @@ public class Payment implements IDProvider {
 	@NotNull
 	private String name;
 	private String description;
-	@Enumerated
-	@NotNull
-	private PaymentType type;
 	@Enumerated
 	private CounterType counterType;
 	private String unit;

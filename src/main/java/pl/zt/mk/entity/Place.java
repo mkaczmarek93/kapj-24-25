@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Place {
+public class Place  {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

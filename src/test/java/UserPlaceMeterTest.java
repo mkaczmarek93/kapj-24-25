@@ -52,7 +52,7 @@ public class UserPlaceMeterTest extends TestCase {
 
 		Meter meter = new Meter();
 		meter.setPlace(place);
-		meterService.addMeter(new Meter());
+		meterService.addMeter(meter);
 
 		LazyModel<Meter> data = meterService.findByUserEmail("admin@admin.pl");
 

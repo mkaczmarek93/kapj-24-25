@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.zt.mk.annotations.ViewScoped;
 import pl.zt.mk.entity.Payment;
 import pl.zt.mk.entity.meta.CounterType;
-import pl.zt.mk.entity.meta.PaymentType;
 import pl.zt.mk.jsf.JsfUtils;
 import pl.zt.mk.lazy.LazyModel;
 import pl.zt.mk.services.PaymentService;
@@ -38,7 +37,6 @@ public class PaymentBean implements Serializable {
 	private Payment payment = new Payment();
 	private LazyModel<Payment> paymentLazyModel;
 	private Payment selectedPayment = null;
-	private List<SelectItem> paymentTypes = null;
 	private List<SelectItem> counterTypes;
 
 	public PaymentBean() {
@@ -51,17 +49,9 @@ public class PaymentBean implements Serializable {
 
 	public void initTypes() {
 		SelectItem empty = new SelectItem();
-		paymentTypes = new ArrayList<>();
 		counterTypes = new ArrayList<>();
 
-		paymentTypes.add(empty);
 		counterTypes.add(empty);
-
-
-		for (PaymentType paymentType : PaymentType.values()) {
-			paymentTypes.add(new SelectItem(paymentType));
-		}
-
 		for (CounterType counterType : CounterType.values()) {
 			counterTypes.add(new SelectItem(counterType));
 		}
@@ -90,7 +80,7 @@ public class PaymentBean implements Serializable {
 	}
 
 	public boolean isUnitRequired() {
-		return Objects.nonNull(this.payment) && Objects.nonNull(this.payment.getType()) && PaymentType.PER_UNIT.equals(this.payment.getType());
+		return Objects.nonNull(this.payment) && Objects.nonNull(this.payment.getCounterType()) && !CounterType.OTHER.equals(this.payment.getCounterType());
 	}
 
 }
