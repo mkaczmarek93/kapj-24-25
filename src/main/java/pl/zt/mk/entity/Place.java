@@ -2,6 +2,7 @@ package pl.zt.mk.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import pl.zt.mk.calculations.RoomersCounter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Place  {
+public class Place  implements RoomersCounter {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,4 +33,9 @@ public class Place  {
 
 	@OneToMany(mappedBy = "place")
 	private List<Meter> meters;
+
+	@Override
+	public  int getRoomersCount(){
+		return  roomersCount.intValue();
+	}
 }

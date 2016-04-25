@@ -2,7 +2,6 @@ package pl.zt.mk.calculations;
 
 import pl.zt.mk.entity.Meter;
 import pl.zt.mk.entity.Payment;
-import pl.zt.mk.entity.Place;
 import pl.zt.mk.entity.meta.CounterType;
 
 import java.util.*;
@@ -11,14 +10,15 @@ import java.util.*;
  * Created by zt on 2016-04-25.
  */
 public class ChargeCalculation {
-	private Meter prevMonth;
-	private Meter currentMonth;
-	private HashMap<CounterType,List<Payment>> payments;
+	private final Integer roomersCount;
+	private final Meter prevMonth;
+	private final Meter currentMonth;
+	private final HashMap<CounterType,List<Payment>> payments;
 
-	public ChargeCalculation(Place place, Meter prevMonth, Meter currentMonth, List<Payment> currentPayments){
+	public ChargeCalculation(RoomersCounter roomersCounter, Meter prevMonth, Meter currentMonth, List<Payment> currentPayments){
 		this.prevMonth = prevMonth;
 		this.currentMonth = currentMonth;
-
+		this.roomersCount = roomersCounter.getRoomersCount();
 		this.payments = new HashMap();
 
 		currentPayments.forEach(payment -> {
@@ -42,6 +42,11 @@ public class ChargeCalculation {
 
 		if (payments.get(CounterType.GAS)!=null)
 			suma += (currentMonth.getGas() - prevMonth.getGas()) * payments.get(CounterType.GAS).get(0).getPrice();
+
+		if (payments.get(CounterType.GARBAGE)!=null){
+			suma += roomersCount * payments.get(CounterType.GAS).get(0).getPrice();
+
+		}
 
 		final double[] tempSum = {0};
 		if(payments.get(null)!=null){
