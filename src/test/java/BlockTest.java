@@ -11,7 +11,7 @@ import java.net.URL;
 /**
  * Created by Michal on 11.04.2016.
  */
-public class AddressTest {
+public class BlockTest {
 
 	private JsonConverter jsonConverter;
 

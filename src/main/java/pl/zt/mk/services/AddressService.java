@@ -1,6 +1,6 @@
 package pl.zt.mk.services;
 
-import pl.zt.mk.entity.Address;
+import pl.zt.mk.entity.Block;
 
 import java.util.List;
 
@@ -8,9 +8,9 @@ import java.util.List;
  * Created by Michal on 10.04.2016.
  */
 public interface AddressService {
-	boolean addAddress(Address address);
+	boolean addAddress(Block block);
 
-	List<String> getCities();
+	List<Block> getAll();
 
-	List<String> getStreets();
+	boolean removeBlock(Block block);
 }

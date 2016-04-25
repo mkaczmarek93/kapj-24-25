@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.json.JSONObject;
 import org.primefaces.json.JSONTokener;
 import org.primefaces.model.map.DefaultMapModel;
@@ -14,7 +15,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import pl.zt.mk.converters.JsonConverter;
 import pl.zt.mk.converters.dto.ReadAddress;
-import pl.zt.mk.entity.Address;
+import pl.zt.mk.entity.Apartment;
+import pl.zt.mk.entity.Block;
 import pl.zt.mk.services.AddressService;
 import pl.zt.mk.services.InternationalizationService;
 
@@ -24,6 +26,8 @@ import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -47,11 +51,10 @@ public class AddingAddressBean implements Serializable {
 	private String postCode;
 	private String street;
 	private String flatNumber;
-	private Integer apartmentNumber;
-	private Integer collaborators;
 	private Double lat;
 	private Double lng;
 	private MapModel emptyModel;
+	private Block selectedBlock;
 
 	@Autowired
 	@Setter(AccessLevel.NONE)
@@ -68,6 +71,7 @@ public class AddingAddressBean implements Serializable {
 	@Setter(AccessLevel.NONE)
 	private JsonConverter jsonConverter;
 
+
 	@PostConstruct
 	public void init() {
 		this.emptyModel = new DefaultMapModel();
@@ -80,7 +84,7 @@ public class AddingAddressBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Wskazano niepoprawny ades.", ""));
 			return;
 		}
-		log.info("Address: " + read.toString());
+		log.info("Block: " + read.toString());
 		city = read.getCity();
 		postCode = read.getPostCode();
 		street = read.getStreet();
@@ -94,7 +98,7 @@ public class AddingAddressBean implements Serializable {
 				&& Objects.nonNull(street)) {
 			String msg;
 			FacesMessage.Severity severity;
-			if (addressService.addAddress(new Address(city, postCode, street, flatNumber, apartmentNumber, collaborators))) {
+			if (addressService.addAddress(new Block(city, postCode, street, flatNumber, null))) {
 				msg = "good";
 				severity = FacesMessage.SEVERITY_INFO;
 			} else {
@@ -104,7 +108,7 @@ public class AddingAddressBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, i18n.getMessage(msg), i18n.getMessage(msg)));
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, i18n.getMessage("bad"), i18n.getMessage("check-on-map")));
-			log.info("Address not added");
+			log.info("Block not added");
 		}
 	}
 
@@ -120,7 +124,5 @@ public class AddingAddressBean implements Serializable {
 		this.postCode = null;
 		this.street = null;
 		this.flatNumber = null;
-		this.apartmentNumber = null;
-		this.collaborators = null;
 	}
 }
