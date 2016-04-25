@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.json.JSONObject;
 import org.primefaces.json.JSONTokener;
 import org.primefaces.model.map.DefaultMapModel;
@@ -15,7 +14,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import pl.zt.mk.converters.JsonConverter;
 import pl.zt.mk.converters.dto.ReadAddress;
-import pl.zt.mk.entity.Apartment;
 import pl.zt.mk.entity.Block;
 import pl.zt.mk.services.AddressService;
 import pl.zt.mk.services.InternationalizationService;
@@ -26,8 +24,6 @@ import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
