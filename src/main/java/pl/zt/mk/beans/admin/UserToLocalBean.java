@@ -56,8 +56,9 @@ public class UserToLocalBean {
 	}
 
 	public void assignUserToLocal() {
-		if (Objects.isNull(selectedPlace) && Objects.isNull(selectedUser)) {
+		if (Objects.isNull(selectedPlace) || Objects.isNull(selectedUser)) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, i18n.getMessage("bad"), i18n.getMessage("user-room-required")));
+			return;
 		}
 		String msg = null;
 		FacesMessage.Severity severity = null;

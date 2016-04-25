@@ -68,7 +68,7 @@
 					</script>
 				</p:tab>
 
-				<p:tab title="#{i18n['addres-management']}">
+				<p:tab title="#{i18n['address-management']}">
 					<h:form>
 						<p:dataTable id="blocks" var="block" value="#{addingApartmentsBean.blocks}"
 									 selectionMode="single" rows="20" selection="#{addingApartmentsBean.selectedBlock}"
@@ -105,10 +105,10 @@
 							  showEffect="fade" hideEffect="fade" height="500px" width="400px" dynamic="true">
 						<h:form id="places" styleClass="apartmentsClass" style="text-align:center;">
 							<p:dataTable var="place" value="#{addingApartmentsBean.selectedBlock.places}">
-								<p:column headerText="#{i18n['apartment']}">
+								<p:column headerText="#{i18n['apartment-number']}">
 									<h:inputText value="#{place.apartmentNumber}" required="true"
 												 style="width: 70px"
-												 requiredMessage="#{i18n['required-appartmnet-number']}"/>
+												 requiredMessage="#{i18n['required-apartmnet-number']}"/>
 								</p:column>
 								<p:column headerText="#{i18n['roomers-count']}">
 									<p:inputText value="#{place.roomersCount}" required="true"
@@ -155,7 +155,7 @@
 							<p:column headerText="#{i18n['apartment-number']}">
 								<h:outputText value="#{user.place.apartmentNumber}"/>
 							</p:column>
-							<p:column headerText="#{i18n['remoce-assigned']}" style="text-align: center">
+							<p:column headerText="#{i18n['remove-assigned']}" style="text-align: center">
 								<p:commandButton icon="ui-icon-circle-close"
 												 actionListener="#{userToLocalBean.removeAssigned(user)}"
 												 update=":messages @(.userToLocal)" immediate="true"/>
