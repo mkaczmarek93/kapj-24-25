@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import pl.zt.mk.entity.Apartment;
 import pl.zt.mk.entity.Block;
+import pl.zt.mk.entity.Place;
 import pl.zt.mk.services.AddressService;
 import pl.zt.mk.services.InternationalizationService;
 import pl.zt.mk.validators.ApartmentsValidator;
@@ -54,7 +55,7 @@ public class AddingApartmentsBean {
 	public void saveApartments() {
 		FacesMessage.Severity severity = null;
 		String msg = null;
-		if (apartmentsValidator.validateApartmentsNumberInOneBlock(selectedBlock.getApartments())) {
+		if (apartmentsValidator.validateApartmentsNumberInOneBlock(selectedBlock.getPlaces())) {
 			if (addressService.addAddress(selectedBlock)) {
 				severity = FacesMessage.SEVERITY_INFO;
 				msg = "good";
@@ -69,13 +70,13 @@ public class AddingApartmentsBean {
 	}
 
 	public void addNewApartment() {
-		Apartment apartment = new Apartment();
-		apartment.setBlock(selectedBlock);
-		selectedBlock.getApartments().add(apartment);
+		Place place = new Place();
+		place.setBlock(selectedBlock);
+		selectedBlock.getPlaces().add(place);
 	}
 
 	public void removeApartment(Apartment apartment) {
-		selectedBlock.getApartments().remove(apartment);
+		selectedBlock.getPlaces().remove(apartment);
 	}
 
 	public void removeBlock(Block block) {

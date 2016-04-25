@@ -101,17 +101,17 @@
 											 icon="ui-icon-close"/>
 						</p:confirmDialog>
 					</h:form>
-					<p:dialog id="apartmentsDialog" header="#{i18n['apartments']}" widgetVar="apartmentsDialog"
+					<p:dialog id="apartmentsDialog" header="#{i18n['places']}" widgetVar="apartmentsDialog"
 							  showEffect="fade" hideEffect="fade" height="500px" width="400px" dynamic="true">
-						<h:form id="apartments" styleClass="apartmentsClass" style="text-align:center;">
-							<p:dataTable var="apartment" value="#{addingApartmentsBean.selectedBlock.apartments}">
+						<h:form id="places" styleClass="apartmentsClass" style="text-align:center;">
+							<p:dataTable var="place" value="#{addingApartmentsBean.selectedBlock.places}">
 								<p:column headerText="#{i18n['apartment']}">
-									<h:inputText value="#{apartment.apartmentNumber}" required="true"
+									<h:inputText value="#{place.apartmentNumber}" required="true"
 												 style="width: 70px"
 												 requiredMessage="#{i18n['required-appartmnet-number']}"/>
 								</p:column>
 								<p:column headerText="#{i18n['roomers-count']}">
-									<p:inputText value="#{apartment.roomersCount}" required="true"
+									<p:inputText value="#{place.roomersCount}" required="true"
 												 requiredMessage="#{i18n['required-roomers-count']}"
 												 style="width: 70px">
 										<pe:keyFilter mask="pint"/>
@@ -119,11 +119,11 @@
 								</p:column>
 								<p:column style="width: 35px; text-align: center">
 									<p:commandButton icon="ui-icon-circle-close"
-													 actionListener="#{addingApartmentsBean.removeApartment(apartment)}"
+													 actionListener="#{addingApartmentsBean.removeApartment(place)}"
 													 update="@(.apartmentsClass) :messages" immediate="true"/>
 								</p:column>
 							</p:dataTable>
-							<p:commandButton value="#{i18n['add-apartment']}"
+							<p:commandButton value="#{i18n['add-apartment']}" e
 											 actionListener="#{addingApartmentsBean.addNewApartment}"
 											 update=":messages @(.apartmentsClass)"/>
 							<p:commandButton value="#{i18n['save']}"

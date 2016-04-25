@@ -17,9 +17,15 @@ public class Place {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	//address
 
-	//
+	@ManyToOne()
+	private Block block;
+
+	@Column
+	private String apartmentNumber;
+
+	@Column
+	private Integer roomersCount;
 
 	@OneToOne(mappedBy = "place")
 	private UserDetail userDetail;

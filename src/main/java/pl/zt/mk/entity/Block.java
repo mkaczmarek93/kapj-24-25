@@ -35,14 +35,14 @@ public class Block {
 	private String postCode;
 
 	@OneToMany(mappedBy = "block", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-	private List<Apartment> apartments;
+	private List<Place> places;
 
-	public Block(String city, String postCode, String street, String flatNumber, List<Apartment> apartments) {
+	public Block(String city, String postCode, String street, String flatNumber, List<Place> places) {
 		this.city = city;
 		this.postCode = postCode;
 		this.street = street;
 		this.flatNumber = flatNumber;
-		this.apartments = apartments;
+		this.places = places;
 	}
 
 }
