@@ -40,7 +40,7 @@ public class MeterServiceImpl implements MeterService {
 	}
 
 	@Override
-	public Meter findCurrentMeterLevelBy(String email, LocalDate date) {
+	public Meter findCurrentMeterLevelByName(String email, LocalDate date) {
 		Place place = placeRepository.findByUserEmail(email);
 		//valid start date is a 11th day of prev month
 		int startDay = 11;
@@ -49,9 +49,21 @@ public class MeterServiceImpl implements MeterService {
 		//so
 		int year = date.getYear();
 		int month = date.getMonthOfYear();
-		LocalDate startDate = new LocalDate(year, month - 1, startDay);
-		LocalDate endDate = new LocalDate(year, month, endDay);
-		return meterRepository.findByPlacAndDate(place, startDate, endDate);
+		int day = date.getDayOfMonth();
+
+		LocalDate startDate = new LocalDate(year, month , startDay);
+		LocalDate endDate = new LocalDate(year, month+1, endDay);
+		if (day < 11) {
+			startDate = new LocalDate(year,month-1,startDay);
+			endDate = new LocalDate(year,month,endDay);
+//			month--; month;
+		} else {
+			startDate = new LocalDate(year,month,startDay);
+			endDate = new LocalDate(year,month+1,endDay);
+//			month, month++;
+		}
+
+		return meterRepository.findByPlaceAndDate(place, startDate, endDate);
 	}
 
 }

@@ -24,5 +24,5 @@ public interface MeterRepository extends PagingAndSortingRepository<Meter, Long>
 
 
 	@Query(value = "select  max(m) from Meter m where m.place=:place and m.date between :startDate and :endDate")
-	Meter findByPlacAndDate(@Param("place") Place place, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+	Meter findByPlaceAndDate(@Param("place") Place place, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }

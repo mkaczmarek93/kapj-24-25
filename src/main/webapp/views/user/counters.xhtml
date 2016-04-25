@@ -39,7 +39,8 @@
 
                             <p:commandButton value="#{i18n['current-measure']}" icon="fa fa-plus"
                                              oncomplete="PF('meterManagement').show()"
-                                             actionListener="#{meterBean.initCurrentMeter}"/>
+                                             actionListener="#{meterBean.initCurrentMeter}"
+                            />
 
                         </f:facet>
                     </p:toolbar>
@@ -50,7 +51,7 @@
                                  paginatorTemplate="#{i18n['paginatorTemplate']}"
                                  rowsPerPageTemplate="#{i18n['rowsPerPageTemplate']}">
 
-                        <p:ajax event="rowSelect" update="@(.toolbar)"/>
+                        <p:ajax event="rowSelect" update="@(.toolbar)" actionListener="#{meterBean.preEdit}" />
                         <p:column headerText="#{i18n['meter-data']}"><p:outputLabel value="#{meter.date}"/></p:column>
                         <p:column headerText="#{i18n['meter-gas']}"><p:outputLabel value="#{meter.gas}"/></p:column>
                         <p:column headerText="#{i18n['meter-water-cold']}"><p:outputLabel

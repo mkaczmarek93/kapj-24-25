@@ -37,8 +37,4 @@ public class Place  implements RoomersCounter {
 	@OneToMany(mappedBy = "place")
 	List<PaymentHistory> paymentHistories;
 
-	@Override
-	public  int getRoomersCount(){
-		return  roomersCount.intValue();
-	}
 }

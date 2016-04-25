@@ -48,7 +48,7 @@ public class MeterBean implements Serializable {
 		this.place = placeService.findPlaceByUserEmail(name);
 		if (Objects.nonNull(place)) {
 			this.metersLazyModel = meterService.findByUserEmail(name);
-			this.meter = meterService.findCurrentMeterLevelBy(name, new LocalDate());
+			this.meter = meterService.findCurrentMeterLevelByName(name, new LocalDate());
 		}
 
 
@@ -72,6 +72,7 @@ public class MeterBean implements Serializable {
 	}
 
 	public void initCurrentMeter() {
+		this.meter = meterService.findCurrentMeterLevelByName(name, new LocalDate());
 		if (Objects.isNull(this.meter)) {
 			this.meter = new Meter();
 			this.meter.setPlace(this.place);

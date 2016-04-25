@@ -14,6 +14,6 @@ public interface MeterService {
 
 	LazyModel<Meter> findByUserEmail(String email);
 
-	Meter findCurrentMeterLevelBy(String email, LocalDate date);
+	Meter findCurrentMeterLevelByName(String email, LocalDate date);
 
 }
