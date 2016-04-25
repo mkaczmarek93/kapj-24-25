@@ -3,6 +3,8 @@ package pl.zt.mk.repo;
 import org.springframework.data.repository.CrudRepository;
 import pl.zt.mk.entity.UserDetail;
 
+import java.util.List;
+
 /**
  * Created by zt on 2016-03-22.
  */
@@ -14,4 +16,6 @@ public interface UserRepository extends CrudRepository<UserDetail, Long> {
 	UserDetail findByName(String name);
 
 	UserDetail findByEmailAndPassword(String email, String password);
+
+	List<UserDetail> findByPlaceIsNull();
 }

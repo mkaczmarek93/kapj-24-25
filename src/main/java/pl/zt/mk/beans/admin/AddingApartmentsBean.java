@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import pl.zt.mk.entity.Apartment;
 import pl.zt.mk.entity.Block;
 import pl.zt.mk.entity.Place;
 import pl.zt.mk.services.AddressService;
@@ -75,8 +74,8 @@ public class AddingApartmentsBean {
 		selectedBlock.getPlaces().add(place);
 	}
 
-	public void removeApartment(Apartment apartment) {
-		selectedBlock.getPlaces().remove(apartment);
+	public void removeApartment(Place place) {
+		selectedBlock.getPlaces().remove(place);
 	}
 
 	public void removeBlock(Block block) {
@@ -86,7 +85,7 @@ public class AddingApartmentsBean {
 		if (addressService.removeBlock(block)) {
 			severity = FacesMessage.SEVERITY_INFO;
 			msg = "good";
-			init();
+			blocks.remove(block);
 		} else {
 			severity = FacesMessage.SEVERITY_ERROR;
 			msg = "bad";

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import pl.zt.mk.entity.UserDetail;
 import pl.zt.mk.entity.meta.Authorities;
 
+import java.util.List;
+
 /**
  * Created by zt on 2016-03-22.
  */
@@ -19,4 +21,7 @@ public interface UserService extends UserDetailsService {
 
 	boolean updateUser(UserDetail admin);
 
+	List<UserDetail> findUsersWithoutPlace();
+
+	boolean saveUser(UserDetail selectedUser);
 }
