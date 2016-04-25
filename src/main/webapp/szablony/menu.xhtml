@@ -12,6 +12,10 @@
 								action="/views/user/changePassword.xhtml?faces-redirect=true"/>
 					<p:menuitem value="#{i18n['meter-management']}"
 								action="/views/user/counters.xhtml?faces-redirect=true"/>
+
+					<p:menuitem value="#{i18n['pay-history']}"
+								action="/views/user/charges.xhtml?faces-redirect=true"/>
+
 					<p:menuitem value="#{i18n['add-user']}"
 								action="/views/admin/addUser.xhtml?faces-redirect=true"
 								rendered="#{securityBean.hasRole('ADMIN')}"/>
