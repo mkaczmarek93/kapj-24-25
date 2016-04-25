@@ -14,6 +14,7 @@ import pl.zt.mk.repo.UserRepository;
 import pl.zt.mk.services.RegistrationMailSender;
 import pl.zt.mk.services.UserService;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -73,6 +74,24 @@ public class UserServiceImpl implements UserService {
 			this.userRepository.save(user);
 			return true;
 		} catch (DataAccessException e) {
+			return false;
+		}
+
+	}
+
+	@Override
+	public List<UserDetail> findUsersWithoutPlace() {
+		return userRepository.findByPlaceIsNull();
+	}
+
+	@Override
+	public boolean saveUser(UserDetail user) {
+		try {
+			userRepository.save(user);
+			log.info("User saved");
+			return true;
+		} catch (Exception e) {
+			log.info("User not saved");
 			return false;
 		}
 

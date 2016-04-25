@@ -85,7 +85,7 @@ public class AddingApartmentsBean {
 		if (addressService.removeBlock(block)) {
 			severity = FacesMessage.SEVERITY_INFO;
 			msg = "good";
-			init();
+			blocks.remove(block);
 		} else {
 			severity = FacesMessage.SEVERITY_ERROR;
 			msg = "bad";

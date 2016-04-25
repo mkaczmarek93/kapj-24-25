@@ -6,6 +6,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pl.zt.mk.entity.Place;
 
+import java.util.List;
+
 /**
  * Created by zt on 2016-04-12.
  */
@@ -14,4 +16,6 @@ public interface PlaceRepository extends PagingAndSortingRepository<Place, Long>
 
 	@Query("select distinct l from Place l where l.userDetail.email =:email")
 	Place findByUserEmail(@Param("email") String email);
+
+	List<Place> findByUserDetailIsNull();
 }
