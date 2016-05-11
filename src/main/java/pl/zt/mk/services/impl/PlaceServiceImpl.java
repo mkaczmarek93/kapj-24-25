@@ -29,4 +29,9 @@ public class PlaceServiceImpl implements PlaceService {
 		return placeRepository.findByUserDetailIsNull();
 	}
 
+	@Override
+	public List<Place> findAll() {
+		return (List<Place>) placeRepository.findAll();
+	}
+
 }

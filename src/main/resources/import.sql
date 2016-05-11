@@ -70,4 +70,3 @@ INSERT INTO "public"."meter" (id,cold_water,date,electricity,gas,hot_water,place
 INSERT INTO "public"."meter" (id,cold_water,date,electricity,gas,hot_water,place_id) VALUES (29,11.0,{d '2016-05-01'},11.0,11.0,11.0,5);
 INSERT INTO "public"."meter" (id,cold_water,date,electricity,gas,hot_water,place_id) VALUES (30,6.0,{d '2016-03-01'},6.0,6.0,6.0,6);
 INSERT INTO "public"."meter" (id,cold_water,date,electricity,gas,hot_water,place_id) VALUES (31,11.0,{d '2016-04-01'},11.0,11.0,11.0,6);
-INSERT INTO "public"."meter" (id,cold_water,date,electricity,gas,hot_water,place_id) VALUES (32,21.0,{d '2016-05-01'},12.0,21.0,21.0,6);
