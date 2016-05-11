@@ -87,6 +87,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean saveUser(UserDetail user) {
 		try {
+
 			userRepository.save(user);
 			log.info("User saved");
 			return true;

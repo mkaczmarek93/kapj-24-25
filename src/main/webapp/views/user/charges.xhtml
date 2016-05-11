@@ -5,8 +5,6 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:pe="http://primefaces.org/ui/extensions"
 
 >
 
@@ -34,20 +32,27 @@
 
                 <p:outputPanel rendered="#{paymentHistoryBean.place != null}" styleClass="afterRemote">
 
-
+                    <p:commandButton value="test obliczeń" actionListener="#{paymentHistoryBean.test}"/>
                     <p:dataTable value="#{paymentHistoryBean.paymentsLazyModel}" var="pay" styleClass="payment"
-                                 selection="#{paymentHistoryBean.selectedRow}" selectionMode="single" rowIndexVar="count"
+                                 selectionMode="single"
+                                 rowIndexVar="count"
                                  rowKey="#{pay.id}" lazy="true" paginator="true" rows="10"
                                  paginatorTemplate="#{i18n['paginatorTemplate']}"
                                  rowsPerPageTemplate="#{i18n['rowsPerPageTemplate']}">
 
-                        <p:column headerText="#{i18n['pay-hist-month']}"><p:outputLabel value="#{pay.month}"/></p:column>
-                        <p:column headerText="#{i18n['pay-hist-charge']}"><p:outputLabel value="#{pay.charge}"/></p:column>
+                        <p:column headerText="#{i18n['pay-hist-month']}"><p:outputLabel
+                                value="#{pay.month}"/></p:column>
+                        <p:column headerText="#{i18n['pay-hist-charge']}"><p:outputLabel
+                                value="#{pay.charge}"/></p:column>
                         <p:column headerText="#{i18n['pay-hist-paid']}">
-                            <p:selectBooleanCheckbox value="#{pay.paid}" />
-                                </p:column>
+                            <p:selectBooleanCheckbox value="#{pay.paid}"/>
+                        </p:column>
                         <p:column headerText="#{i18n['pay-hist-date']}"><p:outputLabel
                                 value="#{pay.paymentDate}"/></p:column>
+                        <p:column> <p:commandButton value="#{i18n['pay']}" oncomplete="PF('payDialog').show()"
+                                                    disabled="#{pay.paid}"
+                                                    actionListener="#{paymentHistoryBean.setSelectedPayment(pay)}"
+                                                    update="@(.payment)"></p:commandButton></p:column>
                     </p:dataTable>
 
                 </p:outputPanel>
@@ -55,6 +60,14 @@
 
             </h:form>
 
+            <h:form styleClass="payment">
+
+                <p:dialog widgetVar="payDialog">
+                    <p:captcha label="Capcha"></p:captcha>
+                    <p:commandButton ajax="false" actionListener="#{paymentHistoryBean.pay()}"
+                                     disabled="#{paymentHistoryBean.selectedPayment==null}"/>
+                </p:dialog>
+            </h:form>
 
         </ui:define>
 

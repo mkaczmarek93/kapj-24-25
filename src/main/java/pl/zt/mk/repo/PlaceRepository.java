@@ -18,4 +18,7 @@ public interface PlaceRepository extends PagingAndSortingRepository<Place, Long>
 	Place findByUserEmail(@Param("email") String email);
 
 	List<Place> findByUserDetailIsNull();
+
+
+	List<Place> findByUserDetailIsNotNull();
 }

@@ -1,5 +1,7 @@
 package pl.zt.mk.services.impl;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import pl.zt.mk.repo.MeterRepository;
 import pl.zt.mk.repo.PlaceRepository;
 import pl.zt.mk.services.MeterService;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -42,28 +45,52 @@ public class MeterServiceImpl implements MeterService {
 	@Override
 	public Meter findCurrentMeterLevelByName(String email, LocalDate date) {
 		Place place = placeRepository.findByUserEmail(email);
-		//valid start date is a 11th day of prev month
-		int startDay = 11;
-		//valid end date is a 10th day of current month
-		int endDay = 10;
-		//so
-		int year = date.getYear();
-		int month = date.getMonthOfYear();
-		int day = date.getDayOfMonth();
 
-		LocalDate startDate = new LocalDate(year, month , startDay);
-		LocalDate endDate = new LocalDate(year, month+1, endDay);
-		if (day < 11) {
-			startDate = new LocalDate(year,month-1,startDay);
-			endDate = new LocalDate(year,month,endDay);
+		EffectiveMetersDates effectiveDates = new EffectiveMetersDates(date);
+
+		return meterRepository.findByPlaceAndDate(place, effectiveDates.getStartDate(), effectiveDates.getEndDate());
+	}
+
+	@Override
+	public Meter findMeterLevelByPlaceAndDate(Place place, LocalDate date) {
+		EffectiveMetersDates effectiveDates = new EffectiveMetersDates(date);
+
+		return meterRepository.findByPlaceAndDate(place, effectiveDates.getStartDate(), effectiveDates.getEndDate());
+	}
+
+	@Override
+	public List<Meter> findByPlace(Place place) {
+		return meterRepository.findByPlace(place);
+	}
+
+	@Getter
+	@Setter
+	private class EffectiveMetersDates {
+		LocalDate startDate;
+		LocalDate endDate;
+
+		EffectiveMetersDates(LocalDate date) {
+			//valid start date is a 11th day of prev month
+			int startDay = 11;
+			//valid end date is a 10th day of current month
+			int endDay = 10;
+			//so
+			int year = date.getYear();
+			int month = date.getMonthOfYear();
+			int day = date.getDayOfMonth();
+
+			LocalDate startDate = new LocalDate(year, month, startDay);
+			LocalDate endDate = new LocalDate(year, month + 1, endDay);
+			if (day < 11) {
+				startDate = new LocalDate(year, month - 1, startDay);
+				endDate = new LocalDate(year, month, endDay);
 //			month--; month;
-		} else {
-			startDate = new LocalDate(year,month,startDay);
-			endDate = new LocalDate(year,month+1,endDay);
+			} else {
+				startDate = new LocalDate(year, month, startDay);
+				endDate = new LocalDate(year, month + 1, endDay);
 //			month, month++;
+			}
 		}
-
-		return meterRepository.findByPlaceAndDate(place, startDate, endDate);
 	}
 
 }

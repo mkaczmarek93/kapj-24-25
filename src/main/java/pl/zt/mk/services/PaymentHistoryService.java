@@ -9,4 +9,10 @@ import pl.zt.mk.lazy.LazyModel;
  */
 public interface PaymentHistoryService {
 	LazyModel<PaymentHistory> findByPlace(Place place);
+
+	void saveHistory(PaymentHistory paymentHistory);
+
+	void pay(PaymentHistory paymentHistory);
+
+	void calculatePaymentsForAllPlaces();
 }

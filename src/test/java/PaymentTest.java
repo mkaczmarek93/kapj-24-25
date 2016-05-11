@@ -12,6 +12,7 @@ import pl.zt.mk.calculations.ChargeCalculation;
 import pl.zt.mk.calculations.RoomersCounter;
 import pl.zt.mk.entity.Meter;
 import pl.zt.mk.entity.Payment;
+import pl.zt.mk.repo.PaymentHistoryRepository;
 import pl.zt.mk.repo.PaymentRepository;
 
 import java.util.List;
@@ -26,6 +27,9 @@ public class PaymentTest extends TestCase{
 
 	@Autowired
 	PaymentRepository repository;
+
+	@Autowired
+	PaymentHistoryRepository historyRepository;
 
 
 
@@ -48,5 +52,7 @@ public class PaymentTest extends TestCase{
 		suma+= calculation.calculate();
 
 		assertTrue(suma == 310D);
+
+//		historyRepository.save(new PaymentHistory(null,))
 	}
 }

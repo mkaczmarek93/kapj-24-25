@@ -8,7 +8,9 @@ import pl.zt.mk.annotations.ViewScoped;
 import pl.zt.mk.entity.PaymentHistory;
 import pl.zt.mk.entity.Place;
 import pl.zt.mk.lazy.LazyModel;
+import pl.zt.mk.services.MeterService;
 import pl.zt.mk.services.PaymentHistoryService;
+import pl.zt.mk.services.PaymentService;
 import pl.zt.mk.services.PlaceService;
 
 import java.util.Objects;
@@ -25,15 +27,34 @@ public class PaymentHistoryBean {
 	LazyModel<PaymentHistory> paymentsLazyModel;
 
 	@Autowired
+	MeterService meterService;
+
+	@Autowired
 	PlaceService placeService;
 
 	@Autowired
 	PaymentHistoryService paymentHistoryService;
+
+	@Autowired
+	PaymentService paymentService;
+	private PaymentHistory selectedPayment;
 
 	public void init(){
 		this.place = placeService.findPlaceByUserEmail(SecurityContextHolder.getContext().getAuthentication().getName());
 		if (Objects.nonNull(this.place)){
 			this.paymentsLazyModel = paymentHistoryService.findByPlace(place);
 		}
+	}
+
+	public void test() {
+		paymentHistoryService.calculatePaymentsForAllPlaces();
+	}
+
+	public void setSelectedPayment(PaymentHistory payment) {
+		this.selectedPayment = payment;
+	}
+
+	public void pay() {
+		this.paymentHistoryService.saveHistory(this.selectedPayment);
 	}
 }

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import pl.zt.mk.entity.Meter;
 import pl.zt.mk.entity.Place;
 
+import java.util.List;
+
 /**
  * Created by zt on 2016-04-11.
  */
@@ -25,4 +27,6 @@ public interface MeterRepository extends PagingAndSortingRepository<Meter, Long>
 
 	@Query(value = "select  max(m) from Meter m where m.place=:place and m.date between :startDate and :endDate")
 	Meter findByPlaceAndDate(@Param("place") Place place, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+	List<Meter> findByPlace(Place place);
 }

@@ -13,4 +13,7 @@ public interface PlaceService {
 
 	List<Place> findPlacesWithoutUser();
 
+	List<Place> findAll();
+
+	List<Place> findPlacesConnectedWithAnyUser();
 }

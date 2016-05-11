@@ -13,6 +13,7 @@ import pl.zt.mk.jsf.JsfUtils;
 import pl.zt.mk.lazy.LazyModel;
 import pl.zt.mk.services.InternationalizationService;
 import pl.zt.mk.services.MeterService;
+import pl.zt.mk.services.PaymentHistoryService;
 import pl.zt.mk.services.PlaceService;
 
 import javax.faces.application.FacesMessage;
@@ -33,6 +34,9 @@ public class MeterBean implements Serializable {
 
 	@Autowired
 	PlaceService placeService;
+
+	@Autowired
+	PaymentHistoryService paymentHistoryService;
 
 	@Autowired
 	InternationalizationService internationalizationService;
@@ -77,5 +81,9 @@ public class MeterBean implements Serializable {
 			this.meter = new Meter();
 			this.meter.setPlace(this.place);
 		}
+	}
+
+	public void calculateAndSaveHistory() {
+
 	}
 }
