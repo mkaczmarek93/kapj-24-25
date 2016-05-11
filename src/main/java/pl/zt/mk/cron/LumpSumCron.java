@@ -38,7 +38,7 @@ public class LumpSumCron {
 		this.meterService = meterService;
 	}
 
-	@Scheduled(cron = "1 15 22 11 * ?")
+	@Scheduled(cron = "1 00 00 11 * ?")
 	public void checkIsALumpSumRequired() {
 		placeService.findAll().stream().forEachOrdered(place -> {
 			if (null == place.getUserDetail()) {
