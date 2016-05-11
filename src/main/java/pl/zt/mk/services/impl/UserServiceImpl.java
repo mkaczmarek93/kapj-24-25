@@ -85,15 +85,19 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean saveUser(UserDetail user) {
-		try {
+	public List<UserDetail> findUsersWithLocal() {
+		return userRepository.findByPlaceIsNotNull();
+	}
 
-			userRepository.save(user);
+	@Override
+	public UserDetail saveUser(UserDetail user) {
+		try {
+			UserDetail saved = userRepository.save(user);
 			log.info("User saved");
-			return true;
+			return saved;
 		} catch (Exception e) {
 			log.info("User not saved");
-			return false;
+			return null;
 		}
 
 	}

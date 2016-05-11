@@ -23,5 +23,7 @@ public interface UserService extends UserDetailsService {
 
 	List<UserDetail> findUsersWithoutPlace();
 
-	boolean saveUser(UserDetail selectedUser);
+	UserDetail saveUser(UserDetail selectedUser);
+
+	List<UserDetail> findUsersWithLocal();
 }
