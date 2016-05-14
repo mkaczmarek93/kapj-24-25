@@ -14,6 +14,7 @@ import pl.zt.mk.services.MeterService;
 import pl.zt.mk.services.PlaceService;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Michal on 09.05.2016.
@@ -49,22 +50,15 @@ public class LumpSumCron {
 		});
 	}
 
-	private void assignLumpSum(Place place) {
-		if (place.getMeters().isEmpty()) {
-			fillEmptyMeter(place);
-		} else {
-			Meter meter = Iterables.getLast(place.getMeters());
-			meter.setDate(new LocalDate(new Date().getTime()));
-			meter.setId(null);
+	private void assignLumpSum(final Place place) {
+		List<Meter> meters = meterService.findByPlace(place);
+		if (meters.isEmpty()) {
+			Meter meter = initEmptyMeter();
+			meter.setPlace(place);
 			meterService.addMeter(meter);
-		}
-	}
-
-	private void rewriteMeter(Place place) {
-		if (place.getMeters().isEmpty()) {
-			fillEmptyMeter(place);
+			log.info("Init meter for place: " + place.getId());
 		} else {
-			Meter meter = Iterables.getLast(place.getMeters());
+			Meter meter = Iterables.getLast(meters);
 			meter.setId(null);
 			meter.setDate(new LocalDate(new Date().getTime()));
 			meter.setColdWater(meter.getColdWater() + LUMP_SUM);
@@ -72,22 +66,42 @@ public class LumpSumCron {
 			meter.setElectricity(meter.getElectricity() + LUMP_SUM);
 			meter.setGas(meter.getGas() + LUMP_SUM);
 			meterService.addMeter(meter);
+			log.info("Ryczalt dla place: " + place.getId());
 		}
 	}
 
-	private void fillEmptyMeter(Place place) {
+	private void rewriteMeter(final Place place) {
+		List<Meter> meters = meterService.findByPlace(place);
+		if (meters.isEmpty()) {
+			Meter meter = initEmptyMeter();
+			meter.setPlace(place);
+			meterService.addMeter(meter);
+			log.info("Init meter for place: " + place.getId());
+		} else {
+			Meter meter = Iterables.getLast(meters);
+			meter.setDate(new LocalDate(new Date().getTime()));
+			meter.setId(null);
+			meterService.addMeter(meter);
+			log.info("Przepisany licznik dla place: " + place.getId());
+		}
+	}
+
+	private Meter initEmptyMeter() {
 		Meter meter = new Meter();
 		meter.setColdWater(0.0);
 		meter.setGas(0.0);
 		meter.setElectricity(0.0);
 		meter.setHotWater(0.0);
-		meter.setPlace(place);
 		meter.setDate(new LocalDate(new Date().getTime()));
-		place.getMeters().add(meter);
+		return meter;
 	}
 
 	public boolean isMetersFilled(final Place place) {
-		Meter last = Iterables.getLast(place.getMeters());
+		List<Meter> meters = meterService.findByPlace(place);
+		if (meters.isEmpty()) {
+			return false;
+		}
+		Meter last = Iterables.getLast(meters);
 		DateTime startDate = new DateTime(new Date().getTime()).minusMonths(1);
 		DateTime endDate = new DateTime(new Date().getTime());
 		Interval interval = new Interval(startDate, endDate);

@@ -11,6 +11,7 @@ import pl.zt.mk.repo.MeterRepository;
 import pl.zt.mk.repo.PlaceRepository;
 import pl.zt.mk.services.MeterService;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -52,6 +53,11 @@ public class MeterServiceImpl implements MeterService {
 		LocalDate startDate = new LocalDate(year, month - 1, startDay);
 		LocalDate endDate = new LocalDate(year, month, endDay);
 		return meterRepository.findByPlacAndDate(place, startDate, endDate);
+	}
+
+	@Override
+	public List<Meter> findByPlace(Place place) {
+		return meterRepository.findByPlace(place);
 	}
 
 }
