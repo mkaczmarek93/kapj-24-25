@@ -102,8 +102,9 @@ public class LumpSumCron {
 			return false;
 		}
 		Meter last = Iterables.getLast(meters);
-		DateTime startDate = new DateTime(new Date().getTime()).minusMonths(1);
-		DateTime endDate = new DateTime(new Date().getTime());
+		LocalDate current = new LocalDate();
+		DateTime startDate = new DateTime(current.getYear(), current.getMonthOfYear() - 1, current.getDayOfMonth() - 1, 0, 0);
+		DateTime endDate = new DateTime(current.getYear(), current.getMonthOfYear(), current.getDayOfMonth(), 0, 0);
 		Interval interval = new Interval(startDate, endDate);
 		return interval.contains(last.getDate().toDate().getTime());
 	}
