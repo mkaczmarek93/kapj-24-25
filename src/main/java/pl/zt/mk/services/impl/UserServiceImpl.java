@@ -11,7 +11,7 @@ import pl.zt.mk.entity.UserDetail;
 import pl.zt.mk.entity.UserRole;
 import pl.zt.mk.entity.meta.Authorities;
 import pl.zt.mk.repo.UserRepository;
-import pl.zt.mk.services.RegistrationMailSender;
+import pl.zt.mk.services.MailSender;
 import pl.zt.mk.services.UserService;
 
 import java.util.List;
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 	PasswordEncoder encoder;
 
 	@Autowired
-	RegistrationMailSender registrationMailSender;
+	MailSender mailSender;
 
 	@Override
 	public UserDetail findByEmail(String email) {
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			UserDetail saved = userRepository.save(new UserDetail(name, email, hashpw, new UserRole(role)));
 			log.info(email + ":" + password);
-			registrationMailSender.sendRegistrationEmail(name, email, password);
+			mailSender.sendRegistrationEmail(name, email, password);
 			return true;
 		} catch (DataAccessException e) {
 			log.debug("user not saved");

@@ -9,7 +9,7 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import pl.zt.mk.config.LocaleConfig;
-import pl.zt.mk.services.RegistrationMailSender;
+import pl.zt.mk.services.MailSender;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ import java.util.Map;
  * Created by Michal on 02.04.2016.
  */
 @Service
-public class RegistrationMailSenderImpl implements RegistrationMailSender {
+public class MailSenderImpl implements MailSender {
 
 	@Autowired
 	private JavaMailSender mailSender;

@@ -3,13 +3,10 @@ package pl.zt.mk.cron;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import pl.zt.mk.entity.Payment;
 import pl.zt.mk.entity.PaymentHistory;
 import pl.zt.mk.entity.Place;
 import pl.zt.mk.entity.UserDetail;
-import pl.zt.mk.services.MeterService;
 import pl.zt.mk.services.PaymentHistoryService;
-import pl.zt.mk.services.PaymentService;
 import pl.zt.mk.services.UserService;
 
 import java.util.List;
@@ -29,13 +26,12 @@ public class YearReport {
 	@Scheduled(cron = "00 02 00 01 01 *")
 	public void prepareAndSendYearReport() {
 		List<UserDetail> users = userService.findUsersWithLocal();
-		for(UserDetail user : users){
+		for (UserDetail user : users) {
 			Place place = user.getPlace();
-			List<PaymentHistory> payments  = paymentHistoryService.findByPlaceInLastYear(place);
-			for(PaymentHistory p: payments){
+			List<PaymentHistory> payments = paymentHistoryService.findByPlaceInLastYear(place);
+			for (PaymentHistory p : payments) {
 
 			}
 		}
-
 	}
 }
