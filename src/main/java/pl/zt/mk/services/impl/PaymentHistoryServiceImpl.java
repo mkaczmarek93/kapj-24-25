@@ -80,4 +80,11 @@ public class PaymentHistoryServiceImpl implements PaymentHistoryService {
 		});
 
 	}
+
+	@Override
+	public List<PaymentHistory> findByPlaceInLastYear(Place place) {
+		LocalDate startDate = new LocalDate().minusYears(1);
+		LocalDate endDate = new LocalDate();
+		return paymentHistoryRepository.findByPlaceInYear(place, startDate,endDate);
+	}
 }
