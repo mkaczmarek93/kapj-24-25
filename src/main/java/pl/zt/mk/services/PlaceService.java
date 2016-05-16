@@ -16,4 +16,5 @@ public interface PlaceService {
 	List<Place> findAll();
 
 	List<Place> findPlacesConnectedWithAnyUser();
+
 }

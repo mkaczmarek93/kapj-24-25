@@ -30,6 +30,7 @@ public class PlaceServiceImpl implements PlaceService {
 		return placeRepository.findByUserDetailIsNull();
 	}
 
+
 	@Override
 	public List<Place> findAll() {
 		return IteratorUtils.toList(placeRepository.findAll().iterator());
