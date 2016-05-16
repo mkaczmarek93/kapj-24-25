@@ -2,6 +2,7 @@ package pl.zt.mk.services.impl;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import pl.zt.mk.calculations.ChargeCalculation;
 import pl.zt.mk.entity.Meter;
@@ -57,6 +58,7 @@ public class PaymentHistoryServiceImpl implements PaymentHistoryService {
 	}
 
 	@Override
+	@Scheduled(cron = "00 00 02 11 * ?")
 	public void calculatePaymentsForAllPlaces() {
 
 		List<Place> places = placeService.findPlacesConnectedWithAnyUser();

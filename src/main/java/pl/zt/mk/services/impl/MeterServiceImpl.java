@@ -79,15 +79,13 @@ public class MeterServiceImpl implements MeterService {
 			int month = date.getMonthOfYear();
 			int day = date.getDayOfMonth();
 
-			LocalDate startDate = new LocalDate(year, month, startDay);
-			LocalDate endDate = new LocalDate(year, month + 1, endDay);
 			if (day < 11) {
-				startDate = new LocalDate(year, month - 1, startDay);
-				endDate = new LocalDate(year, month, endDay);
+				this.startDate = new LocalDate(year, month - 1, startDay);
+				this.endDate = new LocalDate(year, month, endDay);
 //			month--; month;
 			} else {
-				startDate = new LocalDate(year, month, startDay);
-				endDate = new LocalDate(year, month + 1, endDay);
+				this.startDate = new LocalDate(year, month, startDay);
+				this.endDate = new LocalDate(year, month + 1, endDay);
 //			month, month++;
 			}
 		}
