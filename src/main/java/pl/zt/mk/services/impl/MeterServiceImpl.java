@@ -1,10 +1,9 @@
 package pl.zt.mk.services.impl;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.zt.mk.calculations.EffectiveMetersDates;
 import pl.zt.mk.entity.Meter;
 import pl.zt.mk.entity.Place;
 import pl.zt.mk.lazy.LazyModel;
@@ -63,33 +62,7 @@ public class MeterServiceImpl implements MeterService {
 		return meterRepository.findByPlace(place);
 	}
 
-	@Getter
-	@Setter
-	private class EffectiveMetersDates {
-		LocalDate startDate;
-		LocalDate endDate;
 
-		EffectiveMetersDates(LocalDate date) {
-			//valid start date is a 11th day of prev month
-			int startDay = 11;
-			//valid end date is a 10th day of current month
-			int endDay = 10;
-			//so
-			int year = date.getYear();
-			int month = date.getMonthOfYear();
-			int day = date.getDayOfMonth();
-
-			if (day < 11) {
-				this.startDate = new LocalDate(year, month - 1, startDay);
-				this.endDate = new LocalDate(year, month, endDay);
-//			month--; month;
-			} else {
-				this.startDate = new LocalDate(year, month, startDay);
-				this.endDate = new LocalDate(year, month + 1, endDay);
-//			month, month++;
-			}
-		}
-	}
 
 
 }

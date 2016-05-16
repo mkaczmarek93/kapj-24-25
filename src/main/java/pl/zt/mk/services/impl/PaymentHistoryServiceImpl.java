@@ -1,5 +1,6 @@
 package pl.zt.mk.services.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,6 +24,7 @@ import java.util.Objects;
 /**
  * Created by zt on 2016-04-25.
  */
+@Slf4j
 @Service
 public class PaymentHistoryServiceImpl implements PaymentHistoryService {
 	@Autowired
@@ -64,20 +66,24 @@ public class PaymentHistoryServiceImpl implements PaymentHistoryService {
 		List<Place> places = placeService.findPlacesConnectedWithAnyUser();
 
 		LocalDate currentDate = new LocalDate();
-		places.forEach(place -> {
-			Meter prevMonth = meterService.findMeterLevelByPlaceAndDate(place, currentDate.minusMonths(1));
-			if (Objects.isNull(prevMonth)) {
-				prevMonth = new Meter(null, currentDate.minusMonths(1), 0D, 0D, 0D, 0D, null);
+		for (Place place : places) {
+			try {
+				Meter prevMonth = meterService.findMeterLevelByPlaceAndDate(place, currentDate.minusMonths(1));
+				if (Objects.isNull(prevMonth)) {
+					prevMonth = new Meter(null, currentDate.minusMonths(1), 0D, 0D, 0D, 0D, null);
+				}
+				Meter currentMonth = meterService.findMeterLevelByPlaceAndDate(place, currentDate);
+				if (Objects.isNull(currentMonth)) {
+					throw new IllegalArgumentException("Meters for current month not found !");
+				}
+				List<Payment> paymentList = paymentService.findActivePaymentForCurrentMonth();
+				ChargeCalculation chargeCalculation = new ChargeCalculation(place, prevMonth, currentMonth, paymentList);
+				Double sum = chargeCalculation.calculate();
+				paymentHistoryRepository.save(new PaymentHistory(place, new LocalDate(), sum));
+			} catch (IllegalArgumentException e) {
+				log.info(place.getId() + " meters not found ");
 			}
-			Meter currentMonth = meterService.findMeterLevelByPlaceAndDate(place, currentDate);
-			if (Objects.isNull(currentMonth)) {
-				throw new IllegalArgumentException("Meters for current month not found !");
-			}
-			List<Payment> paymentList = paymentService.findActivePaymentForCurrentMonth();
-			ChargeCalculation chargeCalculation = new ChargeCalculation(place, prevMonth, currentMonth, paymentList);
-			Double sum = chargeCalculation.calculate();
-			paymentHistoryRepository.save(new PaymentHistory(place, new LocalDate(), sum));
-		});
+		}
 
 	}
 
