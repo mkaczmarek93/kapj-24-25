@@ -1,16 +1,13 @@
 package pl.zt.mk.repo;
 
 import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.zt.mk.config.providers.BundleProvider;
 import pl.zt.mk.config.providers.JasperConfigProvider;
 import pl.zt.mk.config.providers.LocaleProvider;
-import pl.zt.mk.entity.Payment;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,11 +30,10 @@ public class JasperRepository {
 		this.bundle = bundleProvider;
 	}
 
-	public JasperPrint getReportTemplate(String name) throws JRException {
+	public JasperPrint getReportTemplate(String name, JRDataSource dataSource) throws JRException {
 		JasperReport report = JasperCompileManager.compileReport(templateSrc + parse(name));
-		JRDataSource source = new JRBeanCollectionDataSource(new ArrayList<Payment>());
 		Map<String, Object> paramenters = getParameters();
-		JasperPrint printable = JasperFillManager.fillReport(report, paramenters, new JREmptyDataSource());
+		JasperPrint printable = JasperFillManager.fillReport(report, paramenters, dataSource);
 		return printable;
 
 	}

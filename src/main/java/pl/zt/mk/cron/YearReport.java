@@ -1,11 +1,17 @@
 package pl.zt.mk.cron;
 
+import lombok.extern.slf4j.Slf4j;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import pl.zt.mk.entity.PaymentHistory;
 import pl.zt.mk.entity.Place;
 import pl.zt.mk.entity.UserDetail;
+import pl.zt.mk.repo.JasperRepository;
 import pl.zt.mk.services.PaymentHistoryService;
 import pl.zt.mk.services.UserService;
 
@@ -15,23 +21,29 @@ import java.util.List;
  * Created by Michal on 16.05.2016.
  */
 @Component
+@Slf4j
 public class YearReport {
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	@Autowired
-	PaymentHistoryService paymentHistoryService;
+	private PaymentHistoryService paymentHistoryService;
 
-	@Scheduled(cron = "00 02 00 01 01 *")
-	public void prepareAndSendYearReport() {
+	@Autowired
+	private JasperRepository jasperRepository;
+
+	@Scheduled(cron = "00 26 23 * * *")
+	public void prepareAndSendYearReport() throws JRException {
+		log.info("Working Directory = " + System.getProperty("user.dir"));
 		List<UserDetail> users = userService.findUsersWithLocal();
 		for (UserDetail user : users) {
+			log.info("Report for: " + user.getName());
 			Place place = user.getPlace();
 			List<PaymentHistory> payments = paymentHistoryService.findByPlaceInLastYear(place);
-			for (PaymentHistory p : payments) {
-
-			}
+			JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(payments, false);
+			JasperPrint print = jasperRepository.getReportTemplate("i18nReport.jrxml", jrBeanCollectionDataSource);
+			JasperExportManager.exportReportToPdfFile(print, user.getName() + ".pdf");
 		}
 	}
 }

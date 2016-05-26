@@ -1,3 +1,4 @@
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperPrint;
 import org.junit.Assert;
@@ -54,7 +55,7 @@ public class ReportTests {
 			Mockito.when(localeProvider.getLocale()).thenReturn(new Locale(locale));
 			Mockito.when(bundleProvider.getBundle()).thenReturn(ResourceBundle.getBundle(bundle, new Locale(locale)));
 			jasperRepository = new JasperRepository(jasperConfigProvider, localeProvider, bundleProvider);
-			JasperPrint print = jasperRepository.getReportTemplate(testReport);
+			JasperPrint print = jasperRepository.getReportTemplate(testReport, new JREmptyDataSource());
 			Assert.assertNotNull(print);
 		} catch (JRException e) {
 			e.printStackTrace();
