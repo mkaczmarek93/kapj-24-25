@@ -8,6 +8,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import pl.zt.mk.cron.data.ReportPaymentObject;
 import pl.zt.mk.entity.PaymentHistory;
 import pl.zt.mk.entity.Place;
 import pl.zt.mk.entity.UserDetail;
@@ -17,7 +18,9 @@ import pl.zt.mk.services.MailSender;
 import pl.zt.mk.services.PaymentHistoryService;
 import pl.zt.mk.services.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Michal on 16.05.2016.
@@ -41,18 +44,24 @@ public class YearReport {
 	@Autowired
 	private InternationalizationService i18n;
 
-	@Scheduled(cron = "00 26 23 * * *")
+	@Scheduled(cron = "00 00 00 6 1 *")
 	public void prepareAndSendYearReport() throws JRException {
 		log.info("Working Directory = " + System.getProperty("user.dir"));
 		List<UserDetail> users = userService.findUsersWithLocal();
 		for (UserDetail user : users) {
 			log.info("Report for: " + user.getName());
-			Place place = user.getPlace();
-			List<PaymentHistory> payments = paymentHistoryService.findByPlaceInLastYear(place);
+			List<ReportPaymentObject> payments = producePaymentObject(user.getPlace());
 			JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(payments, false);
-			JasperPrint print = jasperRepository.getReportTemplate("i18nReport.jrxml", jrBeanCollectionDataSource);
+			JasperPrint print = jasperRepository.getReportTemplate("yearReport.jrxml", jrBeanCollectionDataSource);
 			JasperExportManager.exportReportToPdfFile(print, user.getName() + ".pdf");
 			//TODO send file with email
 		}
+	}
+
+	private List<ReportPaymentObject> producePaymentObject(final Place place) {
+		List<ReportPaymentObject> objects = new ArrayList<>();
+		List<PaymentHistory> payments = paymentHistoryService.findByPlaceInLastYear(place);
+		objects.addAll(payments.stream().map(ReportPaymentObject::new).collect(Collectors.toList()));
+		return objects;
 	}
 }

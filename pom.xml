@@ -283,6 +283,11 @@
 			<artifactId>jasperreports</artifactId>
 			<version>5.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-fonts</artifactId>
+			<version>6.0.0</version>
+		</dependency>
 		<!-- needed for reports -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
