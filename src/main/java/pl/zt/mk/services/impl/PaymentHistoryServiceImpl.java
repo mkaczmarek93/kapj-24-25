@@ -68,11 +68,11 @@ public class PaymentHistoryServiceImpl implements PaymentHistoryService {
 		LocalDate currentDate = new LocalDate();
 		for (Place place : places) {
 			try {
-				Meter prevMonth = meterService.findMeterLevelByPlaceAndDate(place, currentDate.minusMonths(1));
+				Meter prevMonth = meterService.findMeterLevelByPlaceAndDate(place, currentDate.minusMonths(2));
 				if (Objects.isNull(prevMonth)) {
 					prevMonth = new Meter(null, currentDate.minusMonths(1), 0D, 0D, 0D, 0D, null);
 				}
-				Meter currentMonth = meterService.findMeterLevelByPlaceAndDate(place, currentDate);
+				Meter currentMonth = meterService.findMeterLevelByPlaceAndDate(place, currentDate.minusMonths(1));
 				if (Objects.isNull(currentMonth)) {
 					throw new IllegalArgumentException("Meters for current month not found !");
 				}

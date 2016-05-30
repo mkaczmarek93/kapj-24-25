@@ -30,7 +30,8 @@ public class MeterServiceImpl implements MeterService {
 	public void addMeter(Meter meter) {
 		if (Objects.isNull(meter.getPlace()))
 			throw new IllegalArgumentException("Meter whitout place !!");
-		meter.setDate(new LocalDate());
+		if (meter.getDate() == null)
+			meter.setDate(new LocalDate());
 		meterRepository.save(meter);
 	}
 
@@ -62,7 +63,10 @@ public class MeterServiceImpl implements MeterService {
 		return meterRepository.findByPlace(place);
 	}
 
-
+	@Override
+	public Meter saveMeter(Meter meter) {
+		return meterRepository.save(meter);
+	}
 
 
 }

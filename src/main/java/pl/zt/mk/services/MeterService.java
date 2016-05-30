@@ -23,4 +23,6 @@ public interface MeterService {
 
 	List<Meter> findByPlace(Place place);
 
+	Meter saveMeter(Meter meter);
+
 }
