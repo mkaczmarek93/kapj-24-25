@@ -72,7 +72,7 @@ public class MailConfig {
 		VelocityEngine velocityEngine = new VelocityEngine();
 		velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "class");
 		velocityEngine.setProperty("class.resource.loader.class", ClasspathResourceLoader.class.getName());
-		velocityEngine.setProperty("velocimacro.library", "velocity/macro.vm");
+		velocityEngine.setProperty("velocimacro.library", "templates/velocity/macro.vm");
 		velocityEngine.init();
 		return velocityEngine;
 	}

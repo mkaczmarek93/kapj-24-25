@@ -11,6 +11,7 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 import pl.zt.mk.config.LocaleConfig;
 import pl.zt.mk.services.MailSender;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,8 +51,26 @@ public class MailSenderImpl implements MailSender {
 			model.put("resources", messageSource);
 			model.put("locale", locale.localeProvider().getLocale());
 
-			String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/registrationMail.vm", "UTF-8", model);
+			String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/velocity/registrationMail.vm", "UTF-8", model);
 			message.setText(text, true);
+		};
+		this.mailSender.send(preparator);
+	}
+
+	@Override
+	public void sendReport(final String name, final String email, final File report, final String title) {
+		MimeMessagePreparator preparator = mimeMessage -> {
+			MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+			message.setTo(email);
+			message.setSubject(title);
+
+			Map model = new HashMap<>();
+			model.put("resources", messageSource);
+			model.put("locale", locale.localeProvider().getLocale());
+
+			String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/templates.velocity/report.vm", "UTF-8", model);
+			message.setText(text, true);
+			message.addAttachment("report", report);
 		};
 		this.mailSender.send(preparator);
 	}

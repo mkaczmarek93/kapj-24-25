@@ -12,6 +12,8 @@ import pl.zt.mk.entity.PaymentHistory;
 import pl.zt.mk.entity.Place;
 import pl.zt.mk.entity.UserDetail;
 import pl.zt.mk.repo.JasperRepository;
+import pl.zt.mk.services.InternationalizationService;
+import pl.zt.mk.services.MailSender;
 import pl.zt.mk.services.PaymentHistoryService;
 import pl.zt.mk.services.UserService;
 
@@ -33,6 +35,12 @@ public class YearReport {
 	@Autowired
 	private JasperRepository jasperRepository;
 
+	@Autowired
+	private MailSender mailSender;
+
+	@Autowired
+	private InternationalizationService i18n;
+
 	@Scheduled(cron = "00 26 23 * * *")
 	public void prepareAndSendYearReport() throws JRException {
 		log.info("Working Directory = " + System.getProperty("user.dir"));
@@ -44,6 +52,7 @@ public class YearReport {
 			JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(payments, false);
 			JasperPrint print = jasperRepository.getReportTemplate("i18nReport.jrxml", jrBeanCollectionDataSource);
 			JasperExportManager.exportReportToPdfFile(print, user.getName() + ".pdf");
+			//TODO send file with email
 		}
 	}
 }
