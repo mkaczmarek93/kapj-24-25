@@ -80,6 +80,6 @@ public class LumpSumTest {
 
 	@Test
 	public void intervalTest() {
-		Assert.assertTrue(cron.isMetersFilled(place));
+		Assert.assertTrue(cron.isLastMeters(place));
 	}
 }

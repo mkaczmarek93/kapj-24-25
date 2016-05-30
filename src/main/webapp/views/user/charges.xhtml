@@ -33,6 +33,7 @@
                 <p:outputPanel rendered="#{paymentHistoryBean.place != null}" styleClass="afterRemote">
 
                     <p:commandButton value="test obliczeń" actionListener="#{paymentHistoryBean.test}"/>
+                    <p:commandButton value="test crona" actionListener="#{lumpSumCron.checkIsALumpSumRequired}"/>
                     <p:dataTable value="#{paymentHistoryBean.paymentsLazyModel}" var="pay" styleClass="payment"
                                  selectionMode="single"
                                  rowIndexVar="count"
