@@ -1,8 +1,11 @@
 package pl.zt.mk.services.impl;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
@@ -12,6 +15,7 @@ import pl.zt.mk.config.LocaleConfig;
 import pl.zt.mk.services.MailSender;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,7 +64,7 @@ public class MailSenderImpl implements MailSender {
 	@Override
 	public void sendReport(final String name, final String email, final File report, final String title) {
 		MimeMessagePreparator preparator = mimeMessage -> {
-			MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+			MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true);
 			message.setTo(email);
 			message.setSubject(title);
 
@@ -68,9 +72,9 @@ public class MailSenderImpl implements MailSender {
 			model.put("resources", messageSource);
 			model.put("locale", locale.localeProvider().getLocale());
 
-			String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/templates.velocity/report.vm", "UTF-8", model);
+			String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/velocity/report.vm", "UTF-8", model);
 			message.setText(text, true);
-			message.addAttachment("report", report);
+			message.addAttachment("report", new ByteArrayResource(IOUtils.toByteArray(new FileInputStream(report))));
 		};
 		this.mailSender.send(preparator);
 	}

@@ -18,6 +18,7 @@ import pl.zt.mk.services.MailSender;
 import pl.zt.mk.services.PaymentHistoryService;
 import pl.zt.mk.services.UserService;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,7 +55,8 @@ public class YearReport {
 			JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(payments, false);
 			JasperPrint print = jasperRepository.getReportTemplate("yearReport.jrxml", jrBeanCollectionDataSource);
 			JasperExportManager.exportReportToPdfFile(print, user.getName() + ".pdf");
-			//TODO send file with email
+			File file = new File(user.getName() + ".pdf");
+			mailSender.sendReport(user.getName(), user.getEmail(), file, i18n.getMessage("report.year.email.title"));
 		}
 	}
 
