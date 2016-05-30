@@ -52,7 +52,7 @@ public class PaymentHistoryServiceImpl implements PaymentHistoryService {
 	}
 
 	@Override
-	public void pay(PaymentHistory paymentHistory) {
+	public void checkAsPayed(PaymentHistory paymentHistory) {
 		paymentHistory.setPaymentDate(new LocalDate());
 		paymentHistory.setPaid(Boolean.TRUE);
 

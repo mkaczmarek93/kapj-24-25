@@ -14,7 +14,7 @@ public interface PaymentHistoryService {
 
 	void saveHistory(PaymentHistory paymentHistory);
 
-	void pay(PaymentHistory paymentHistory);
+	void checkAsPayed(PaymentHistory paymentHistory);
 
 	void calculatePaymentsForAllPlaces();
 

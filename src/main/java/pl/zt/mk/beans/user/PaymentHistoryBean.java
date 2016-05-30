@@ -55,6 +55,6 @@ public class PaymentHistoryBean {
 	}
 
 	public void pay() {
-		this.paymentHistoryService.saveHistory(this.selectedPayment);
+		this.paymentHistoryService.checkAsPayed(this.selectedPayment);
 	}
 }
