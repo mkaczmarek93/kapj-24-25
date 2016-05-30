@@ -14,7 +14,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
 public class Place  implements RoomersCounter {
 
 	@Id
@@ -39,4 +38,27 @@ public class Place  implements RoomersCounter {
 	@OneToMany(mappedBy = "place")
 	List<PaymentHistory> paymentHistories;
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Place place = (Place) o;
+
+		if (id != null ? !id.equals(place.id) : place.id != null) return false;
+		if (block != null ? !block.equals(place.block) : place.block != null) return false;
+		if (apartmentNumber != null ? !apartmentNumber.equals(place.apartmentNumber) : place.apartmentNumber != null)
+			return false;
+		return roomersCount != null ? roomersCount.equals(place.roomersCount) : place.roomersCount == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (block != null ? block.hashCode() : 0);
+		result = 31 * result + (apartmentNumber != null ? apartmentNumber.hashCode() : 0);
+		result = 31 * result + (roomersCount != null ? roomersCount.hashCode() : 0);
+		return result;
+	}
 }

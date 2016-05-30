@@ -31,7 +31,6 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@EqualsAndHashCode
 public class Payment implements IDProvider {
 
 	@Id

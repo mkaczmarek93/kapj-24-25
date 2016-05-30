@@ -16,7 +16,6 @@ import java.util.Collection;
 @Table
 @Entity
 @RequiredArgsConstructor
-@EqualsAndHashCode
 public class UserDetail implements org.springframework.security.core.userdetails.UserDetails {
 
 	@Id
@@ -56,6 +55,29 @@ public class UserDetail implements org.springframework.security.core.userdetails
 	}
 
 	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		UserDetail that = (UserDetail) o;
+
+		if (id != null ? !id.equals(that.id) : that.id != null) return false;
+		if (name != null ? !name.equals(that.name) : that.name != null) return false;
+		if (email != null ? !email.equals(that.email) : that.email != null) return false;
+		return password != null ? password.equals(that.password) : that.password == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (name != null ? name.hashCode() : 0);
+		result = 31 * result + (email != null ? email.hashCode() : 0);
+		result = 31 * result + (password != null ? password.hashCode() : 0);
+		return result;
+	}
+
+	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return Arrays.asList(role);
 	}
@@ -89,4 +111,6 @@ public class UserDetail implements org.springframework.security.core.userdetails
 	public boolean isEnabled() {
 		return true;
 	}
+
+
 }

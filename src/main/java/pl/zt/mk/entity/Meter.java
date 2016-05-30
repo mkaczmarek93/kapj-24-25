@@ -15,7 +15,6 @@ import javax.validation.constraints.NotNull;
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
-@EqualsAndHashCode
 public class Meter implements IDProvider {
 
 	@Id
@@ -30,6 +29,25 @@ public class Meter implements IDProvider {
 	private Double coldWater;
 	private Double electricity;
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Meter meter = (Meter) o;
+
+		return id != null ? id.equals(meter.id) : meter.id == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		return id != null ? id.hashCode() : 0;
+	}
+
 	@ManyToOne()
+
 	private Place place;
+
+
 }
