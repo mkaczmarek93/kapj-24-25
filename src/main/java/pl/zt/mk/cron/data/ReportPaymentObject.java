@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import pl.zt.mk.entity.PaymentHistory;
 
+import java.util.Locale;
+
 /**
  * Created by Michal on 30.05.2016.
  */
@@ -17,13 +19,14 @@ public class ReportPaymentObject {
 	private String charge;
 	private String paymentDate;
 
-	public ReportPaymentObject(PaymentHistory payment) {
+	public ReportPaymentObject(PaymentHistory payment, Locale locale) {
 		charge = String.valueOf(payment.getCharge());
 		if (null != payment.getPaymentDate())
 			paymentDate = payment.getPaymentDate().toString();
 		else
 			paymentDate = "-";
-		month = payment.getMonth().monthOfYear().getAsText();
+		month = payment.getMonth().toString("MMM");
 	}
+
 
 }
