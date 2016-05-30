@@ -1,9 +1,6 @@
 package pl.zt.mk.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.joda.time.LocalDate;
 import pl.zt.mk.lazy.interfaces.IDProvider;
 
@@ -18,6 +15,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
+@EqualsAndHashCode
 public class Meter implements IDProvider {
 
 	@Id

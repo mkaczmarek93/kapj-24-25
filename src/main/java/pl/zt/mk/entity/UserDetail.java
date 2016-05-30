@@ -1,5 +1,6 @@
 package pl.zt.mk.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import java.util.Collection;
 @Table
 @Entity
 @RequiredArgsConstructor
+@EqualsAndHashCode
 public class UserDetail implements org.springframework.security.core.userdetails.UserDetails {
 
 	@Id

@@ -1,5 +1,6 @@
 package pl.zt.mk.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import pl.zt.mk.calculations.RoomersCounter;
@@ -13,6 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Place  implements RoomersCounter {
 
 	@Id

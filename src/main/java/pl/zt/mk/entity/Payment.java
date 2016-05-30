@@ -1,5 +1,6 @@
 package pl.zt.mk.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -30,6 +31,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@EqualsAndHashCode
 public class Payment implements IDProvider {
 
 	@Id
