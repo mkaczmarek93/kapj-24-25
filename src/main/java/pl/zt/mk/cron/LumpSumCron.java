@@ -118,8 +118,12 @@ public class LumpSumCron {
 			return false;
 		}
 		Interval interval = getCurrentInterval();
-		Meter last = Iterables.getLast(meters);
-		return interval.contains(last.getDate().toDate().getTime());
+		for (Meter m : meters) {
+			if (interval.contains(m.getDate().toDate().getTime())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private Interval getCurrentInterval() {

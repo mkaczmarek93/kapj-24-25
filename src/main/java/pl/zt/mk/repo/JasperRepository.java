@@ -30,16 +30,18 @@ public class JasperRepository {
 		this.bundle = bundleProvider;
 	}
 
-	public JasperPrint getReportTemplate(String name, JRDataSource dataSource) throws JRException {
+	public JasperPrint getReportTemplate(String name, Map parameters, JRDataSource dataSource) throws JRException {
 		JasperReport report = JasperCompileManager.compileReport(templateSrc + parse(name));
-		Map<String, Object> paramenters = getParameters();
+		Map<String, Object> paramenters = getParameters(parameters);
 		JasperPrint printable = JasperFillManager.fillReport(report, paramenters, dataSource);
 		return printable;
 
 	}
 
-	private Map<String, Object> getParameters() {
+	private Map<String, Object> getParameters(Map param) {
 		Map parameters = new HashMap<>();
+		if (null != param)
+			parameters.putAll(param);
 		parameters.put("REPORT_LOCALE", locale.getLocale());
 		parameters.put("REPORT_RESOURCE_BUNDLE", bundle.getBundle());
 		return parameters;

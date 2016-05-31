@@ -5,6 +5,7 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -20,8 +21,7 @@ import pl.zt.mk.services.PaymentHistoryService;
 import pl.zt.mk.services.UserService;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Michal on 16.05.2016.
@@ -50,13 +50,13 @@ public class YearReport {
 
 	@Scheduled(cron = "00 00 00 6 1 *")
 	public void prepareAndSendYearReport() throws JRException {
-		log.info("Working Directory = " + System.getProperty("user.dir"));
 		List<UserDetail> users = userService.findUsersWithLocal();
 		for (UserDetail user : users) {
 			log.info("Report for: " + user.getName());
 			List<ReportPaymentObject> payments = producePaymentObject(user.getPlace());
 			JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(payments, false);
-			JasperPrint print = jasperRepository.getReportTemplate("yearReport.jrxml", jrBeanCollectionDataSource);
+			Map parameters = getReportParameters(user, payments);
+			JasperPrint print = jasperRepository.getReportTemplate("yearReport.jrxml", parameters, jrBeanCollectionDataSource);
 			JasperExportManager.exportReportToPdfFile(print, user.getName() + ".pdf");
 			File file = new File(user.getName() + ".pdf");
 			mailSender.sendReport(user.getName(), user.getEmail(), file, i18n.getMessage("report.year.email.title"));
@@ -70,5 +70,36 @@ public class YearReport {
 			objects.add(new ReportPaymentObject(payment, localeConfig.localeProvider().getLocale()));
 		}
 		return objects;
+	}
+
+	private Map getReportParameters(UserDetail user, List<ReportPaymentObject> payments) {
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("Adres", getAdres(user.getPlace()));
+		parameters.put("User", user.getName());
+		parameters.put("TotalCharge", calculateTotalCharge(payments));
+		parameters.put("Date", new LocalDate().toString());
+		return parameters;
+	}
+
+	private String calculateTotalCharge(List<ReportPaymentObject> payments) {
+		double total = 0.0;
+		for (ReportPaymentObject payment : payments) {
+			total += Double.valueOf(payment.getCharge());
+		}
+		return String.format("%.2f", total);
+	}
+
+	private String getAdres(Place place) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(place.getBlock().getPostCode())
+				.append(" ")
+				.append(place.getBlock().getCity())
+				.append("\n")
+				.append(place.getBlock().getStreet())
+				.append(" ")
+				.append(place.getBlock().getFlatNumber())
+				.append("/")
+				.append(place.getApartmentNumber());
+		return sb.toString();
 	}
 }

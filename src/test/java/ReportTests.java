@@ -9,6 +9,7 @@ import pl.zt.mk.config.providers.JasperConfigProvider;
 import pl.zt.mk.config.providers.LocaleProvider;
 import pl.zt.mk.repo.JasperRepository;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -55,7 +56,7 @@ public class ReportTests {
 			Mockito.when(localeProvider.getLocale()).thenReturn(new Locale(locale));
 			Mockito.when(bundleProvider.getBundle()).thenReturn(ResourceBundle.getBundle(bundle, new Locale(locale)));
 			jasperRepository = new JasperRepository(jasperConfigProvider, localeProvider, bundleProvider);
-			JasperPrint print = jasperRepository.getReportTemplate(testReport, new JREmptyDataSource());
+			JasperPrint print = jasperRepository.getReportTemplate(testReport, new HashMap<>(), new JREmptyDataSource());
 			Assert.assertNotNull(print);
 		} catch (JRException e) {
 			e.printStackTrace();
