@@ -69,12 +69,13 @@ public class MailSenderImpl implements MailSender {
 			message.setSubject(title);
 
 			Map model = new HashMap<>();
+			model.put("name", name);
 			model.put("resources", messageSource);
 			model.put("locale", locale.localeProvider().getLocale());
 
 			String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/velocity/report.vm", "UTF-8", model);
 			message.setText(text, true);
-			message.addAttachment("report", new ByteArrayResource(IOUtils.toByteArray(new FileInputStream(report))));
+			message.addAttachment("report.pdf", new ByteArrayResource(IOUtils.toByteArray(new FileInputStream(report))));
 		};
 		this.mailSender.send(preparator);
 	}

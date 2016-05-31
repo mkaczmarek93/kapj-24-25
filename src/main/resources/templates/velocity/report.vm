@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8"/>
+</head>
+<body xmlns="http://www.w3.org/1999/html">
+<h3>#msg("mail_hi") ${name}</h3>
+<div>
+	#msg('year_report')
+</div>
+</body>
+</html>
