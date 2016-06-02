@@ -21,14 +21,17 @@ import pl.zt.mk.services.PaymentHistoryService;
 import pl.zt.mk.services.UserService;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Michal on 16.05.2016.
  */
 @Component
 @Slf4j
-public class YearReport {
+public class PaymentReport {
 
 	@Autowired
 	private UserService userService;
@@ -41,9 +44,6 @@ public class YearReport {
 
 	@Autowired
 	private MailSender mailSender;
-
-	@Autowired
-	private InternationalizationService i18n;
 
 	@Autowired
 	private LocaleConfig localeConfig;
@@ -59,8 +59,33 @@ public class YearReport {
 			JasperPrint print = jasperRepository.getReportTemplate("yearReport.jrxml", parameters, jrBeanCollectionDataSource);
 			JasperExportManager.exportReportToPdfFile(print, user.getName() + ".pdf");
 			File file = new File(user.getName() + ".pdf");
-			mailSender.sendReport(user.getName(), user.getEmail(), file, i18n.getMessage("report.year.email.title"));
+			mailSender.sendReport(user.getName(), user.getEmail(), file, false);
 		}
+		log.info("All year reports are sent");
+	}
+
+	@Scheduled(cron = "00 00 6 11 * ?")
+	public void prepareAndSendMonthReport() throws JRException {
+		List<UserDetail> users = userService.findUsersWithLocal();
+		for (UserDetail user : users) {
+			log.info("Report for: " + user.getName());
+			List<ReportPaymentObject> payments = producePaymentObjectForLastMonth(user.getPlace());
+			JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(payments, false);
+			Map parameters = getReportParameters(user, payments);
+			JasperPrint print = jasperRepository.getReportTemplate("monthReport.jrxml", parameters, jrBeanCollectionDataSource);
+			JasperExportManager.exportReportToPdfFile(print, user.getName() + ".pdf");
+			File file = new File(user.getName() + ".pdf");
+			mailSender.sendReport(user.getName(), user.getEmail(), file, true);
+		}
+		log.info("All month reports are sent");
+	}
+
+	private List<ReportPaymentObject> producePaymentObjectForLastMonth(final Place place) {
+		List<ReportPaymentObject> objects = new ArrayList<>();
+		List<PaymentHistory> payment = paymentHistoryService.findByPlaceInLastMonth(place);
+		if (!payment.isEmpty())
+			objects.add(new ReportPaymentObject(payment.get(0), localeConfig.localeProvider().getLocale()));
+		return objects;
 	}
 
 	private List<ReportPaymentObject> producePaymentObject(final Place place) {

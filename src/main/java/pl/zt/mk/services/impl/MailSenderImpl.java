@@ -62,14 +62,24 @@ public class MailSenderImpl implements MailSender {
 	}
 
 	@Override
-	public void sendReport(final String name, final String email, final File report, final String title) {
+	public void sendReport(final String name, final String email, final File report, final boolean isMonth) {
 		MimeMessagePreparator preparator = mimeMessage -> {
+			String title = null;
+			String type = null;
+			if (isMonth) {
+				title = i18n.getMessage("report.month.title");
+				type = i18n.getMessage("monthly");
+			} else {
+				title = i18n.getMessage("report.year.title");
+				type = i18n.getMessage("yearly");
+			}
 			MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true);
 			message.setTo(email);
 			message.setSubject(title);
 
 			Map model = new HashMap<>();
 			model.put("name", name);
+			model.put("type", type);
 			model.put("resources", messageSource);
 			model.put("locale", locale.localeProvider().getLocale());
 

@@ -5,7 +5,7 @@
 <body xmlns="http://www.w3.org/1999/html">
 <h3>#msg("mail_hi") ${name}</h3>
 <div>
-	#msg('year_report')
+	#msg('report1') ${type} #msg('report2')
 </div>
 </body>
 </html>

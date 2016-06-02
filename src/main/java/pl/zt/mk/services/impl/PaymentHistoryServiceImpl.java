@@ -93,4 +93,11 @@ public class PaymentHistoryServiceImpl implements PaymentHistoryService {
 		LocalDate endDate = new LocalDate();
 		return paymentHistoryRepository.findByPlaceInYear(place, startDate,endDate);
 	}
+
+	@Override
+	public List<PaymentHistory> findByPlaceInLastMonth(Place place) {
+		LocalDate startDate = new LocalDate().minusMonths(1);
+		LocalDate endDate = new LocalDate();
+		return paymentHistoryRepository.findByPlaceInMonth(place, startDate, endDate);
+	}
 }

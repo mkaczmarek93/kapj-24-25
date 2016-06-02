@@ -24,4 +24,7 @@ public interface PaymentHistoryRepository extends PagingAndSortingRepository<Pay
 
 	@Query(value = "select p from PaymentHistory p where p.place=:place and p.month between :startDate and :endDate")
 	List<PaymentHistory> findByPlaceInYear(@Param("place") Place place, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+	@Query(value = "select p from PaymentHistory p where p.place=:place and p.month between :startDate and :endDate order by p.month desc")
+	List<PaymentHistory> findByPlaceInMonth(@Param("place") Place place, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }

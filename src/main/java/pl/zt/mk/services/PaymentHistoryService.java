@@ -19,4 +19,6 @@ public interface PaymentHistoryService {
 	void calculatePaymentsForAllPlaces();
 
 	List<PaymentHistory> findByPlaceInLastYear(Place place);
+
+	List<PaymentHistory> findByPlaceInLastMonth(Place place);
 }

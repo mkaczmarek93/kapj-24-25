@@ -8,5 +8,5 @@ import java.io.File;
 public interface MailSender {
 	void sendRegistrationEmail(final String name, final String email, final String password);
 
-	void sendReport(final String name, final String email, final File report, final String title);
+	void sendReport(final String name, final String email, final File report, final boolean isMonth);
 }

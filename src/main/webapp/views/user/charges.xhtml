@@ -34,7 +34,9 @@
 
                     <p:commandButton value="test obliczeń" actionListener="#{paymentHistoryBean.test}"/>
                     <p:commandButton value="test crona" actionListener="#{lumpSumCron.checkIsALumpSumRequired}"/>
-                    <p:commandButton value="test raportow" actionListener="#{yearReport.prepareAndSendYearReport}"/>
+                    <p:commandButton value="test raportow" actionListener="#{paymentReport.prepareAndSendYearReport}"/>
+                    <p:commandButton value="test raportow miesiecznych"
+                                     actionListener="#{paymentReport.prepareAndSendMonthReport}"/>
                     <p:dataTable value="#{paymentHistoryBean.paymentsLazyModel}" var="pay" styleClass="payment"
                                  selectionMode="single"
                                  rowIndexVar="count"
