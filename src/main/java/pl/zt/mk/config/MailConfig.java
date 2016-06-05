@@ -49,6 +49,9 @@ public class MailConfig {
 	@Value("${mail.smtp.socketFactory.class}")
 	private String socketFactory;
 
+	@Value("${mail.smtp.socketFactory.port}")
+	private int socketFactoryPort;
+
 	@Bean
 	public JavaMailSender mailSender() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -57,6 +60,7 @@ public class MailConfig {
 		mailProperties.put("mail.smtp.starttls.enable", starttls);
 		mailProperties.put("mail.smtp.ssl.trust", trustSsl);
 		mailProperties.put("mail.smtp.socketFactory.class", socketFactory);
+		mailProperties.put("mail.smtp.socketFactoty.port", socketFactoryPort);
 		mailSender.setJavaMailProperties(mailProperties);
 		mailSender.setHost(host);
 		mailSender.setPort(port);
