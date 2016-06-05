@@ -68,23 +68,35 @@
                     <p:panelGrid
                             columns="3" rendered="#{meterBean.meter != null}" styleClass="meterManagementForm">
                         <p:outputLabel value="#{i18n['meter-gas']}"/>
-                        <pe:inputNumber value="#{meterBean.meter.gas}" id="gas"/>
+                        <pe:inputNumber value="#{meterBean.meter.gas}" id="gas">
+                            <f:validator binding="#{meterValidators}" ></f:validator>
+                            <f:attribute name="curFieldValue" value="#{meterBean.meter.gas}" />
+                                </pe:inputNumber>
                         <p:message for="gas"/>
 
                         <p:outputLabel value="#{i18n['meter-water-hot']}"/>
-                        <pe:inputNumber value="#{meterBean.meter.hotWater}" id="wh"/>
+                        <pe:inputNumber value="#{meterBean.meter.hotWater}" id="wh">
+                            <f:validator binding="#{meterValidators}" ></f:validator>
+                            <f:attribute name="curFieldValue" value="#{meterBean.meter.hotWater}" />
+                        </pe:inputNumber>
                         <p:message for="wh"/>
 
                         <p:outputLabel value="#{i18n['meter-water-cold']}"/>
-                        <pe:inputNumber value="#{meterBean.meter.coldWater}" id="wc"/>
+                        <pe:inputNumber value="#{meterBean.meter.coldWater}" id="wc">
+                            <f:validator binding="#{meterValidators}" ></f:validator>
+                            <f:attribute name="curFieldValue" value="#{meterBean.meter.coldWater}" />
+                        </pe:inputNumber>
                         <p:message for="wc"/>
 
                         <p:outputLabel value="#{i18n['meter-elec']}"/>
-                        <pe:inputNumber value="#{meterBean.meter.electricity}" id="elec"/>
+                        <pe:inputNumber value="#{meterBean.meter.electricity}" id="elec">
+                            <f:validator binding="#{meterValidators}" ></f:validator>
+                            <f:attribute name="curFieldValue" value="#{meterBean.meter.electricity}" />
+                        </pe:inputNumber>
                         <p:message for="elec"/>
 
                         <p:commandButton value="#{i18n['add']}" actionListener="#{meterBean.addMeter}"
-                                         update="@(.meter)"/>
+                                         update="@(.meter) @(.meterManagementForm)"/>
                     </p:panelGrid>
 
 

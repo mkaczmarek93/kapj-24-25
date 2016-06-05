@@ -25,4 +25,6 @@ public interface MeterService {
 
 	Meter saveMeter(Meter meter);
 
+	Meter findLastMeterByPlace(Place place);
+
 }

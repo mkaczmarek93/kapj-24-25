@@ -2,6 +2,7 @@ package pl.zt.mk.services.impl;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.CollectionUtils;
 import org.springframework.stereotype.Service;
 import pl.zt.mk.calculations.EffectiveMetersDates;
 import pl.zt.mk.entity.Meter;
@@ -63,6 +64,11 @@ public class MeterServiceImpl implements MeterService {
 		return meterRepository.findByPlace(place);
 	}
 
+	@Override
+	public Meter findLastMeterByPlace(Place place) {
+		List<Meter> list = meterRepository.findByPlace(place);
+		return org.springframework.util.CollectionUtils.isEmpty(list) ? null : list.get(0) ;
+	}
 	@Override
 	public Meter saveMeter(Meter meter) {
 		return meterRepository.save(meter);

@@ -32,4 +32,6 @@ public interface MeterRepository extends PagingAndSortingRepository<Meter, Long>
 
 	@Query(value = "select  m from Meter m where m.place=:place order by m.date asc")
 	List<Meter> findByPlace(@Param("place") Place place);
+
+
 }
