@@ -1,5 +1,6 @@
 package pl.zt.mk.validators;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -36,9 +37,10 @@ public  class MeterValidators implements Validator {
 		Double oldVal = (Double) uiComponent.getAttributes().get("curFieldValue");
 		Double newVal = (Double) o;
 
+
 		if (Objects.nonNull(oldVal)) {
 
-			if (Objects.nonNull(newVal) && oldVal > newVal)
+			if (Objects.nonNull(newVal) && (oldVal > newVal || newVal < 0))
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,i18n.getMessage("smaller-than-expected"),i18n.getMessage("smaller-than-expected")));
 		}
 

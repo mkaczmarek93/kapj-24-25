@@ -46,14 +46,13 @@
 
                     <p:ajax event="rowSelect" update=" @(.toolbar)"/>
                     <p:ajax event="rowUnselect" update=" @(.toolbar)"/>
-                    <p:column headerText="#{i18n['fee-name']}" sortable="true"
-                              sortBy="#{payment.id}">#{payment.id}</p:column>
+
                     <p:column headerText="#{i18n['fee-name']}" sortable="true"
                               sortBy="#{payment.name}">#{payment.name}</p:column>
                     <p:column headerText="#{i18n['fee-desc']}" sortable="true"
                               sortBy="#{payment.description}">#{payment.description}</p:column>
                     <p:column headerText="#{i18n['fee-counter-type']}" sortable="true"
-                              sortBy="#{payment.type}">#{payment.counterType}</p:column>
+                              sortBy="#{payment.counterType}">#{payment.counterType}</p:column>
                     <p:column headerText="#{i18n['fee-unit']}" sortable="true"
                               sortBy="#{payment.unit}">#{payment.unit}</p:column>
                     <p:column headerText="#{i18n['fee-price']}" sortable="true"

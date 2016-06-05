@@ -13,6 +13,7 @@ import pl.zt.mk.services.PaymentHistoryService;
 import pl.zt.mk.services.PaymentService;
 import pl.zt.mk.services.PlaceService;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -21,7 +22,7 @@ import java.util.Objects;
 @ViewScoped
 @Getter
 @Setter
-public class PaymentHistoryBean {
+public class PaymentHistoryBean implements Serializable{
 
 	Place place;
 	LazyModel<PaymentHistory> paymentsLazyModel;

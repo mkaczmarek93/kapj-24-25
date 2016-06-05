@@ -34,4 +34,5 @@ public interface MeterRepository extends PagingAndSortingRepository<Meter, Long>
 	List<Meter> findByPlace(@Param("place") Place place);
 
 
+
 }

@@ -19,5 +19,8 @@
 
 
 
-
+.ui-panelgrid .ui-panelgrid-cell {
+    border-width: 0px!important;
+    border-style: none;
+}
 

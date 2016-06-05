@@ -96,7 +96,9 @@
                         <p:message for="elec"/>
 
                         <p:commandButton value="#{i18n['add']}" actionListener="#{meterBean.addMeter}"
-                                         update="@(.meter) @(.meterManagementForm)"/>
+                                         update="@(.meter) @(.meterManagementForm)" id="cb"/>
+                        <p:messages  />
+
                     </p:panelGrid>
 
 
