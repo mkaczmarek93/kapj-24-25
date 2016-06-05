@@ -7,7 +7,7 @@
 
 		<h:form id="formMenu" rendered="#{securityBean.authenticated}">
 			<p:menu widgetVar="wmenuGlowne" style="width:95%!important;">
-				<p:submenu label="Menu" expanded="true">
+				<p:submenu label="#{i18n['user-panel']}" expanded="true">
 					<p:menuitem value="#{i18n['change-password']}"
 								action="/views/user/changePassword.xhtml?faces-redirect=true"/>
 					<p:menuitem value="#{i18n['meter-management']}"
@@ -15,8 +15,10 @@
 
 					<p:menuitem value="#{i18n['pay-history']}"
 								action="/views/user/charges.xhtml?faces-redirect=true"/>
+</p:submenu>
+				<p:submenu label="#{i18n['admin-panel']}" expanded="true">
 
-					<p:menuitem value="#{i18n['add-user']}"
+				<p:menuitem value="#{i18n['add-user']}"
 								action="/views/admin/addUser.xhtml?faces-redirect=true"
 								rendered="#{securityBean.hasRole('ADMIN')}"/>
 					<p:menuitem value="#{i18n['payment-management']}"
