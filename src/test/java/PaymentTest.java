@@ -2,6 +2,7 @@ import junit.framework.TestCase;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,6 +15,7 @@ import pl.zt.mk.entity.Meter;
 import pl.zt.mk.entity.Payment;
 import pl.zt.mk.repo.PaymentHistoryRepository;
 import pl.zt.mk.repo.PaymentRepository;
+import pl.zt.mk.services.HeatCounterProvider;
 
 import java.util.List;
 
@@ -47,7 +49,10 @@ public class PaymentTest extends TestCase{
 
 		RoomersCounter roomersCounter = Mockito.mock(RoomersCounter.class);
 		Mockito.when(roomersCounter.getRoomersCount()).thenReturn(5);
-		ChargeCalculation calculation = new ChargeCalculation(roomersCounter,prevMonth,actualMonth,paymentList);
+
+		HeatCounterProvider heatCounterProvider  = Mockito.mock(HeatCounterProvider.class);
+		Mockito.when(heatCounterProvider.getHeatState()).thenReturn(10d);
+		ChargeCalculation calculation = new ChargeCalculation(heatCounterProvider,roomersCounter,prevMonth,actualMonth,paymentList);
 		double suma = 0D;
 		suma+= calculation.calculate();
 

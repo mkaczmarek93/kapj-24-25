@@ -13,10 +13,7 @@ import pl.zt.mk.entity.Place;
 import pl.zt.mk.lazy.LazyModel;
 import pl.zt.mk.lazy.impl.PaymentHistoryPageResolver;
 import pl.zt.mk.repo.PaymentHistoryRepository;
-import pl.zt.mk.services.MeterService;
-import pl.zt.mk.services.PaymentHistoryService;
-import pl.zt.mk.services.PaymentService;
-import pl.zt.mk.services.PlaceService;
+import pl.zt.mk.services.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -39,6 +36,9 @@ public class PaymentHistoryServiceImpl implements PaymentHistoryService {
 
 	@Autowired
 	PlaceService placeService;
+
+	@Autowired
+	HeatCounterProvider heatCounterProvider;
 
 
 	@Override
@@ -77,7 +77,7 @@ public class PaymentHistoryServiceImpl implements PaymentHistoryService {
 					throw new IllegalArgumentException("Meters for current month not found !");
 				}
 				List<Payment> paymentList = paymentService.findActivePaymentForCurrentMonth();
-				ChargeCalculation chargeCalculation = new ChargeCalculation(place, prevMonth, currentMonth, paymentList);
+				ChargeCalculation chargeCalculation = new ChargeCalculation(heatCounterProvider,place, prevMonth, currentMonth, paymentList);
 				Double sum = chargeCalculation.calculate();
 				paymentHistoryRepository.save(new PaymentHistory(place, new LocalDate(), sum));
 			} catch (IllegalArgumentException e) {

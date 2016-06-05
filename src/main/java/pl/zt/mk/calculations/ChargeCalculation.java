@@ -3,6 +3,7 @@ package pl.zt.mk.calculations;
 import pl.zt.mk.entity.Meter;
 import pl.zt.mk.entity.Payment;
 import pl.zt.mk.entity.meta.CounterType;
+import pl.zt.mk.services.HeatCounterProvider;
 
 import java.util.*;
 
@@ -14,12 +15,14 @@ public class ChargeCalculation {
 	private final Meter prevMonth;
 	private final Meter currentMonth;
 	private final HashMap<CounterType,List<Payment>> payments;
+	private final HeatCounterProvider heatCounterProvider;
 
-	public ChargeCalculation(RoomersCounter roomersCounter, Meter prevMonth, Meter currentMonth, List<Payment> currentPayments){
+	public ChargeCalculation(HeatCounterProvider heatProvider, RoomersCounter roomersCounter, Meter prevMonth, Meter currentMonth, List<Payment> currentPayments){
 		this.prevMonth = prevMonth;
 		this.currentMonth = currentMonth;
 		this.roomersCount = roomersCounter.getRoomersCount();
 		this.payments = new HashMap();
+		this.heatCounterProvider = heatProvider;
 
 		currentPayments.forEach(payment -> {
 			payments.putIfAbsent(payment.getCounterType(), new ArrayList<>());
@@ -45,6 +48,11 @@ public class ChargeCalculation {
 
 		if (payments.get(CounterType.GARBAGE)!=null){
 			suma += roomersCount * payments.get(CounterType.GAS).get(0).getPrice();
+
+		}
+
+		if (payments.get(CounterType.HEAT)!=null){
+			suma += this.heatCounterProvider.getHeatState() * payments.get(CounterType.HEAT).get(0).getPrice();
 
 		}
 
