@@ -1,3 +1,5 @@
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,12 +35,13 @@ public class LumpSumTest {
 		place = new Place();
 		List<Meter> meters = new ArrayList<>();
 		Meter m = new Meter();
-		LocalDate date = new LocalDate(new Date().getTime()).minusDays(3);
+		LocalDate date = new LocalDate(2016, 6, 9);
 		m.setDate(date);
 		meters.add(m);
 		place.setMeters(meters);
 		places.add(place);
 		Mockito.when(placeService.findAll()).thenReturn(places);
+		Mockito.when(meterService.findByPlace(place)).thenReturn(meters);
 		cron = new LumpSumCron(placeService, meterService);
 	}
 
@@ -79,7 +82,7 @@ public class LumpSumTest {
 	}
 
 	@Test
-	public void intervalTest() {
+	public void intervalTestTrue() {
 		Assert.assertTrue(cron.isLastMeters(place));
 	}
 }

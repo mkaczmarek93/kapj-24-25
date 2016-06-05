@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8"/>
+</head>
+<body xmlns="http://www.w3.org/1999/html">
+<h3>#msg("mail_hi") ${name}, #msg("mail.registration.welcome")</h3>
+<div>
+	#msg("mail.registration.login") <b>${email}</b></br>
+	#msg("mail.registration.password") <b>${password}</b>
+</div>
+</body>
+</html>
